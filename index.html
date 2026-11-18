@@ -61,18 +61,18 @@
             background: white;
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 25px;
-            max-width: 500px;
+            padding: 24px;
+            max-width: 520px;
             width: 100%;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
+            margin-bottom: 24px;
             box-sizing: border-box;
         }
 
         .modal-title {
-            font-size: 1.8rem;
+            font-size: 1.75rem;
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
 
         .modal-btn {
@@ -130,6 +130,12 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .patient-panel.stable {
+            background: #f0fff4;
+            border-color: #9ae6b4;
         }
 
         /* 바이탈 사인 & 심전도 파형 모니터 */
@@ -155,6 +161,11 @@
             font-weight: bold;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
+            transition: color 0.3s ease;
+        }
+
+        .vital-status.stable {
+            color: #68d391;
         }
 
         .bpm-display {
@@ -162,11 +173,22 @@
             font-weight: 900;
             color: #fc8181;
             animation: pulseBpm 0.7s infinite alternate;
+            transition: color 0.3s ease;
+        }
+
+        .bpm-display.stable {
+            color: #68d391;
+            animation: pulseBpmStable 1.4s infinite alternate;
         }
 
         @keyframes pulseBpm {
             0% { transform: scale(1); opacity: 0.8; }
             100% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 10px rgba(252,129,129,0.7); }
+        }
+
+        @keyframes pulseBpmStable {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 8px rgba(104,211,145,0.6); }
         }
 
         .ecg-container {
@@ -187,6 +209,12 @@
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
             animation: ecgSweep 2.2s linear infinite;
+            transition: stroke 0.3s ease;
+        }
+
+        .ecg-line.stable {
+            stroke: #48bb78;
+            animation: ecgSweep 3.5s linear infinite;
         }
 
         @keyframes ecgSweep {
@@ -223,7 +251,7 @@
             border-left: 4px solid var(--accent-red);
             padding: 14px;
             border-radius: 0 8px 8px 0;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .patient-desc {
@@ -234,14 +262,36 @@
             margin: 0;
         }
 
+        /* 힌트 토글 영역 */
+        .hint-section {
+            margin-bottom: 16px;
+        }
+
+        .hint-toggle-btn {
+            background: #fefcbf;
+            border: 1px solid #ecc94b;
+            color: #744210;
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.15s;
+        }
+        .hint-toggle-btn:hover { background: #faf089; }
+
         .hint-banner {
+            display: none;
             background: #fefcbf;
             border: 1px solid #f6e05e;
             padding: 10px 12px;
             border-radius: 8px;
             font-size: 0.85rem;
             color: #744210;
-            margin-bottom: 16px;
+            margin-top: 8px;
             line-height: 1.45;
         }
 
@@ -347,7 +397,6 @@
             font-weight: 800;
         }
 
-        /* 클릭만 불가능한 비활성 셀 (밑줄 없음) */
         .drug-cell.disabled {
             background-color: #f1f5f9 !important;
             color: #94a3b8 !important;
@@ -368,7 +417,7 @@
             <div class="modal-title" style="color: var(--accent-red);">수업 평가 응급실 (ASSESSMENT ER)</div>
             <p style="font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
                 선생님, 학교 현장에서 IB PYP 평가 불균형으로 인한 응급 환자들이 속출하고 있습니다!<br>
-                올바른 시기와 목적에 맞는 <strong>평가 처방</strong>을 내려 위기의 환자 3명을 살려주세요.
+                올바른 시기와 목적에 맞는 <strong>평가 처방</strong>을 내려 위기의 환자 4명을 살려주세요.
             </p>
             <button type="button" class="modal-btn" id="btn-start">응급실 입장하기 🩺</button>
         </div>
@@ -377,21 +426,19 @@
         <div id="success-modal" class="modal-overlay">
             <div style="font-size: 3rem; margin-bottom: 10px;">🩺✨</div>
             <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 명의 처방입니다!</div>
-            <div class="modal-card" style="background: #f8fafc;">
+            <div class="modal-card" style="background: #f0fff4; border-color: #9ae6b4;">
                 <p id="success-explanation" style="margin: 0; line-height: 1.6; font-size: 0.98rem; color: var(--text-main);"></p>
             </div>
             <button type="button" class="modal-btn" id="btn-next">다음 환자 보기 ➔</button>
         </div>
 
-        <!-- 3. 오답 모달 -->
+        <!-- 3. 맞춤형 부작용 오답 모달 -->
         <div id="fail-modal" class="modal-overlay">
-            <div style="font-size: 3rem; margin-bottom: 10px;">💡</div>
-            <div class="modal-title" style="color: #d69e2e;">조금 아쉽습니다! 힌트를 다시 볼까요?</div>
-            <div class="modal-card" style="background: #f8fafc;">
-                <p style="margin: 0 0 12px 0; font-size: 0.95rem; color: var(--text-main); line-height: 1.5;">
-                    선택하신 약품도 좋지만, 환자 차트의 <strong>노란색 힌트(시기와 목적)</strong>를 보고 딱 맞는 칸을 다시 골라보세요!
-                </p>
-                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.92rem; color: #744210; background: #fefcbf; padding: 10px; border-radius: 8px;"></div>
+            <div style="font-size: 3rem; margin-bottom: 10px;">⚠️</div>
+            <div class="modal-title" style="color: #dd6b20;">처방 부작용 발생! 임상 결과를 확인하세요</div>
+            <div class="modal-card" style="background: #fffaf0; border-color: #fbd38d;">
+                <p id="side-effect-msg" style="margin: 0 0 12px 0; font-size: 0.95rem; color: #9c4221; line-height: 1.55; font-weight: 600;"></p>
+                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.88rem; color: #744210; background: #fefcbf; padding: 10px; border-radius: 8px;"></div>
             </div>
             <button type="button" class="modal-btn" id="btn-retry">다시 처방 고르기</button>
         </div>
@@ -402,7 +449,7 @@
             <div class="modal-title" style="color: var(--accent-green); margin-bottom: 18px;">전원 소생 성공! 명예 평가 닥터 인증</div>
             <div class="modal-card" style="border: 2px solid var(--accent-green); background: #e6fffa;">
                 <div style="border: 1.5px solid #38a169; color: #276749; display: inline-block; padding: 4px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; transform: rotate(-1deg);">IB PYP ASSESSMENT ER · 공식 인증</div>
-                <div style="font-size: 1.15rem; font-weight: 800; color: #1a202c; margin-bottom: 8px;">3명의 위기 수업 환자 완벽 처방 완료!</div>
+                <div style="font-size: 1.15rem; font-weight: 800; color: #1a202c; margin-bottom: 8px;">4명의 위기 수업 환자 완벽 처방 완료!</div>
                 <p style="font-size: 0.9rem; color: #2f855a; margin: 0; line-height: 1.5;">차시 · 중단원(LOI) · 대단원(UOI)의 균형 잡힌 평가 처방 능력을 인정합니다.</p>
             </div>
             <p style="font-size: 0.95rem; color: var(--text-sub); margin-bottom: 22px;">
@@ -423,7 +470,7 @@
         <!-- 메인 게임 영역 -->
         <div class="game-layout">
             <!-- 환자 차트 & 처방전 패널 -->
-            <div class="patient-panel">
+            <div class="patient-panel" id="patient-panel">
                 <div>
                     <!-- 심전도 바이탈 모니터 -->
                     <div class="vital-monitor">
@@ -433,13 +480,13 @@
                         </div>
                         <div class="ecg-container">
                             <svg width="100%" height="36" viewBox="0 0 400 36" preserveAspectRatio="none">
-                                <polyline class="ecg-line" points="0,18 40,18 50,6 60,30 70,10 80,24 90,18 140,18 150,4 160,32 170,8 180,25 190,18 240,18 250,6 260,30 270,10 280,24 290,18 340,18 350,4 360,32 370,8 380,25 390,18 400,18" />
+                                <polyline id="ecg-line" class="ecg-line" points="0,18 40,18 50,6 60,30 70,10 80,24 90,18 140,18 150,4 160,32 170,8 180,25 190,18 240,18 250,6 260,30 270,10 280,24 290,18 340,18 350,4 360,32 370,8 380,25 390,18 400,18" />
                             </svg>
                         </div>
                     </div>
 
                     <div class="patient-header-row">
-                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 3</span>
+                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 4</span>
                         <span class="patient-subject" id="patient-subject">6학년 사회 '인권 존중' (대단원 마무리)</span>
                     </div>
                     
@@ -448,8 +495,12 @@
                         <p class="patient-desc" id="patient-desc">“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 얼마나 성장했는지, 무엇을 더 보완해야 하는지 전혀 모른 채 단원을 끝내버려요!”</p>
                     </div>
 
-                    <div class="hint-banner" id="patient-hint">
-                        🔍 <strong>힌트:</strong> [대단원(UOI) 끝]에 아이들이 평가 기준표를 보며 자신의 배움과 성장을 스스로 돌아보게 하려면?
+                    <!-- 힌트 토글 영역 -->
+                    <div class="hint-section">
+                        <button type="button" class="hint-toggle-btn" id="btn-toggle-hint">🔍 수간호사 힌트 보기</button>
+                        <div class="hint-banner" id="patient-hint">
+                            🔍 <strong>힌트:</strong> [대단원(UOI) 끝]에 아이들이 평가 기준표를 보며 자신의 배움과 성장을 스스로 돌아보게 하려면?
+                        </div>
                     </div>
                 </div>
 
@@ -487,20 +538,20 @@
                     <tbody>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">UOI<br><span style="font-size:0.72rem; font-weight:normal;">대단원 끝</span></td>
-                            <td class="drug-cell" data-drug="중심아이디어 피드백">중심아이디어 피드백</td>
-                            <td class="drug-cell" data-drug="성장 스펙트럼 자기성찰">성장 스펙트럼 자기성찰</td>
-                            <td class="drug-cell" data-drug="지식 에세이 & 포트폴리오">지식 에세이 & 포트폴리오</td>
+                            <td class="drug-cell" data-drug="중심아이디어 피드백" data-time="UOI" data-purpose="학습을 위한 평가">중심아이디어 피드백</td>
+                            <td class="drug-cell" data-drug="성장 스펙트럼 자기성찰" data-time="UOI" data-purpose="학습으로서의 평가">성장 스펙트럼 자기성찰</td>
+                            <td class="drug-cell" data-drug="지식 에세이 & 포트폴리오" data-time="UOI" data-purpose="학습의 평가">지식 에세이 & 포트폴리오</td>
                         </tr>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">LOI<br><span style="font-size:0.72rem; font-weight:normal;">중단원</span></td>
-                            <td class="drug-cell" data-drug="소주제 결과물 피드백">소주제 결과물 피드백</td>
-                            <td class="drug-cell" data-drug="탐구나침반 & 동료평가">탐구나침반 & 동료평가</td>
-                            <td class="drug-cell" data-drug="LOI 과정중심평가 기록">LOI 과정중심평가 기록</td>
+                            <td class="drug-cell" data-drug="소주제 결과물 피드백" data-time="LOI" data-purpose="학습을 위한 평가">소주제 결과물 피드백</td>
+                            <td class="drug-cell" data-drug="탐구나침반 & 동료평가" data-time="LOI" data-purpose="학습으로서의 평가">탐구나침반 & 동료평가</td>
+                            <td class="drug-cell" data-drug="LOI 과정중심평가 기록" data-time="LOI" data-purpose="학습의 평가">LOI 과정중심평가 기록</td>
                         </tr>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">차시<br><span style="font-size:0.72rem; font-weight:normal;">1시간 수업</span></td>
-                            <td class="drug-cell" data-drug="수업 중 관찰 & 즉각 코칭">수업 중 관찰 & 즉각 코칭</td>
-                            <td class="drug-cell" data-drug="수업 마무리 자기점검">수업 마무리 자기점검</td>
+                            <td class="drug-cell" data-drug="수업 중 관찰 & 즉각 코칭" data-time="차시" data-purpose="학습을 위한 평가">수업 중 관찰 & 즉각 코칭</td>
+                            <td class="drug-cell" data-drug="수업 마무리 자기점검" data-time="차시" data-purpose="학습으로서의 평가">수업 마무리 자기점검</td>
                             <td class="drug-cell disabled">차시 단위 총괄평가 지양</td>
                         </tr>
                     </tbody>
@@ -513,26 +564,42 @@
         document.addEventListener('DOMContentLoaded', () => {
             const patients = [
                 {
-                    badge: "응급 환자 #1 / 3",
+                    badge: "응급 환자 #1 / 4",
                     subject: "6학년 사회 '인권 존중' (대단원 마무리)",
                     desc: "“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 얼마나 성장했는지, 무엇을 더 보완해야 하는지 전혀 모른 채 단원을 끝내버려요!”",
                     hint: "🔍 <strong>힌트:</strong> [대단원(UOI) 끝]에 아이들이 평가 기준표를 보며 자신의 배움과 성장을 스스로 돌아보게 하려면?",
+                    targetTime: "UOI",
+                    targetPurpose: "학습으로서의 평가",
                     answer: "성장 스펙트럼 자기성찰",
                     successMsg: "<strong>정확합니다!</strong> 대단원을 마무리하며 평가 기준표를 보고 아이들 스스로 배움의 성장을 돌아보는 <strong>[UOI(대단원 끝) × 학습으로서의 평가]</strong> 처방으로 자기주도적 성찰을 이끌어낼 수 있습니다!"
                 },
                 {
-                    badge: "응급 환자 #2 / 3",
+                    badge: "응급 환자 #2 / 4",
                     subject: "5학년 과학 '생태계' (1시간 모둠 수업 중)",
                     desc: "“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”",
                     hint: "🔍 <strong>힌트:</strong> [1시간 수업(차시)] 중에 [교사가 관찰하고 피드백]을 주려면?",
+                    targetTime: "차시",
+                    targetPurpose: "학습을 위한 평가",
                     answer: "수업 중 관찰 & 즉각 코칭",
                     successMsg: "<strong>훌륭합니다!</strong> 모둠 활동 중에 교사가 직접 돌며 관찰하고 실시간 피드백을 주는 <strong>[차시(1시간) × 학습을 위한 평가]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
                 },
                 {
-                    badge: "응급 환자 #3 / 3",
+                    badge: "응급 환자 #3 / 4",
+                    subject: "4학년 사회 '우리 지역의 문제' (중단원 탐구 중)",
+                    desc: "“첫 번째 소주제 탐구 활동이 끝났는데, 아이들이 핵심 개념에서 벗어나 엉뚱한 방향으로 가고 있어요. 다음 탐구로 넘어가기 전에 중간 점검과 피드백이 시급해요!”",
+                    hint: "🔍 <strong>힌트:</strong> [중단원(LOI)] 단계에서 교사가 소주제 탐구 내용을 중간 점검하고 피드백을 주려면?",
+                    targetTime: "LOI",
+                    targetPurpose: "학습을 위한 평가",
+                    answer: "소주제 결과물 피드백",
+                    successMsg: "<strong>명쾌합니다!</strong> 중단원(LOI) 소주제 탐구 후 교사가 중간 피드백을 제공하는 <strong>[LOI(중단원) × 학습을 위한 평가]</strong> 처방으로 탐구 방향을 올바르게 잡아줄 수 있습니다!"
+                },
+                {
+                    badge: "응급 환자 #4 / 4",
                     subject: "4학년 국어 '주장하는 글쓰기' (대단원 종합)",
                     desc: "“수업마다 스티커도 붙이고 칭찬도 많이 했는데, 정작 단원이 끝나고 나니 아이들이 배운 개념을 종합해서 써먹은 최종 결과물이 하나도 안 남았어요.”",
                     hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 끝에 배운 개념을 연결한 [최종 결과물(학습의 평가)]을 남기려면?",
+                    targetTime: "UOI",
+                    targetPurpose: "학습의 평가",
                     answer: "지식 에세이 & 포트폴리오",
                     successMsg: "<strong>완벽합니다!</strong> 대단원 학습이 끝날 때 배운 개념을 연결해 최종 결과물을 남기는 <strong>[UOI(대단원) × 학습의 평가]</strong> 처방으로 의미 있는 포트폴리오를 완성할 수 있습니다!"
                 }
@@ -540,25 +607,63 @@
 
             let currentIdx = 0;
             let selectedDrug = null;
+            let selectedTime = null;
+            let selectedPurpose = null;
 
             const introModal = document.getElementById('intro-modal');
             const successModal = document.getElementById('success-modal');
             const failModal = document.getElementById('fail-modal');
             const finalModal = document.getElementById('final-modal');
             const selectedDisplay = document.getElementById('selected-display');
+            const hintBanner = document.getElementById('patient-hint');
+            const btnToggleHint = document.getElementById('btn-toggle-hint');
+
+            // 바이탈 모니터 요소
+            const patientPanel = document.getElementById('patient-panel');
+            const vitalStatus = document.getElementById('vital-status-text');
+            const bpmDisplay = document.getElementById('bpm-display');
+            const ecgLine = document.getElementById('ecg-line');
+
+            // 바이탈 상태 전환 함수
+            function setVitalStable(isStable) {
+                if (isStable) {
+                    patientPanel.classList.add('stable');
+                    vitalStatus.classList.add('stable');
+                    vitalStatus.innerText = "STABLE · 심박수 안정화 완료";
+                    bpmDisplay.classList.add('stable');
+                    bpmDisplay.innerText = "72 BPM";
+                    ecgLine.classList.add('stable');
+                } else {
+                    patientPanel.classList.remove('stable');
+                    vitalStatus.classList.remove('stable');
+                    vitalStatus.innerText = "CRITICAL · 평가 불균형 위기";
+                    bpmDisplay.classList.remove('stable');
+                    bpmDisplay.innerText = "148 BPM";
+                    ecgLine.classList.remove('stable');
+                }
+            }
 
             // 인트로 닫기
             document.getElementById('btn-start').addEventListener('click', () => {
                 introModal.style.display = 'none';
             });
 
-            // 약품 셀 클릭 이벤트 바인딩 (disabled 제외)
+            // 힌트 토글
+            btnToggleHint.addEventListener('click', () => {
+                const isHidden = hintBanner.style.display === 'none' || hintBanner.style.display === '';
+                hintBanner.style.display = isHidden ? 'block' : 'none';
+                btnToggleHint.innerText = isHidden ? '🙈 수간호사 힌트 숨기기' : '🔍 수간호사 힌트 보기';
+            });
+
+            // 약품 셀 클릭 이벤트
             const drugCells = document.querySelectorAll('.drug-cell:not(.disabled)');
             drugCells.forEach(cell => {
                 cell.addEventListener('click', () => {
                     drugCells.forEach(c => c.classList.remove('selected'));
                     cell.classList.add('selected');
                     selectedDrug = cell.getAttribute('data-drug');
+                    selectedTime = cell.getAttribute('data-time');
+                    selectedPurpose = cell.getAttribute('data-purpose');
                     
                     selectedDisplay.innerHTML = `💊 <strong style="color:var(--accent-blue);">${selectedDrug}</strong>`;
                     selectedDisplay.style.color = "var(--text-main)";
@@ -566,6 +671,20 @@
                     selectedDisplay.style.backgroundColor = "#ebf8ff";
                 });
             });
+
+            // 맞춤형 부작용 메시지 생성 함수
+            function generateSideEffectMessage(patient, chosenDrug, chosenTime, chosenPurpose) {
+                const timeMatch = (chosenTime === patient.targetTime);
+                const purposeMatch = (chosenPurpose === patient.targetPurpose);
+
+                if (!timeMatch && !purposeMatch) {
+                    return `선택하신 [${chosenDrug}]은(는) '${chosenTime}' 단계의 '${chosenPurpose}' 약품입니다. 현재 환자의 증상 시기와 평가 목적을 모두 다시 확인해 주세요!`;
+                } else if (!timeMatch) {
+                    return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 현재 환자는 '${chosenTime}' 단계가 아닌 다른 시기의 처방이 필요합니다.`;
+                } else {
+                    return `적용 시기(${chosenTime})는 정확합니다! 하지만 지금은 '${chosenPurpose}'보다 다른 목적의 평가 처방이 더 시급한 상황입니다.`;
+                }
+            }
 
             // 처방 투여하기
             document.getElementById('btn-prescribe').addEventListener('click', () => {
@@ -576,9 +695,18 @@
 
                 const currentPatient = patients[currentIdx];
                 if (selectedDrug === currentPatient.answer) {
+                    // 바이탈 모니터 안정화 연출
+                    setVitalStable(true);
                     document.getElementById('success-explanation').innerHTML = currentPatient.successMsg;
+                    
+                    // 마지막 환자일 경우 버튼 텍스트 변경
+                    const btnNext = document.getElementById('btn-next');
+                    btnNext.innerText = (currentIdx === patients.length - 1) ? "최종 인증서 받기 🏆" : "다음 환자 보기 ➔";
+                    
                     successModal.style.display = 'flex';
                 } else {
+                    const sideEffectText = generateSideEffectMessage(currentPatient, selectedDrug, selectedTime, selectedPurpose);
+                    document.getElementById('side-effect-msg').innerText = sideEffectText;
                     document.getElementById('fail-hint-text').innerHTML = currentPatient.hint;
                     failModal.style.display = 'flex';
                 }
@@ -600,7 +728,7 @@
                 failModal.style.display = 'none';
             });
 
-            // 리셋 버튼들
+            // 리셋
             const resetAll = () => {
                 currentIdx = 0;
                 loadPatient(0);
@@ -612,15 +740,22 @@
             document.getElementById('btn-reset').addEventListener('click', resetAll);
             document.getElementById('btn-restart-final').addEventListener('click', resetAll);
 
-            // 환자 정보 업데이트 함수
+            // 환자 정보 로드
             function loadPatient(idx) {
+                setVitalStable(false);
                 const p = patients[idx];
                 document.getElementById('patient-step-badge').innerText = p.badge;
                 document.getElementById('patient-subject').innerText = p.subject;
                 document.getElementById('patient-desc').innerText = p.desc;
-                document.getElementById('patient-hint').innerHTML = p.hint;
+                hintBanner.innerHTML = p.hint;
+                
+                // 다음 환자로 넘어갈 때 힌트 다시 숨김 초기화
+                hintBanner.style.display = 'none';
+                btnToggleHint.innerText = '🔍 수간호사 힌트 보기';
 
                 selectedDrug = null;
+                selectedTime = null;
+                selectedPurpose = null;
                 drugCells.forEach(c => c.classList.remove('selected'));
                 selectedDisplay.innerHTML = "오른쪽에서 처방 약품 1개를 클릭하세요";
                 selectedDisplay.style.color = "var(--text-sub)";
