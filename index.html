@@ -145,7 +145,7 @@
         /* 메인 레이아웃 */
         .game-layout {
             display: grid;
-            grid-template-columns: 1fr 1.25fr;
+            grid-template-columns: 1fr 1.28fr;
             gap: 22px;
         }
 
@@ -390,7 +390,7 @@
             border: 1px solid var(--border-color);
             padding: 12px 6px;
             text-align: center;
-            font-size: 0.82rem;
+            font-size: 0.81rem;
             word-break: keep-all;
         }
 
@@ -405,7 +405,7 @@
             transition: all 0.15s ease;
             background: white;
             font-weight: 600;
-            line-height: 1.35;
+            line-height: 1.4;
         }
 
         .drug-cell:hover {
@@ -455,7 +455,7 @@
             .bpm-display { font-size: 1.05rem; }
             .patient-symptom-box { padding: 10px 12px; margin-bottom: 10px; }
             .patient-desc { font-size: 0.88rem; }
-            .matrix-table th, .matrix-table td { padding: 9px 4px; font-size: 0.74rem; }
+            .matrix-table th, .matrix-table td { padding: 9px 4px; font-size: 0.73rem; }
         }
     </style>
 </head>
@@ -503,7 +503,7 @@
                     <div class="hint-section">
                         <button type="button" class="hint-toggle-btn" id="btn-toggle-hint">🔍 수간호사 힌트 보기</button>
                         <div class="hint-banner" id="patient-hint">
-                            🔍 <strong>힌트:</strong> [대단원(UOI) 끝]에 아이들이 평가 기준표를 보며 자신의 배움과 성장을 스스로 돌아보게 하려면?
+                            🔍 <strong>힌트:</strong> [UOI(대단원 끝)]에 아이들이 준거에 따라 자신의 학습 활동을 성찰하고 새로운 목표를 설정하게 하려면?
                         </div>
                     </div>
                 </div>
@@ -533,29 +533,29 @@
                 <table class="matrix-table">
                     <thead>
                         <tr>
-                            <th style="width: 17%;">시기 / 목적</th>
-                            <th style="width: 27.6%;">학습을 위한 평가</th>
-                            <th style="width: 27.6%;">학습으로서의 평가</th>
-                            <th style="width: 27.6%;">학습의 평가</th>
+                            <th style="width: 15%;">시기 / 목적</th>
+                            <th style="width: 28.3%;">학습을 위한 평가</th>
+                            <th style="width: 28.3%;">학습으로서의 평가</th>
+                            <th style="width: 28.3%;">학습의 평가</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">UOI</td>
-                            <td class="drug-cell" data-drug="중심아이디어 피드백" data-time="UOI" data-purpose="학습을 위한 평가">중심아이디어 피드백</td>
-                            <td class="drug-cell" data-drug="성장 스펙트럼 자기성찰" data-time="UOI" data-purpose="학습으로서의 평가">성장 스펙트럼 자기성찰</td>
-                            <td class="drug-cell" data-drug="지식 에세이 & 포트폴리오" data-time="UOI" data-purpose="학습의 평가">지식 에세이 & 포트폴리오</td>
+                            <td class="drug-cell" data-drug="중심아이디어 작성 · ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습을 위한 평가">중심아이디어 작성<br>ATL 성장 스펙트럼</td>
+                            <td class="drug-cell" data-drug="학습자상 및 ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습으로서의 평가">학습자상 및 ATL<br>성장 스펙트럼</td>
+                            <td class="drug-cell" data-drug="지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼" data-time="UOI" data-purpose="학습의 평가">지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼</td>
                         </tr>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">LOI</td>
-                            <td class="drug-cell" data-drug="소주제 결과물 피드백" data-time="LOI" data-purpose="학습을 위한 평가">소주제 결과물 피드백</td>
-                            <td class="drug-cell" data-drug="탐구나침반 & 동료평가" data-time="LOI" data-purpose="학습으로서의 평가">탐구나침반 & 동료평가</td>
-                            <td class="drug-cell" data-drug="LOI 과정중심평가 기록" data-time="LOI" data-purpose="학습의 평가">LOI 과정중심평가 기록</td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="LOI" data-purpose="학습을 위한 평가">학습 결과물<br>학습 활동 관찰</td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 탐구 과정 성찰" data-time="LOI" data-purpose="학습으로서의 평가">학습 결과물<br>탐구 과정 성찰</td>
+                            <td class="drug-cell" data-drug="LOI 관련 과정중심평가 결과" data-time="LOI" data-purpose="학습의 평가">LOI 관련<br>과정중심평가 결과</td>
                         </tr>
                         <tr>
                             <td style="background-color: #edf2f7; font-weight: bold;">차시</td>
-                            <td class="drug-cell" data-drug="수업 중 관찰 & 즉각 코칭" data-time="차시" data-purpose="학습을 위한 평가">수업 중 관찰 & 즉각 코칭</td>
-                            <td class="drug-cell" data-drug="수업 마무리 자기점검" data-time="차시" data-purpose="학습으로서의 평가">수업 마무리 자기점검</td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="차시" data-purpose="학습을 위한 평가">학습 결과물<br>학습 활동 관찰</td>
+                            <td class="drug-cell" data-drug="학습 결과물 및 활동 내용" data-time="차시" data-purpose="학습으로서의 평가">학습 결과물<br>및 활동 내용</td>
                             <td class="drug-cell disabled">차시 단위 총괄평가 지양</td>
                         </tr>
                     </tbody>
@@ -613,7 +613,7 @@
                 <p style="font-size: 0.85rem; color: #2f855a; margin: 0; line-height: 1.45; word-break: keep-all;">차시 · 중단원(LOI) · 대단원(UOI)의 균형 잡힌 평가 처방 능력을 인정합니다.</p>
             </div>
             <p style="font-size: 0.88rem; color: var(--text-sub); margin: 0 0 18px 0; word-break: keep-all;">
-                이제 오늘 연수에서 살펴볼 <strong>평가 프레임워크</strong>를 우리 반 수업에도 멋지게 처방해 보세요! 👏
+                이제 오늘 연수에서 살펴본 <strong>평가 프레임워크</strong>를 우리 반 수업에도 멋지게 처방해 보세요! 👏
             </p>
             <button type="button" class="modal-btn" id="btn-restart-final">🔄 처음부터 다시 체험하기</button>
         </div>
@@ -626,41 +626,41 @@
                     badge: "응급 환자 #1 / 4",
                     subject: "6학년 사회 '인권 존중' (대단원 마무리)",
                     desc: "“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 얼마나 성장했는지, 무엇을 더 보완해야 하는지 전혀 모른 채 단원을 끝내버려요!”",
-                    hint: "🔍 <strong>힌트:</strong> [대단원(UOI) 끝]에 아이들이 평가 기준표를 보며 자신의 배움과 성장을 스스로 돌아보게 하려면?",
+                    hint: "🔍 <strong>힌트:</strong> [UOI(대단원 끝)]에 아이들이 준거에 따라 자신의 학습 활동을 성찰하고 새로운 목표를 설정하게 하려면?",
                     targetTime: "UOI",
                     targetPurpose: "학습으로서의 평가",
-                    answer: "성장 스펙트럼 자기성찰",
-                    successMsg: "<strong>정확합니다!</strong> 대단원을 마무리하며 평가 기준표를 보고 아이들 스스로 배움의 성장을 돌아보는 <strong>[UOI(대단원 끝) × 학습으로서의 평가]</strong> 처방으로 자기주도적 성찰을 이끌어낼 수 있습니다!"
+                    answer: "학습자상 및 ATL 성장 스펙트럼",
+                    successMsg: "<strong>정확합니다!</strong> 대단원을 마무리하며 준거에 따라 학습 활동을 성찰하고 새로운 목표를 설정하는 <strong>[UOI × 학습으로서의 평가(학습자상 및 ATL 성장 스펙트럼)]</strong> 처방으로 자기주도적 성찰을 이끌어낼 수 있습니다!"
                 },
                 {
                     badge: "응급 환자 #2 / 4",
                     subject: "5학년 과학 '생태계' (1시간 모둠 수업 중)",
                     desc: "“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”",
-                    hint: "🔍 <strong>힌트:</strong> [1시간 수업(차시)] 중에 [교사가 관찰하고 피드백]을 주려면?",
+                    hint: "🔍 <strong>힌트:</strong> [차시(1시간 수업)] 중에 교사가 학생의 탐구 수준을 파악하고 맞춤형 피드백을 주려면?",
                     targetTime: "차시",
                     targetPurpose: "학습을 위한 평가",
-                    answer: "수업 중 관찰 & 즉각 코칭",
-                    successMsg: "<strong>훌륭합니다!</strong> 모둠 활동 중에 교사가 직접 돌며 관찰하고 실시간 피드백을 주는 <strong>[차시(1시간) × 학습을 위한 평가]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
+                    answer: "학습 결과물 · 학습 활동 관찰",
+                    successMsg: "<strong>훌륭합니다!</strong> 차시 수업 중 학생의 탐구 수준과 개념 이해를 실시간으로 파악해 맞춤형 피드백을 주는 <strong>[차시 × 학습을 위한 평가(학습 결과물 · 학습 활동 관찰)]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
                 },
                 {
                     badge: "응급 환자 #3 / 4",
                     subject: "4학년 사회 '우리 지역의 문제' (중단원 탐구 중)",
-                    desc: "“첫 번째 소주제 탐구 활동이 끝났는데, 아이들이 핵심 개념에서 벗어나 엉뚱한 방향으로 가고 있어요. 다음 탐구로 넘어가기 전에 중간 점검과 피드백이 시급해요!”",
-                    hint: "🔍 <strong>힌트:</strong> [중단원(LOI)] 단계에서 교사가 소주제 탐구 내용을 중간 점검하고 피드백을 주려면?",
+                    desc: "“LOI 1이 끝났는데, 아이들이 핵심 개념에서 벗어나 엉뚱한 방향으로 가고 있어요. 다음 탐구로 넘어가기 전에 중간 점검과 피드백이 시급해요!”",
+                    hint: "🔍 <strong>힌트:</strong> [LOI(중단원)] 수준에서 학생의 개념 이해 수준과 탐구 활동을 파악해 맞춤형 피드백을 주려면?",
                     targetTime: "LOI",
                     targetPurpose: "학습을 위한 평가",
-                    answer: "소주제 결과물 피드백",
-                    successMsg: "<strong>명쾌합니다!</strong> 중단원(LOI) 소주제 탐구 후 교사가 중간 피드백을 제공하는 <strong>[LOI(중단원) × 학습을 위한 평가]</strong> 처방으로 탐구 방향을 올바르게 잡아줄 수 있습니다!"
+                    answer: "학습 결과물 · 학습 활동 관찰",
+                    successMsg: "<strong>명쾌합니다!</strong> LOI 수준에서 학생의 개념 이해와 탐구 활동을 점검해 맞춤형 피드백(Ongoing assessment)을 제공하는 <strong>[LOI × 학습을 위한 평가(학습 결과물 · 학습 활동 관찰)]</strong> 처방으로 탐구 방향을 올바르게 잡아줄 수 있습니다!"
                 },
                 {
                     badge: "응급 환자 #4 / 4",
                     subject: "4학년 국어 '주장하는 글쓰기' (대단원 종합)",
                     desc: "“수업마다 스티커도 붙이고 칭찬도 많이 했는데, 정작 단원이 끝나고 나니 아이들이 배운 개념을 종합해서 써먹은 최종 결과물이 하나도 안 남았어요.”",
-                    hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 끝에 배운 개념을 연결한 [최종 결과물(학습의 평가)]을 남기려면?",
+                    hint: "🔍 <strong>힌트:</strong> [UOI(대단원)]를 통해 학습한 개념들을 연결·적용하고 학습의 과정과 결과를 파악·기록·통지하려면?",
                     targetTime: "UOI",
                     targetPurpose: "학습의 평가",
-                    answer: "지식 에세이 & 포트폴리오",
-                    successMsg: "<strong>완벽합니다!</strong> 대단원 학습이 끝날 때 배운 개념을 연결해 최종 결과물을 남기는 <strong>[UOI(대단원) × 학습의 평가]</strong> 처방으로 의미 있는 포트폴리오를 완성할 수 있습니다!"
+                    answer: "지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼",
+                    successMsg: "<strong>완벽합니다!</strong> UOI를 통해 학습한 개념을 새로운 문제 상황에 적용하고 학습 과정·결과·가치태도를 종합 기록하는 <strong>[UOI × 학습의 평가(지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼)]</strong> 처방으로 의미 있는 최종 결과물을 완성할 수 있습니다!"
                 }
             ];
 
@@ -724,7 +724,7 @@
                     selectedTime = cell.getAttribute('data-time');
                     selectedPurpose = cell.getAttribute('data-purpose');
                     
-                    selectedDisplay.innerHTML = `💊 <strong style="color:var(--accent-blue);">${selectedDrug}</strong>`;
+                    selectedDisplay.innerHTML = `💊 <strong style="color:var(--accent-blue);">[${selectedTime}] ${selectedDrug}</strong>`;
                     selectedDisplay.style.color = "var(--text-main)";
                     selectedDisplay.style.borderColor = "var(--accent-blue)";
                     selectedDisplay.style.backgroundColor = "#ebf8ff";
@@ -737,7 +737,7 @@
                 const purposeMatch = (chosenPurpose === patient.targetPurpose);
 
                 if (!timeMatch && !purposeMatch) {
-                    return `선택하신 [${chosenDrug}]은(는) '${chosenTime}' 단계의 '${chosenPurpose}' 약품입니다. 현재 환자의 증상 시기와 평가 목적을 모두 다시 확인해 주세요!`;
+                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 현재 환자의 증상 시기와 평가 목적을 모두 다시 확인해 주세요!`;
                 } else if (!timeMatch) {
                     return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 현재 환자는 '${chosenTime}' 단계가 아닌 다른 시기의 처방이 필요합니다.`;
                 } else {
@@ -753,7 +753,7 @@
                 }
 
                 const currentPatient = patients[currentIdx];
-                if (selectedDrug === currentPatient.answer) {
+                if (selectedTime === currentPatient.targetTime && selectedPurpose === currentPatient.targetPurpose && selectedDrug === currentPatient.answer) {
                     setVitalStable(true);
                     document.getElementById('success-explanation').innerHTML = currentPatient.successMsg;
                     
