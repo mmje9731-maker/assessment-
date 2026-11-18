@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수업 평가 응급실 - 정밀 진료 시뮬레이션</title>
+    <title>수업 평가 응급실 - 정밀 추리 시뮬레이션</title>
     <style>
         :root {
             --bg-color: #edf2f7;
@@ -186,9 +186,9 @@
         }
 
         .reputation-pill {
-            background: #fef2f2;
-            border: 1.5px solid #fecaca;
-            color: #b91c1c;
+            background: #f0fdf4;
+            border: 1.5px solid #bbf7d0;
+            color: #15803d;
             font-weight: 800;
             font-size: 0.84rem;
             padding: 5px 11px;
@@ -273,7 +273,7 @@
         /* 메인 레이아웃 */
         .game-layout {
             display: grid;
-            grid-template-columns: 1fr 1.32fr;
+            grid-template-columns: 1.06fr 1.26fr;
             gap: 18px;
         }
 
@@ -298,7 +298,7 @@
         .vital-monitor {
             background: #0f172a;
             border-radius: 10px;
-            padding: 9px 13px;
+            padding: 8px 13px;
             margin-bottom: 10px;
             color: white;
             display: flex;
@@ -322,7 +322,7 @@
 
         .ecg-container {
             width: 100%;
-            height: 22px;
+            height: 20px;
             overflow: hidden;
             background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
@@ -346,36 +346,69 @@
 
         .patient-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
         .patient-badge { background: #fee2e2; color: #b91c1c; font-weight: 800; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; }
-        .element-tag {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            color: #1d4ed8;
+        .consult-tag {
+            background: #f3e8ff;
+            border: 1px solid #d8b4fe;
+            color: #6b21a8;
             font-size: 0.73rem;
-            font-weight: 700;
+            font-weight: 800;
             padding: 3px 8px;
             border-radius: 6px;
         }
-        .element-tag.secret {
+        .consult-tag.secret {
             background: #f1f5f9;
             border-color: #cbd5e1;
             color: #64748b;
+            font-weight: 700;
         }
-        .patient-subject { font-weight: 800; font-size: 0.94rem; color: var(--text-main); margin-bottom: 10px; }
+        .patient-subject { font-weight: 800; font-size: 0.94rem; color: var(--text-main); margin-bottom: 8px; }
 
-        /* 1번 제안: 진료 기록 탐색(문진) 3종 탭 시스템 */
+        /* 🎬 수업 장면 박스 (중립적 관찰 장면만 제시) */
+        .scene-box {
+            background: #f8fafc;
+            border: 1.5px solid #cbd5e1;
+            border-left: 4px solid #334155;
+            border-radius: 8px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+        }
+        .scene-label {
+            font-size: 0.73rem;
+            font-weight: 800;
+            color: #334155;
+            margin-bottom: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .scene-note {
+            font-size: 0.68rem;
+            color: #64748b;
+            font-weight: 600;
+        }
+        .scene-text {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #1e293b;
+            margin: 0;
+            font-weight: 600;
+            word-break: keep-all;
+        }
+
+        /* 🩺 정밀 문진 기록 3종 탭 시스템 */
         .clue-system {
             background: #fff5f5;
             border: 1.5px solid #fecaca;
             border-radius: 12px;
-            padding: 11px;
-            margin-bottom: 11px;
+            padding: 10px 11px;
+            margin-bottom: 10px;
         }
         .clue-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            font-size: 0.75rem;
+            margin-bottom: 7px;
+            font-size: 0.74rem;
             font-weight: 800;
             color: #991b1b;
         }
@@ -383,28 +416,28 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 6px;
-            margin-bottom: 9px;
+            margin-bottom: 8px;
         }
         .clue-tab {
             background: white;
             border: 1.5px solid #fca5a5;
             color: #7f1d1d;
-            font-size: 0.74rem;
+            font-size: 0.73rem;
             font-weight: 700;
-            padding: 7px 4px;
+            padding: 6px 4px;
             border-radius: 8px;
             cursor: pointer;
             transition: all 0.15s;
             position: relative;
         }
         .clue-tab.unread::after {
-            content: "NEW";
+            content: "단서";
             position: absolute;
             top: -6px;
             right: -3px;
             background: #ef4444;
             color: white;
-            font-size: 0.58rem;
+            font-size: 0.56rem;
             padding: 1px 4px;
             border-radius: 4px;
             font-weight: 900;
@@ -421,13 +454,13 @@
         .clue-content-box {
             background: white;
             border-radius: 8px;
-            padding: 11px 12px;
-            font-size: 0.88rem;
+            padding: 10px 12px;
+            font-size: 0.85rem;
             line-height: 1.52;
             font-weight: 600;
             color: #1e293b;
             border-left: 3.5px solid var(--accent-red);
-            min-height: 62px;
+            min-height: 64px;
             word-break: keep-all;
         }
 
@@ -437,24 +470,24 @@
             border: 1px solid #cbd5e1;
             border-top: 4px solid var(--accent-blue);
             border-radius: 10px;
-            padding: 10px 12px;
+            padding: 9px 12px;
             margin-bottom: 9px;
         }
         .prescription-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             border-bottom: 1px dashed #cbd5e1;
             padding-bottom: 4px;
         }
-        .rx-symbol { font-size: 0.94rem; font-weight: 900; color: var(--accent-blue); }
+        .rx-symbol { font-size: 0.92rem; font-weight: 900; color: var(--accent-blue); }
         .selected-prescription {
             background: white;
-            padding: 9px;
+            padding: 8px;
             border-radius: 8px;
             border: 1.5px dashed #94a3b8;
-            font-size: 0.84rem;
+            font-size: 0.83rem;
             color: var(--text-sub);
             text-align: center;
         }
@@ -470,7 +503,7 @@
             color: white;
             border: none;
             padding: 12px;
-            font-size: 0.96rem;
+            font-size: 0.95rem;
             font-weight: 800;
             border-radius: 10px;
             cursor: pointer;
@@ -596,7 +629,7 @@
         <header>
             <div class="header-left">
                 <h1>🚨 수업 평가 응급실</h1>
-                <div class="subtitle">진료 단서 문진 · 협진 찬스 · 정밀 평가 처방 시뮬레이션</div>
+                <div class="subtitle">교실 장면 관찰 · 3중 문진 기록 교차 추리 · 정밀 평가 처방</div>
             </div>
             <div class="header-controls">
                 <div class="reputation-pill" id="reputation-display">🏥 교실 평판: 100점</div>
@@ -616,17 +649,17 @@
                 <span class="heart-slot" id="slot-5">🤍 #6</span>
             </div>
 
-            <!-- 4번 제안: 동료 교사 협진 찬스 3종 -->
+            <!-- 동료 교사 협진 찬스 3종 -->
             <div class="chance-bar">
                 <span class="chance-label">🤝 협진 찬스:</span>
                 <button type="button" class="chance-btn" id="chance-xray" title="오답 칸 3개를 지워줍니다">🔎 오답 소거 (1회)</button>
-                <button type="button" class="chance-btn" id="chance-consult" title="이 환자의 핵심 평가 요소를 공개합니다">📞 수석교사 자문 (1회)</button>
+                <button type="button" class="chance-btn" id="chance-consult" title="수석교사가 핵심 평가 도구를 짚어줍니다">📞 수석교사 자문 (1회)</button>
                 <button type="button" class="chance-btn" id="chance-heal" title="교실 평판 15점을 회복합니다">💖 평판 회복 (1회)</button>
             </div>
         </div>
 
         <div class="game-layout">
-            <!-- 왼쪽: 환자 차트 & 3종 문진 단서 -->
+            <!-- 왼쪽: 수업 장면 & 정밀 문진 기록 -->
             <div class="patient-panel" id="patient-panel">
                 <div>
                     <div class="vital-monitor">
@@ -643,14 +676,23 @@
 
                     <div class="patient-meta">
                         <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 6</span>
-                        <span class="element-tag secret" id="patient-element-tag">🔒 핵심 요소: 문진 추론 (또는 수석교사 자문)</span>
+                        <span class="consult-tag secret" id="patient-consult-tag">🔒 수석교사 자문 대기중</span>
                     </div>
                     <div class="patient-subject" id="patient-subject"></div>
                     
-                    <!-- 1번 제안: 진료 기록 탐색(문진) 3종 탭 -->
+                    <!-- 🎬 수업 장면 제시 (장면만 봐서는 시기/목적 추리 불가) -->
+                    <div class="scene-box">
+                        <div class="scene-label">
+                            <span>🎬 교실 관찰 장면</span>
+                            <span class="scene-note">※ 단서는 아래 정밀 문진 기록에 숨어 있습니다</span>
+                        </div>
+                        <p class="scene-text" id="patient-scene"></p>
+                    </div>
+
+                    <!-- 🩺 정밀 문진 기록 3종 탭 -->
                     <div class="clue-system">
                         <div class="clue-header">
-                            <span>🩺 정밀 문진 기록 (3개 탭을 모두 눌러 단서를 확인하세요)</span>
+                            <span>🩺 정밀 문진 기록 (3개 단서를 교차 추리하세요)</span>
                             <span id="clue-progress">확인 1/3</span>
                         </div>
                         <div class="clue-tabs">
@@ -672,7 +714,7 @@
                             오른쪽 캐비닛에서 처방 약품을 클릭하세요
                         </div>
                     </div>
-                    <button type="button" class="action-btn locked" id="btn-prescribe">🔒 단서 3개를 모두 확인해야 처방 가능</button>
+                    <button type="button" class="action-btn locked" id="btn-prescribe">🔒 문진 기록 3개를 모두 확인해야 처방 가능</button>
                 </div>
             </div>
 
@@ -681,7 +723,7 @@
                 <div class="cabinet-top-bar">
                     <div>
                         <strong style="font-size: 0.96rem;">💊 평가 처방 약품 캐비닛</strong>
-                        <div style="font-size: 0.76rem; color: var(--text-sub);">3가지 문진 단서를 종합해 시기·목적·요소가 맞는 약품을 고르세요.</div>
+                        <div style="font-size: 0.76rem; color: var(--text-sub);">3가지 문진 기록에서 '시기'와 '평가 목적' 단서를 종합해 선택하세요.</div>
                     </div>
                     <div class="element-legend">
                         <span>📖 지식·이해</span>
@@ -758,9 +800,9 @@
             <div class="modal-emoji">🩺🚨</div>
             <div class="modal-title" style="color: var(--accent-red);">수업 평가 응급실</div>
             <p class="modal-desc">
-                환자마다 <strong>3가지 문진 단서(학생 산출물·교사 일지·현장 피드백)</strong>를<br>
-                직접 열어보고 정확한 시기·목적·실행 전략을 처방해 주세요!<br>
-                위기 순간에는 상단의 <strong>동료 교사 협진 찬스(3종)</strong>를 활용할 수 있습니다.
+                겉으로 보이는 <strong>교실 관찰 장면</strong>만으로는 정확한 진단이 어렵습니다!<br>
+                <strong>3가지 정밀 문진 기록(학생 산출물·교사 수업일지·현장 피드백)</strong>에<br>
+                흩어진 단서를 교차 추리해 가장 적절한 처방을 내려주세요.
             </p>
             <button type="button" class="modal-btn" id="btn-start">응급실 당직 시작하기 🩺</button>
         </div>
@@ -830,7 +872,7 @@
             <div class="id-card">
                 <div class="id-card-header">
                     <span>수업 평가 응급실 · 공식 인증서</span>
-                    <span class="rank-badge" id="final-rank-badge">🏥 평가 병원장</span>
+                    <span class="rank-badge" id="final-rank-badge">👑 평가 병원장</span>
                 </div>
                 <div style="font-size: 0.98rem; font-weight: 800; color: #14532d;">
                     6명의 위기 수업 환자 심폐소생 및 긴급 자문 완료!
@@ -875,15 +917,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 수업 장면(scene)만으로는 시기와 목적을 알 수 없도록 중립적 교실 상황으로 구성하고,
+            // 3가지 문진 기록(clues)에 단서를 분산 배치해 교차 추리하도록 설계
             const patients = [
                 {
                     badge: "응급 환자 #1 / 6",
-                    elementReveal: "핵심 요소: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
-                    subject: "5학년 과학 '생태계' (40분 모둠 활동 중)",
+                    subject: "5학년 과학 '생태계' 교실",
+                    scene: "4명씩 6개 모둠이 책상을 맞대고 먹이사슬 관계도를 그리는 중입니다. 교실 뒤편 3모둠에서는 한 학생이 색연필로 화살표를 긋고 있고, 옆자리 세 학생은 말없이 활동지만 바라보고 있습니다.",
+                    consultHint: "수석교사 자문: \"이건 다음 시간까지 기다리면 안 돼요! 지금 이 [차시] 안에서 '학습 활동 관찰'로 탐구 수준을 즉시 파악해 맞춤형 코칭을 넣어주세요.\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> 모둠 학습지 4장 중 1장만 빼곡히 적혀 있고, 나머지 아이들은 “어차피 민수가 다 적는데 뭐해요”라며 딴짓 중입니다.",
-                        "<strong>[교사 수업일지]</strong> 오늘 2교시(40분) 안에 먹이사슬 관계를 파악해야 하는데, 활동이 끝난 뒤 걷어서 채점하면 이미 늦을 것 같습니다.",
-                        "<strong>[현장 피드백]</strong> 수업 중 교실 순회를 돌며 각 모둠의 탐구 과정과 개념 이해도를 즉각 관찰해 바로 피드백해 주어야 합니다."
+                        "<strong>[학생 산출물/발언]</strong> 모둠 활동지 칸 절반이 비어 있고, 아이들 대화 녹음에는 “어차피 민수가 다 적는데 우리는 뭐 적지?”라는 말만 남아 있습니다.",
+                        "<strong>[교사 수업일지]</strong> 2교시(40분) 한 시간 안에 생산자·소비자 관계를 파악해야 하는데, 종이 친 뒤 걷어서 채점하면 이미 오늘 학습 결손을 메울 수 없습니다.",
+                        "<strong>[현장 피드백]</strong> 성적을 매기려는 게 아니라, 교사가 순회하며 활동 과정과 개념 이해 수준을 실시간으로 파악해 즉각 피드백을 주어야 하는 상황입니다."
                     ],
                     hint: "🔍 <strong>힌트:</strong> 1시간 수업 단위(차시) 안에서 교사가 활동 과정을 관찰해 실시간 피드백을 주려면?",
                     targetTime: "차시",
@@ -900,12 +945,13 @@
                 },
                 {
                     badge: "응급 환자 #2 / 6",
-                    elementReveal: "핵심 요소: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
-                    subject: "4학년 사회 '우리 지역의 문제' (첫 번째 탐구 질문 마무리)",
+                    subject: "4학년 사회 '우리 지역의 문제' 교실",
+                    scene: "모둠별로 조사한 포스터를 칠판에 붙이고 발표를 마쳤습니다. 학생들은 포스터 앞에 모여 자기 모둠 자료를 가리키며 이야기하고 있고, 교사는 교탁 옆에서 아이들의 대화를 지켜보고 있습니다.",
+                    consultHint: "수석교사 자문: \"교사가 정답을 불러주기보다, [LOI] 단계에서 '탐구나침반'을 꺼내 아이들 스스로 탐구 과정을 성찰하고 동료평가를 하게 해보세요!\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> “선생님, 저희 모둠 조사 방향이 맞는지 잘 모르겠어요. 다음 탐구 질문으로 넘어가도 될까요?”",
-                        "<strong>[교사 수업일지]</strong> 첫 번째 탐구 질문(중단원) 조사가 끝난 시점입니다. 교사가 일방적으로 지적하기보다 아이들 스스로 과정을 돌아보게 하고 싶습니다.",
-                        "<strong>[현장 피드백]</strong> 탐구나침반 같은 성찰 도구를 활용해 학생 스스로 학습 활동을 점검하고 동료와 피드백을 주고받을 시간이 필요합니다."
+                        "<strong>[학생 산출물/발언]</strong> 포스터에는 쓰레기통 사진만 잔뜩 붙어 있고, 아이들은 “우리 모둠 조사 방향이 맞는지 잘 모르겠어요”라며 고개를 갸웃거립니다.",
+                        "<strong>[교사 수업일지]</strong> 첫 번째 탐구 질문(중단원) 조사가 끝난 시점입니다. 다음 탐구 질문으로 넘어가기 전, 아이들 스스로 자신의 탐구 과정을 점검할 시간이 필요합니다.",
+                        "<strong>[현장 피드백]</strong> 교사가 일방적으로 지적하기보다, 성찰 도구를 활용해 준거에 따라 자신의 학습 활동을 스스로 돌아보고 친구끼리 동료평가를 하게 하세요."
                     ],
                     hint: "🔍 <strong>힌트:</strong> 중단원 탐구(LOI) 단계에서 학생 스스로 탐구 과정을 성찰하고 동료평가를 실시하려면?",
                     targetTime: "LOI",
@@ -922,12 +968,13 @@
                 },
                 {
                     badge: "응급 환자 #3 / 6",
-                    elementReveal: "핵심 요소: 📖 지식·이해 / 🛠️ 과정·기능",
-                    subject: "6학년 사회 '인권 존중' (단원 전체 핵심 일반화 문장 점검)",
+                    subject: "6학년 사회 '인권 존중' 교실",
+                    scene: "교실 앞 화이트보드에 학생들이 각자 적어 붙인 문장 카드가 빼곡히 붙어 있습니다. 학생들은 자기 자리에 앉아 보드를 바라보고 있고, 교사는 문장 카드들을 하나씩 가리키며 메모를 적고 있습니다.",
+                    consultHint: "수석교사 자문: \"[UOI] 수준의 형성평가네요! 학생의 '중심아이디어 작성' 초안을 살피고, 'ATL POI'와 '수행지시어'로 구체적 피드백을 주세요.\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> “사람은 소중하다”처럼 단편적인 문장만 적혀 있고, 단원의 핵심 개념 간 연결이나 탐구 기능(ATL) 수준이 드러나지 않습니다.",
-                        "<strong>[교사 수업일지]</strong> 대단원 탐구가 무르익는 시점입니다. 최종 성적을 매기기 전, 교사가 구체적인 기준과 용어로 개선 방향을 안내해 주어야 합니다.",
-                        "<strong>[현장 피드백]</strong> 학생이 작성한 중심아이디어 초안을 살피고, ATL 성장 스펙트럼과 수행지시어를 활용해 피드백을 제공해 보세요."
+                        "<strong>[학생 산출물/발언]</strong> 화이트보드 카드에는 “사람은 서로 도와야 한다”처럼 단편적인 문장만 적혀 있고, 핵심 개념 간 연결이나 탐구 기능 수준이 드러나지 않습니다.",
+                        "<strong>[교사 수업일지]</strong> 대단원 탐구가 무르익어 단원을 관통하는 일반화 문장 초안을 점검하는 시점입니다. 최종 성적 부여가 아니라 문장을 다듬도록 돕는 코칭이 목적입니다.",
+                        "<strong>[현장 피드백]</strong> 명시된 개념이 중심아이디어에 반영되었는지 파악하고, 기능 수준은 ATL POI를 기준으로 판단해 수행지시어를 활용한 교사 피드백을 제공하세요."
                     ],
                     hint: "🔍 <strong>힌트:</strong> 대단원(UOI) 수준에서 중심아이디어 작성 내용을 파악하고 기능 수준에 대한 교사 피드백을 주려면?",
                     targetTime: "UOI",
@@ -944,12 +991,13 @@
                 },
                 {
                     badge: "응급 환자 #4 / 6",
-                    elementReveal: "핵심 요소: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
-                    subject: "3학년 과학 '물질의 상태' (LOI별 성취 기록 시점)",
+                    subject: "3학년 과학 '물질의 상태' 교실",
+                    scene: "아이들이 하교한 뒤 조용한 교실, 교사 책상 위에는 모둠별 실험 관찰 보고서 묶음과 학기 말 통지표 초안 파일이 나란히 놓여 있습니다. 교사는 보고서를 한 장씩 넘기며 깊은 한숨을 쉬고 있습니다.",
+                    consultHint: "수석교사 자문: \"단순 코칭을 넘어 성취 수준을 공식적으로 남길 시점이네요! [LOI] 학습 과정에서 필요한 시점에 파악·기록하는 '과정중심평가 결과'가 필요합니다.\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> LOI별 탐구 보고서와 실험 기록지는 많이 쌓였는데, 학생별로 어느 수준까지 도달했는지 판정된 기록이 없습니다.",
-                        "<strong>[교사 수업일지]</strong> 학기 말 통지표와 생활기록부에 아이들의 개념 이해와 수행 수준을 객관적 근거로 기록해야 하는데 막막합니다.",
-                        "<strong>[현장 피드백]</strong> 단순 구두 칭찬으로 끝내지 말고, 각 LOI 학습 과정에서 필요한 시점에 성취 수준을 공식적으로 파악·기록해 두어야 합니다."
+                        "<strong>[학생 산출물/발언]</strong> 실험 관찰 보고서에는 아이들의 자유로운 기록만 있을 뿐, 개념 이해와 수행 수준이 어느 도달점에 있는지 판정된 흔적이 없습니다.",
+                        "<strong>[교사 수업일지]</strong> 두 번째 탐구 질문(LOI 2) 학습을 마친 시점입니다. 수업 중 구두 피드백은 많이 했는데, 정작 통지표·생활기록부에 적을 공식 성취 기록이 비어 있습니다.",
+                        "<strong>[현장 피드백]</strong> 각 LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 및 수행 수준을 공식적으로 파악하고 기록해 두어야 성취 근거가 남습니다."
                     ],
                     hint: "🔍 <strong>힌트:</strong> LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 또는 수행 수준을 파악하고 기록하려면?",
                     targetTime: "LOI",
@@ -966,12 +1014,13 @@
                 },
                 {
                     badge: "응급 환자 #5 / 6",
-                    elementReveal: "핵심 요소: ❤️ 가치·태도 / 🛠️ 과정·기능",
-                    subject: "5학년 도덕 '공정한 사회' (5주간의 대단원 마무리)",
+                    subject: "5학년 도덕 '공정한 사회' 교실",
+                    scene: "교실 게시판에는 한 달간 진행한 프로젝트 결과물이 가득 붙어 있습니다. 학생들은 자리에 앉아 가방을 정리하며 종례를 기다리고 있고, 칠판에는 '단원 마무리'라는 글씨만 적혀 있습니다.",
+                    consultHint: "수석교사 자문: \"[UOI]를 마무리하는 자기성찰이 빠졌어요! 준거를 보며 스스로 가치·태도와 역량을 돌아보는 '학습자상 및 ATL 성장 스펙트럼'이 딱입니다.\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> “단원 시험은 다 봤는데, 제가 한 달 동안 어떤 태도와 역량이 자랐는지 잘 모르겠어요. 다음엔 뭘 노력해야 하죠?”",
-                        "<strong>[교사 수업일지]</strong> 5주간의 대단원이 마무리되는 날입니다. 지식 점수만 남고 아이들 내면의 가치·태도 성찰과 다음 목표 설정이 빠져 있습니다.",
-                        "<strong>[현장 피드백]</strong> 대단원 마무리 시 준거에 따라 자신의 학습자상과 ATL 성장 과정을 스스로 성찰하고 새 목표를 세우게 해주세요."
+                        "<strong>[학생 산출물/발언]</strong> “단원 활동은 다 끝났는데, 제가 한 달 동안 어떤 태도와 역량이 자랐는지 잘 모르겠어요. 다음 단원엔 뭘 노력해야 하죠?”",
+                        "<strong>[교사 수업일지]</strong> 5주간의 대단원(UOI)이 종료되는 마지막 시간입니다. 지식 평가 점수는 나왔지만, 학생 스스로 자신의 변화와 태도를 되돌아보는 절차가 빠졌습니다.",
+                        "<strong>[현장 피드백]</strong> 대단원 마무리 시 준거에 따라 자신의 학습 활동과 가치·태도를 학생 스스로 성찰하고 새로운 목표를 설정하도록 안내해 주세요."
                     ],
                     hint: "🔍 <strong>힌트:</strong> 대단원(UOI) 마무리 단계에서 준거에 따라 자신의 가치·태도와 학습 활동을 성찰하고 새 목표를 세우려면?",
                     targetTime: "UOI",
@@ -988,12 +1037,13 @@
                 },
                 {
                     badge: "응급 환자 #6 / 6",
-                    elementReveal: "핵심 요소: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
-                    subject: "4학년 국어 '주장하는 글쓰기' (대단원 최종 종합)",
+                    subject: "4학년 국어 '주장하는 글쓰기' 교실",
+                    scene: "학부모 상담 주간을 앞두고 교사가 학생 개인별 사물함에서 낱장 활동지 뭉치를 꺼내 책상 위에 펼쳐 놓았습니다. 활동지마다 칭찬 도장은 찍혀 있지만, 단원 전체를 아우르는 종합 결과물이 보이지 않습니다.",
+                    consultHint: "수석교사 자문: \"[UOI]의 대미를 장식할 총괄평가네요! 개념 적용을 보는 '지식 에세이', 과정을 모으는 '학습 포트폴리오', 태도를 보는 '성장 스펙트럼' 세트를 처방하세요.\"",
                     clues: [
-                        "<strong>[학생 산출물/발언]</strong> 낱장 활동지들은 파일에 꽂혀 있지만, 단원에서 배운 개념들을 연결해 새로운 문제 상황에 적용해 본 최종 산출물이 없습니다.",
-                        "<strong>[교사 수업일지]</strong> 대단원을 완전히 매듭짓는 시점입니다. 학습의 과정·결과·가치태도를 한데 모아 종합적으로 파악·기록·통지해야 합니다.",
-                        "<strong>[현장 피드백]</strong> 개념 적용을 보여주는 지식 에세이와 학습 포트폴리오, 성장 스펙트럼을 결합한 대단원 총괄 처방이 필요합니다."
+                        "<strong>[학생 산출물/발언]</strong> 차시별 학습지는 여러 장 쌓여 있지만, 단원에서 익힌 개념들을 연결해 새로운 문제 상황에 적용해 본 최종 산출물이 없습니다.",
+                        "<strong>[교사 수업일지]</strong> 대단원(UOI)의 모든 탐구를 완전히 매듭짓고, 학습의 과정과 결과, 가치·태도를 종합적으로 파악·기록해 가정에 통지해야 하는 시점입니다.",
+                        "<strong>[현장 피드백]</strong> 개념 연결·적용을 확인하는 지식 에세이, 과정과 결과를 담은 학습 포트폴리오, 가치·태도를 파악하는 성장 스펙트럼을 종합 처방하세요."
                     ],
                     hint: "🔍 <strong>힌트:</strong> 대단원(UOI)을 통해 학습한 개념을 연결·적용하고 학습의 과정·결과·가치태도를 종합 파악·기록·통지하려면?",
                     targetTime: "UOI",
@@ -1039,7 +1089,7 @@
             const btnPrescribe = document.getElementById('btn-prescribe');
             const timerDisplay = document.getElementById('timer-display');
             const reputationDisplay = document.getElementById('reputation-display');
-            const elementTagEl = document.getElementById('patient-element-tag');
+            const consultTagEl = document.getElementById('patient-consult-tag');
 
             const patientPanel = document.getElementById('patient-panel');
             const vitalStatus = document.getElementById('vital-status-text');
@@ -1167,7 +1217,7 @@
                 }
             }
 
-            // 1번 제안: 문진 탭 전환 및 잠금 해제 로직
+            // 정밀 문진 탭 전환 및 잠금 해제
             const clueTabs = document.querySelectorAll('.clue-tab');
             const clueContentBox = document.getElementById('clue-content-box');
             const clueProgressEl = document.getElementById('clue-progress');
@@ -1198,7 +1248,7 @@
                     btnPrescribe.innerText = "⚡ 1단계 처방 투여하기";
                 } else {
                     btnPrescribe.classList.add('locked');
-                    btnPrescribe.innerText = `🔒 나머지 단서(${3 - checkedCount}개)를 먼저 확인하세요`;
+                    btnPrescribe.innerText = `🔒 문진 기록 ${3 - checkedCount}개를 더 확인하세요`;
                 }
             }
 
@@ -1210,7 +1260,7 @@
                 });
             });
 
-            // 4번 제안: 동료 교사 협진 찬스 3종
+            // 동료 교사 협진 찬스 3종
             const btnXray = document.getElementById('chance-xray');
             const btnConsult = document.getElementById('chance-consult');
             const btnHeal = document.getElementById('chance-heal');
@@ -1227,7 +1277,6 @@
                         cell.getAttribute('data-drug') === currentPatient.answer
                     );
                 });
-                // 무작위 오답 3칸 소거
                 const toEliminate = wrongCells.sort(() => Math.random() - 0.5).slice(0, 3);
                 toEliminate.forEach(cell => {
                     cell.classList.remove('selected');
@@ -1241,13 +1290,14 @@
                 alert("🔎 [오답 소거 찬스 사용] 선택지가 아닌 약품 3칸을 제외했습니다!");
             });
 
+            // 결정적 실행 도구·키워드를 알려주는 실질적 수석교사 자문
             btnConsult.addEventListener('click', () => {
                 playTone('step1');
                 btnConsult.disabled = true;
                 const currentPatient = patients[currentIdx];
-                elementTagEl.classList.remove('secret');
-                elementTagEl.innerText = `🔓 ${currentPatient.elementReveal}`;
-                alert(`📞 [수석교사 자문 완료] 이 환자의 ${currentPatient.elementReveal}입니다!`);
+                consultTagEl.classList.remove('secret');
+                consultTagEl.innerText = `📞 자문 완료 (키워드 확인)`;
+                alert(`📞 [${currentPatient.consultHint}]`);
             });
 
             btnHeal.addEventListener('click', () => {
@@ -1292,9 +1342,9 @@
                 const purposeMatch = (chosenPurpose === patient.targetPurpose);
 
                 if (!timeMatch && !purposeMatch) {
-                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 3가지 문진 단서에서 수업 시기와 평가 목적을 다시 확인해 보세요!`;
+                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 3가지 문진 기록에서 수업 시기와 평가 목적 단서를 다시 교차 추리해 보세요!`;
                 } else if (!timeMatch) {
-                    return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 현재 환자는 '${chosenTime}' 단계가 아닌 다른 시기의 처방이 필요합니다.`;
+                    return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 문진 기록 속 수업 시기는 '${chosenTime}' 단계가 아닙니다.`;
                 } else {
                     return `적용 시기(${chosenTime})는 정확합니다! 하지만 지금은 '${chosenPurpose}'보다 다른 목적의 평가 처방이 더 시급합니다.`;
                 }
@@ -1303,7 +1353,7 @@
             // 1단계 처방 투여 버튼
             btnPrescribe.addEventListener('click', () => {
                 if (btnPrescribe.classList.contains('locked')) {
-                    alert("🩺 상단의 3가지 문진 단서 탭(학생 산출물·교사 수업일지·현장 피드백)을 모두 확인한 뒤 처방해 주세요!");
+                    alert("🩺 정밀 문진 기록 3개 탭(학생 산출물·교사 수업일지·현장 피드백)을 모두 확인한 뒤 처방해 주세요!");
                     return;
                 }
                 if (!selectedDrug) {
@@ -1392,7 +1442,7 @@
                 }, 300);
             }
 
-            // 3번 제안: 돌발 긴급 콜 이벤트 (3번 환자 완료 후 1회 발동)
+            // 돌발 긴급 콜 이벤트 (3번 환자 완료 후 1회 발동)
             function triggerEmergencyCall() {
                 playTone('alarm');
                 const emergencyOptions = [
@@ -1436,7 +1486,6 @@
                 successModal.style.display = 'none';
                 currentIdx++;
 
-                // 3번째 환자(index 2) 완료 직후 돌발 긴급 콜 발생
                 if (currentIdx === 3 && !emergencyCallDone) {
                     triggerEmergencyCall();
                     return;
@@ -1455,7 +1504,6 @@
                 failModal.style.display = 'none';
             });
 
-            // 4번 제안: 전문의 등급 인증서 산출
             function showFinalCertificate() {
                 clearInterval(timerInterval);
                 for (let i = 0; i < patients.length; i++) {
@@ -1487,7 +1535,6 @@
                 finalModal.style.display = 'flex';
             }
 
-            // 결과 클립보드 복사
             document.getElementById('btn-copy-result').addEventListener('click', () => {
                 const pledge = document.getElementById('pledge-select').value;
                 const timeStr = document.getElementById('final-time').innerText;
@@ -1533,9 +1580,10 @@
 
                 const p = patients[idx];
                 document.getElementById('patient-step-badge').innerText = p.badge;
-                elementTagEl.classList.add('secret');
-                elementTagEl.innerText = "🔒 핵심 요소: 문진 추론 (또는 수석교사 자문)";
+                consultTagEl.classList.add('secret');
+                consultTagEl.innerText = "🔒 수석교사 자문 대기중";
                 document.getElementById('patient-subject').innerText = p.subject;
+                document.getElementById('patient-scene').innerText = p.scene;
 
                 renderClueTab(0);
 
