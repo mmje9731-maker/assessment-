@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수업 평가 응급실 (Assessment ER)</title>
+    <title>수업 평가 응급실 (Assessment ER) - 7분 클리닉</title>
     <style>
         :root {
-            --bg-color: #f0f4f8;
+            --bg-color: #edf2f7;
             --card-bg: #ffffff;
-            --text-main: #2d3748;
-            --text-sub: #718096;
+            --text-main: #1a202c;
+            --text-sub: #64748b;
             --accent-red: #e53e3e;
-            --accent-blue: #3182ce;
-            --accent-green: #38a169;
+            --accent-blue: #2b6cb0;
+            --accent-green: #2f855a;
+            --accent-amber: #d97706;
             --border-color: #e2e8f0;
         }
 
@@ -21,7 +22,7 @@
             background-color: var(--bg-color);
             color: var(--text-main);
             margin: 0;
-            padding: 16px;
+            padding: 14px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -31,89 +32,111 @@
 
         .container {
             width: 100%;
-            max-width: 1120px;
+            max-width: 1160px;
             background: var(--card-bg);
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            padding: 28px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+            padding: 24px 28px;
             box-sizing: border-box;
             position: relative;
         }
 
-        /* 전체 뷰포트 고정형 모달 (모바일에서도 스크롤 없이 한눈에 표시) */
+        /* 뷰포트 고정형 모달 */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100dvh;
-            background: rgba(240, 244, 248, 0.94);
-            backdrop-filter: blur(8px);
+            background: rgba(15, 23, 42, 0.72);
+            backdrop-filter: blur(6px);
             z-index: 1000;
             display: none;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 20px;
+            padding: 16px;
             box-sizing: border-box;
             overflow-y: auto;
         }
 
         .modal-inner {
             background: white;
-            border-radius: 20px;
-            padding: 32px 28px;
-            max-width: 500px;
+            border-radius: 22px;
+            padding: 28px 24px;
+            max-width: 540px;
             width: 100%;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            box-shadow: 0 20px 45px rgba(0,0,0,0.2);
             border: 1px solid var(--border-color);
             box-sizing: border-box;
+            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            max-height: 92dvh;
+            overflow-y: auto;
+        }
+
+        @keyframes modalPop {
+            0% { transform: scale(0.93); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .modal-emoji {
-            font-size: 2.6rem;
-            margin-bottom: 10px;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
             line-height: 1.1;
+        }
+
+        .modal-title {
+            font-size: 1.48rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            word-break: keep-all;
+        }
+
+        .modal-desc {
+            font-size: 0.96rem;
+            line-height: 1.55;
+            color: var(--text-main);
+            margin: 0 0 20px 0;
+            word-break: keep-all;
         }
 
         .modal-card {
             background: #f8fafc;
             border: 1px solid var(--border-color);
             border-radius: 14px;
-            padding: 18px;
+            padding: 16px;
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             box-sizing: border-box;
-        }
-
-        .modal-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            margin-bottom: 12px;
-            word-break: keep-all;
-        }
-
-        .modal-desc {
-            font-size: 1rem;
-            line-height: 1.55;
-            color: var(--text-main);
-            margin: 0 0 22px 0;
-            word-break: keep-all;
+            text-align: left;
         }
 
         .modal-btn {
-            background-color: var(--accent-blue);
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
             color: white;
             border: none;
-            padding: 14px 32px;
-            font-size: 1.05rem;
-            font-weight: bold;
+            padding: 14px 28px;
+            font-size: 1.02rem;
+            font-weight: 700;
             border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 14px rgba(49, 130, 206, 0.35);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             width: 100%;
-            max-width: 280px;
+            max-width: 300px;
         }
-        .modal-btn:hover { transform: translateY(-2px); }
+        .modal-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(49, 130, 206, 0.45); }
+
+        /* 콤보 & 원샷원킬 배지 */
+        .combo-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 800;
+            padding: 4px 12px;
+            border-radius: 999px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+        }
 
         /* 헤더 */
         header {
@@ -121,61 +144,127 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 14px;
-            margin-bottom: 20px;
+            padding-bottom: 12px;
+            margin-bottom: 14px;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
-        h1 { font-size: 1.35rem; margin: 0; color: var(--text-main); word-break: keep-all; }
-        .subtitle { font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; }
+        .header-left h1 { font-size: 1.3rem; margin: 0; color: var(--text-main); display: flex; align-items: center; gap: 6px; }
+        .subtitle { font-size: 0.82rem; color: var(--text-sub); margin-top: 3px; }
 
-        .reset-btn {
-            background: none;
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timer-pill {
+            background: #1e293b;
+            color: #38bdf8;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 800;
+            font-size: 0.92rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .icon-btn {
+            background: #f8fafc;
             border: 1px solid var(--border-color);
-            padding: 8px 12px;
+            padding: 6px 11px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 600;
-            color: var(--text-sub);
-            white-space: nowrap;
-            font-size: 0.85rem;
+            color: var(--text-main);
+            font-size: 0.82rem;
+            transition: background 0.15s;
         }
-        .reset-btn:hover { background: #f8fafc; color: var(--text-main); }
+        .icon-btn:hover { background: #edf2f7; }
+
+        /* 응급실 대기 환자 상태 트래커 */
+        .ward-tracker {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f8fafc;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 8px 14px;
+            margin-bottom: 18px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .ward-hearts {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .heart-slot {
+            font-size: 0.82rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: #e2e8f0;
+            color: #64748b;
+            transition: all 0.25s ease;
+        }
+        .heart-slot.active {
+            background: #fed7d7;
+            color: #c53030;
+            box-shadow: 0 0 0 2px #fc8181;
+        }
+        .heart-slot.saved {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .combo-status {
+            font-size: 0.82rem;
+            font-weight: 800;
+            color: var(--accent-amber);
+        }
 
         /* 메인 레이아웃 */
         .game-layout {
             display: grid;
-            grid-template-columns: 1fr 1.28fr;
-            gap: 22px;
+            grid-template-columns: 0.95fr 1.35fr;
+            gap: 20px;
         }
 
         /* 환자 패널 */
         .patient-panel {
             background: #fffdfd;
             border: 2px solid #fed7d7;
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: border-color 0.3s ease, background-color 0.3s ease;
+            transition: all 0.35s ease;
         }
 
         .patient-panel.stable {
             background: #f0fff4;
-            border-color: #9ae6b4;
+            border-color: #68d391;
+            box-shadow: 0 0 20px rgba(72, 187, 120, 0.25);
         }
 
-        /* 바이탈 사인 & 심전도 파형 모니터 */
+        /* 바이탈 사인 & 심전도 모니터 */
         .vital-monitor {
-            background: #1a202c;
+            background: #0f172a;
             border-radius: 10px;
             padding: 10px 14px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
             color: white;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
         }
 
         .vital-top {
@@ -185,40 +274,38 @@
         }
 
         .vital-status {
-            color: #fc8181;
-            font-weight: bold;
-            font-size: 0.82rem;
-            letter-spacing: 0.5px;
+            color: #f87171;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.4px;
             transition: color 0.3s ease;
         }
-        .vital-status.stable { color: #68d391; }
+        .vital-status.stable { color: #4ade80; }
 
         .bpm-display {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 900;
-            color: #fc8181;
-            animation: pulseBpm 0.7s infinite alternate;
-            transition: color 0.3s ease;
+            color: #f87171;
+            animation: pulseBpm 0.65s infinite alternate;
         }
         .bpm-display.stable {
-            color: #68d391;
+            color: #4ade80;
             animation: pulseBpmStable 1.4s infinite alternate;
         }
 
         @keyframes pulseBpm {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 10px rgba(252,129,129,0.7); }
+            0% { transform: scale(1); opacity: 0.85; }
+            100% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 10px rgba(248,113,113,0.7); }
         }
         @keyframes pulseBpmStable {
             0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 8px rgba(104,211,145,0.6); }
+            100% { transform: scale(1.03); opacity: 1; text-shadow: 0 0 8px rgba(74,222,128,0.6); }
         }
 
         .ecg-container {
             width: 100%;
-            height: 30px;
+            height: 28px;
             overflow: hidden;
-            position: relative;
             background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
             background-size: 12px 12px;
@@ -226,16 +313,16 @@
         }
 
         .ecg-line {
-            stroke: #f56565;
+            stroke: #ef4444;
             stroke-width: 2.5;
             fill: none;
             stroke-dasharray: 400;
             stroke-dashoffset: 400;
-            animation: ecgSweep 2.2s linear infinite;
+            animation: ecgSweep 2s linear infinite;
             transition: stroke 0.3s ease;
         }
         .ecg-line.stable {
-            stroke: #48bb78;
+            stroke: #22c55e;
             animation: ecgSweep 3.5s linear infinite;
         }
 
@@ -244,56 +331,66 @@
             100% { stroke-dashoffset: 0; }
         }
 
-        /* 환자 정보 */
-        .patient-header-row {
+        /* 환자 정보 & 진단 태그 */
+        .patient-meta {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 10px;
+            gap: 6px;
+            margin-bottom: 8px;
         }
 
         .patient-badge {
-            background: #fed7d7;
-            color: #c53030;
+            background: #fee2e2;
+            color: #b91c1c;
             font-weight: 800;
-            font-size: 0.78rem;
-            padding: 4px 9px;
+            font-size: 0.76rem;
+            padding: 3px 8px;
             border-radius: 6px;
-            white-space: nowrap;
+        }
+
+        .element-tag {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1d4ed8;
+            font-size: 0.74rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
         }
 
         .patient-subject {
-            font-weight: 700;
-            font-size: 0.92rem;
+            font-weight: 800;
+            font-size: 0.94rem;
             color: var(--text-main);
+            margin-bottom: 10px;
         }
 
         .patient-symptom-box {
             background: #fff5f5;
             border-left: 4px solid var(--accent-red);
             padding: 12px 14px;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 10px 10px 0;
             margin-bottom: 12px;
         }
 
         .patient-desc {
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 0.92rem;
+            line-height: 1.55;
             font-weight: 600;
-            color: #1a202c;
+            color: #1e293b;
             margin: 0;
             word-break: keep-all;
         }
 
-        /* 힌트 토글 영역 */
-        .hint-section { margin-bottom: 14px; }
+        /* 힌트 토글 */
+        .hint-section { margin-bottom: 12px; }
 
         .hint-toggle-btn {
-            background: #fefcbf;
-            border: 1px solid #ecc94b;
-            color: #744210;
-            font-size: 0.8rem;
+            background: #fef9c3;
+            border: 1px solid #facc15;
+            color: #854d0e;
+            font-size: 0.78rem;
             font-weight: 700;
             padding: 6px 11px;
             border-radius: 8px;
@@ -302,37 +399,38 @@
             align-items: center;
             gap: 5px;
         }
-        .hint-toggle-btn:hover { background: #faf089; }
+        .hint-toggle-btn:hover { background: #fef08a; }
 
         .hint-banner {
             display: none;
-            background: #fefcbf;
-            border: 1px solid #f6e05e;
+            background: #fefce8;
+            border: 1px solid #fde047;
             padding: 9px 11px;
             border-radius: 8px;
-            font-size: 0.83rem;
-            color: #744210;
-            margin-top: 8px;
+            font-size: 0.82rem;
+            color: #713f12;
+            margin-top: 7px;
             line-height: 1.45;
             word-break: keep-all;
         }
 
-        /* 실제 처방전 디테일 */
+        /* 처방전 박스 */
         .prescription-paper {
-            background: #f7fafc;
-            border: 1px solid #cbd5e0;
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
             border-top: 4px solid var(--accent-blue);
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            padding: 11px 12px;
+            margin-bottom: 10px;
+            position: relative;
         }
 
         .prescription-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #cbd5e0;
+            margin-bottom: 7px;
+            border-bottom: 1px dashed #cbd5e1;
             padding-bottom: 5px;
         }
 
@@ -345,117 +443,269 @@
 
         .selected-prescription {
             background: white;
-            padding: 9px 10px;
-            border-radius: 6px;
-            border: 1px dashed #a0aec0;
-            font-size: 0.88rem;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1.5px dashed #94a3b8;
+            font-size: 0.86rem;
             color: var(--text-sub);
             text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .selected-prescription.stamped {
+            border-style: solid;
+            border-color: var(--accent-blue);
+            background: #eff6ff;
+            color: #1e3a8a;
+            animation: stampEffect 0.22s ease-out;
+        }
+
+        @keyframes stampEffect {
+            0% { transform: scale(1.06); }
+            100% { transform: scale(1); }
         }
 
         .action-btn {
-            background-color: var(--accent-red);
+            background: linear-gradient(135deg, #e53e3e, #c53030);
             color: white;
             border: none;
             padding: 13px;
             font-size: 0.98rem;
-            font-weight: bold;
+            font-weight: 800;
             border-radius: 10px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 4px 10px rgba(229,62,62,0.3);
+            box-shadow: 0 4px 12px rgba(229,62,62,0.3);
+            transition: transform 0.15s;
         }
-        .action-btn:hover { background-color: #c53030; }
+        .action-btn:hover { transform: translateY(-1px); }
 
         /* 약품 캐비닛 패널 */
         .cabinet-panel {
             background: #f8fafc;
             border: 2px solid var(--border-color);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .cabinet-top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .element-legend {
+            display: flex;
+            gap: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            color: #334155;
         }
 
         .matrix-table {
             width: 100%;
             border-collapse: collapse;
             background: white;
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            border: 1px solid var(--border-color);
-            margin-top: 10px;
+            border: 1.5px solid #cbd5e1;
             table-layout: fixed;
         }
 
         .matrix-table th, .matrix-table td {
-            border: 1px solid var(--border-color);
-            padding: 12px 6px;
+            border: 1px solid #cbd5e1;
+            padding: 10px 6px;
             text-align: center;
-            font-size: 0.81rem;
+            font-size: 0.8rem;
             word-break: keep-all;
         }
 
-        .matrix-table th {
-            background-color: #edf2f7;
-            color: var(--text-main);
-            font-weight: 700;
+        .group-header-process {
+            background-color: #fef3c7 !important;
+            color: #92400e !important;
+            font-weight: 800 !important;
+            font-size: 0.82rem !important;
+        }
+
+        .group-header-result {
+            background-color: #dcfce7 !important;
+            color: #166534 !important;
+            font-weight: 800 !important;
+            font-size: 0.82rem !important;
+        }
+
+        .sub-header {
+            background-color: #f1f5f9 !important;
+            color: #1e293b !important;
+            font-weight: 800 !important;
+        }
+
+        .time-col {
+            background-color: #f8fafc;
+            font-weight: 900;
+            color: #0f172a;
+            font-size: 0.86rem !important;
         }
 
         .drug-cell {
             cursor: pointer;
             transition: all 0.15s ease;
             background: white;
-            font-weight: 600;
-            line-height: 1.4;
+            vertical-align: middle;
         }
 
         .drug-cell:hover {
-            background-color: #ebf8ff;
-            color: var(--accent-blue);
+            background-color: #eff6ff;
         }
 
         .drug-cell.selected {
-            background-color: #bee3f8 !important;
-            border: 2px solid var(--accent-blue);
-            color: #1a365d;
+            background-color: #dbeafe !important;
+            box-shadow: inset 0 0 0 2.5px var(--accent-blue);
+        }
+
+        .drug-title {
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.35;
+            margin-bottom: 5px;
+        }
+
+        .drug-cell.selected .drug-title {
+            color: #1e3a8a;
             font-weight: 800;
+        }
+
+        .drug-icons {
+            display: inline-block;
+            font-size: 0.72rem;
+            background: #f1f5f9;
+            padding: 2px 6px;
+            border-radius: 6px;
+            letter-spacing: 1px;
         }
 
         .drug-cell.disabled {
             background-color: #f1f5f9 !important;
             color: #94a3b8 !important;
             cursor: not-allowed;
+            font-weight: 600;
         }
 
-        /* 모바일 및 태블릿 세로 화면 최적화 */
-        @media(max-width: 850px) {
+        /* 최종 인증서 ID 카드 & 족보 스타일 */
+        .id-card {
+            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+            border: 2px solid #22c55e;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+
+        .id-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1.5px dashed #86efac;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            color: #166534;
+        }
+
+        .rank-badge {
+            background: #15803d;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .stat-box {
+            background: white;
+            border-radius: 10px;
+            padding: 8px 4px;
+            border: 1px solid #bbf7d0;
+        }
+        .stat-label { font-size: 0.7rem; color: #64748b; font-weight: 700; }
+        .stat-val { font-size: 0.95rem; font-weight: 900; color: #14532d; margin-top: 2px; }
+
+        .summary-list {
+            background: #f8fafc;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 14px;
+            text-align: left;
+            max-height: 175px;
+            overflow-y: auto;
+        }
+
+        .summary-item {
+            font-size: 0.78rem;
+            padding: 6px 0;
+            border-bottom: 1px solid #e2e8f0;
+            line-height: 1.4;
+        }
+        .summary-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+        .pledge-box {
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .pledge-select {
+            width: 100%;
+            padding: 9px 10px;
+            border-radius: 8px;
+            border: 1.5px solid #93c5fd;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: #1e3a8a;
+            background: #eff6ff;
+            margin-top: 5px;
+        }
+
+        /* 반응형 모바일 최적화 */
+        @media(max-width: 900px) {
             .game-layout { grid-template-columns: 1fr; gap: 16px; }
         }
 
         @media(max-width: 600px) {
-            body { padding: 10px; align-items: flex-start; }
-            .container { padding: 16px; border-radius: 16px; }
-            header { padding-bottom: 10px; margin-bottom: 14px; }
-            h1 { font-size: 1.12rem; }
-            .subtitle { font-size: 0.76rem; }
-            .reset-btn { padding: 6px 10px; font-size: 0.78rem; }
+            body { padding: 8px; align-items: flex-start; }
+            .container { padding: 14px; border-radius: 16px; }
+            .header-left h1 { font-size: 1.08rem; }
+            .subtitle { font-size: 0.74rem; }
+            .timer-pill { font-size: 0.8rem; padding: 5px 8px; }
+            .icon-btn { font-size: 0.76rem; padding: 5px 8px; }
+            .ward-tracker { padding: 6px 10px; margin-bottom: 12px; }
+            .heart-slot { font-size: 0.72rem; padding: 2px 6px; }
 
-            /* 모달 세로 길이 컴팩트 압축 */
-            .modal-overlay { padding: 14px; }
-            .modal-inner { padding: 22px 18px; border-radius: 16px; }
-            .modal-emoji { font-size: 2.1rem; margin-bottom: 6px; }
-            .modal-title { font-size: 1.3rem; margin-bottom: 10px; }
-            .modal-desc { font-size: 0.9rem; margin-bottom: 16px; line-height: 1.45; }
-            .modal-card { padding: 14px; margin-bottom: 16px; }
-            .modal-btn { padding: 12px 24px; font-size: 0.98rem; max-width: 100%; }
+            .modal-inner { padding: 20px 16px; border-radius: 18px; }
+            .modal-emoji { font-size: 2rem; margin-bottom: 6px; }
+            .modal-title { font-size: 1.25rem; }
+            .modal-desc { font-size: 0.88rem; margin-bottom: 14px; }
+            .modal-btn { padding: 12px 20px; font-size: 0.95rem; max-width: 100%; }
 
-            /* 환자 패널 & 매트릭스 표 압축 */
-            .patient-panel, .cabinet-panel { padding: 14px; }
-            .vital-monitor { padding: 8px 12px; margin-bottom: 10px; }
-            .ecg-container { height: 22px; }
-            .bpm-display { font-size: 1.05rem; }
-            .patient-symptom-box { padding: 10px 12px; margin-bottom: 10px; }
-            .patient-desc { font-size: 0.88rem; }
-            .matrix-table th, .matrix-table td { padding: 9px 4px; font-size: 0.73rem; }
+            .patient-panel, .cabinet-panel { padding: 12px; }
+            .matrix-table th, .matrix-table td { padding: 7px 3px; font-size: 0.71rem; }
+            .drug-icons { font-size: 0.65rem; padding: 1px 4px; }
         }
     </style>
 </head>
@@ -464,16 +714,33 @@
     <div class="container">
         <!-- 헤더 -->
         <header>
-            <div>
+            <div class="header-left">
                 <h1>🚨 수업 평가 응급실 (ASSESSMENT ER)</h1>
-                <div class="subtitle">평가 프레임워크 기반 수업 심폐소생 클리닉</div>
+                <div class="subtitle">평가 프레임워크 기반 7분 수업 심폐소생 클리닉</div>
             </div>
-            <button type="button" class="reset-btn" id="btn-reset">🔄 처음부터</button>
+            <div class="header-controls">
+                <div class="timer-pill" title="체험 경과 시간">⏱️ <span id="timer-display">00:00</span></div>
+                <button type="button" class="icon-btn" id="btn-sound" title="효과음 켜기/끄기">🔊 소리 켬</button>
+                <button type="button" class="icon-btn" id="btn-reset">🔄 처음부터</button>
+            </div>
         </header>
+
+        <!-- 대기 환자 진행률 & 콤보 트래커 -->
+        <div class="ward-tracker">
+            <div class="ward-hearts" id="ward-hearts">
+                <span class="heart-slot active" id="slot-0">❤️‍🔥 #1</span>
+                <span class="heart-slot" id="slot-1">🤍 #2</span>
+                <span class="heart-slot" id="slot-2">🤍 #3</span>
+                <span class="heart-slot" id="slot-3">🤍 #4</span>
+                <span class="heart-slot" id="slot-4">🤍 #5</span>
+                <span class="heart-slot" id="slot-5">🤍 #6</span>
+            </div>
+            <div class="combo-status" id="combo-status">🔥 연속 원샷 처방: 0콤보</div>
+        </div>
 
         <!-- 메인 게임 영역 -->
         <div class="game-layout">
-            <!-- 환자 차트 & 처방전 패널 -->
+            <!-- 왼쪽: 환자 차트 & 처방전 -->
             <div class="patient-panel" id="patient-panel">
                 <div>
                     <!-- 심전도 바이탈 모니터 -->
@@ -489,22 +756,21 @@
                         </div>
                     </div>
 
-                    <div class="patient-header-row">
-                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 4</span>
-                        <span class="patient-subject" id="patient-subject">6학년 사회 '인권 존중' (대단원 마무리)</span>
+                    <div class="patient-meta">
+                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 6</span>
+                        <span class="element-tag" id="patient-element-tag">주요 진단: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도</span>
                     </div>
+                    <div class="patient-subject" id="patient-subject">5학년 과학 '생태계' (1시간 모둠 수업 중)</div>
                     
                     <div class="patient-symptom-box">
-                        <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-red); margin-bottom: 5px;">🩺 주호소</div>
-                        <p class="patient-desc" id="patient-desc">“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 얼마나 성장했는지, 무엇을 더 보완해야 하는지 전혀 모른 채 단원을 끝내버려요!”</p>
+                        <div style="font-size: 0.74rem; font-weight: 800; color: var(--accent-red); margin-bottom: 5px;">🩺 주호소</div>
+                        <p class="patient-desc" id="patient-desc">“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”</p>
                     </div>
 
                     <!-- 힌트 토글 영역 -->
                     <div class="hint-section">
                         <button type="button" class="hint-toggle-btn" id="btn-toggle-hint">🔍 수간호사 힌트 보기</button>
-                        <div class="hint-banner" id="patient-hint">
-                            🔍 <strong>힌트:</strong> [UOI(대단원 끝)]에 아이들이 준거에 따라 자신의 학습 활동을 성찰하고 새로운 목표를 설정하게 하려면?
-                        </div>
+                        <div class="hint-banner" id="patient-hint"></div>
                     </div>
                 </div>
 
@@ -513,49 +779,84 @@
                     <div class="prescription-paper">
                         <div class="prescription-header">
                             <span class="rx-symbol">℞ 처방전</span>
-                            <span style="font-size: 0.75rem; color: var(--text-sub); font-weight: 600;">딱 1개만 골라 처방하세요!</span>
+                            <span style="font-size: 0.74rem; color: var(--text-sub); font-weight: 700;">시기와 목적에 맞는 1개 처방</span>
                         </div>
                         <div class="selected-prescription" id="selected-display">
-                            아래 캐비닛에서 처방 약품 1개를 클릭하세요
+                            오른쪽 캐비닛에서 처방 약품을 클릭하세요
                         </div>
                     </div>
                     <button type="button" class="action-btn" id="btn-prescribe">⚡ 처방 투여하기</button>
                 </div>
             </div>
 
-            <!-- 약품 캐비닛 패널 -->
+            <!-- 오른쪽: 약품 캐비닛 (평가 프레임워크) -->
             <div class="cabinet-panel">
-                <div style="margin-bottom: 10px;">
-                    <strong style="font-size: 0.96rem;">💊 평가 처방 약품 캐비닛 (평가 프레임워크)</strong>
-                    <div style="font-size: 0.78rem; color: var(--text-sub); margin-top: 2px;">시기와 목적이 일치하는 올바른 약품을 선택하세요.</div>
+                <div class="cabinet-top-bar">
+                    <div>
+                        <strong style="font-size: 0.96rem;">💊 평가 처방 약품 캐비닛</strong>
+                        <div style="font-size: 0.76rem; color: var(--text-sub);">평가 요소와 시기·목적을 확인하고 약품을 선택하세요.</div>
+                    </div>
+                    <div class="element-legend">
+                        <span>📖 지식·이해</span>
+                        <span>🛠️ 과정·기능</span>
+                        <span>❤️ 가치·태도</span>
+                    </div>
                 </div>
 
                 <table class="matrix-table">
                     <thead>
                         <tr>
-                            <th style="width: 15%;">시기 / 목적</th>
-                            <th style="width: 28.3%;">학습을 위한 평가</th>
-                            <th style="width: 28.3%;">학습으로서의 평가</th>
-                            <th style="width: 28.3%;">학습의 평가</th>
+                            <th rowspan="2" style="width: 13%;" class="sub-header">영역<br>/<br>시기</th>
+                            <th colspan="2" class="group-header-process">학습 과정 (형성평가)</th>
+                            <th class="group-header-result">학습 결과 (총괄평가)</th>
+                        </tr>
+                        <tr>
+                            <th style="width: 29%;" class="sub-header">학습을 위한 평가</th>
+                            <th style="width: 29%;" class="sub-header">학습으로서의 평가</th>
+                            <th style="width: 29%;" class="sub-header">학습의 평가</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">UOI</td>
-                            <td class="drug-cell" data-drug="중심아이디어 작성 · ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습을 위한 평가">중심아이디어 작성<br>ATL 성장 스펙트럼</td>
-                            <td class="drug-cell" data-drug="학습자상 및 ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습으로서의 평가">학습자상 및 ATL<br>성장 스펙트럼</td>
-                            <td class="drug-cell" data-drug="지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼" data-time="UOI" data-purpose="학습의 평가">지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼</td>
+                            <td class="time-col">UOI</td>
+                            <td class="drug-cell" data-drug="중심아이디어 작성 · ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습을 위한 평가" data-icons="📖 🛠️">
+                                <div class="drug-title">중심아이디어 작성<br>ATL 성장 스펙트럼</div>
+                                <span class="drug-icons">📖 🛠️</span>
+                            </td>
+                            <td class="drug-cell" data-drug="학습자상 및 ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습으로서의 평가" data-icons="❤️ 🛠️">
+                                <div class="drug-title">학습자상 및 ATL<br>성장 스펙트럼</div>
+                                <span class="drug-icons">❤️ 🛠️</span>
+                            </td>
+                            <td class="drug-cell" data-drug="지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼" data-time="UOI" data-purpose="학습의 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">LOI</td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="LOI" data-purpose="학습을 위한 평가">학습 결과물<br>학습 활동 관찰</td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 탐구 과정 성찰" data-time="LOI" data-purpose="학습으로서의 평가">학습 결과물<br>탐구 과정 성찰</td>
-                            <td class="drug-cell" data-drug="LOI 관련 과정중심평가 결과" data-time="LOI" data-purpose="학습의 평가">LOI 관련<br>과정중심평가 결과</td>
+                            <td class="time-col">LOI</td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="LOI" data-purpose="학습을 위한 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">학습 결과물<br>학습 활동 관찰</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 탐구 과정 성찰" data-time="LOI" data-purpose="학습으로서의 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">학습 결과물<br>탐구 과정 성찰</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
+                            <td class="drug-cell" data-drug="LOI 관련 과정중심평가 결과" data-time="LOI" data-purpose="학습의 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">LOI 관련<br>과정중심평가 결과</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
                         </tr>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">차시</td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="차시" data-purpose="학습을 위한 평가">학습 결과물<br>학습 활동 관찰</td>
-                            <td class="drug-cell" data-drug="학습 결과물 및 활동 내용" data-time="차시" data-purpose="학습으로서의 평가">학습 결과물<br>및 활동 내용</td>
+                            <td class="time-col">차시</td>
+                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="차시" data-purpose="학습을 위한 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">학습 결과물<br>학습 활동 관찰</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
+                            <td class="drug-cell" data-drug="학습 결과물 및 활동 내용" data-time="차시" data-purpose="학습으로서의 평가" data-icons="📖 🛠️ ❤️">
+                                <div class="drug-title">학습 결과물<br>및 활동 내용</div>
+                                <span class="drug-icons">📖 🛠️ ❤️</span>
+                            </td>
                             <td class="drug-cell disabled">차시 단위 총괄평가 지양</td>
                         </tr>
                     </tbody>
@@ -564,111 +865,193 @@
         </div>
     </div>
 
-    <!-- 1. 인트로 화면 (뷰포트 고정) -->
+    <!-- 1. 인트로 모달 -->
     <div id="intro-modal" class="modal-overlay" style="display: flex;">
         <div class="modal-inner">
             <div class="modal-emoji">🩺🚨</div>
             <div class="modal-title" style="color: var(--accent-red);">수업 평가 응급실<br>(ASSESSMENT ER)</div>
             <p class="modal-desc">
                 선생님, 학교 현장에서 어려움을 겪는 응급 환자가 속출하고 있습니다!<br>
-                올바른 시기와 목적에 맞는 <strong>평가 처방</strong>을 내려 위기의 환자 4명을 살려주세요.
+                연수에서 살펴본 <strong>평가 프레임워크</strong>(시기 · 목적 · 평가 요소)를 바탕으로<br>
+                <strong>7분 안에</strong> 위기의 환자 6명을 모두 살려주세요!
             </p>
-            <button type="button" class="modal-btn" id="btn-start">응급실 입장하기 🩺</button>
+            <button type="button" class="modal-btn" id="btn-start">응급실 당직 시작하기 🩺</button>
         </div>
     </div>
 
-    <!-- 2. 정답 성공 모달 (뷰포트 고정) -->
+    <!-- 2. 정답 성공 모달 -->
     <div id="success-modal" class="modal-overlay">
         <div class="modal-inner">
-            <div class="modal-emoji">🩺✨</div>
-            <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 명의 처방입니다!</div>
-            <div class="modal-card" style="background: #f0fff4; border-color: #9ae6b4;">
-                <p id="success-explanation" style="margin: 0; line-height: 1.55; font-size: 0.92rem; color: var(--text-main); word-break: keep-all;"></p>
+            <div id="oneshot-badge" class="combo-badge" style="display: none;">✨ 원샷 원킬! 첫 시도 명의 처방</div>
+            <div class="modal-emoji">🩺💚</div>
+            <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 정확한 처방입니다!</div>
+            <div class="modal-card" style="background: #f0fdf4; border-color: #86efac;">
+                <p id="success-explanation" style="margin: 0; line-height: 1.55; font-size: 0.9rem; color: var(--text-main); word-break: keep-all;"></p>
             </div>
             <button type="button" class="modal-btn" id="btn-next">다음 환자 보기 ➔</button>
         </div>
     </div>
 
-    <!-- 3. 맞춤형 부작용 오답 모달 (뷰포트 고정) -->
+    <!-- 3. 부작용 오답 모달 -->
     <div id="fail-modal" class="modal-overlay">
         <div class="modal-inner">
             <div class="modal-emoji">⚠️</div>
-            <div class="modal-title" style="color: #dd6b20;">처방 부작용 발생!</div>
-            <div class="modal-card" style="background: #fffaf0; border-color: #fbd38d;">
-                <p id="side-effect-msg" style="margin: 0 0 10px 0; font-size: 0.9rem; color: #9c4221; line-height: 1.5; font-weight: 600; word-break: keep-all;"></p>
-                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.84rem; color: #744210; background: #fefcbf; padding: 9px; border-radius: 8px; word-break: keep-all;"></div>
+            <div class="modal-title" style="color: var(--accent-amber);">처방 부작용 발생!</div>
+            <div class="modal-card" style="background: #fffbeb; border-color: #fcd34d;">
+                <p id="side-effect-msg" style="margin: 0 0 10px 0; font-size: 0.88rem; color: #92400e; line-height: 1.5; font-weight: 700; word-break: keep-all;"></p>
+                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.82rem; color: #78350f; background: #fef3c7; padding: 9px; border-radius: 8px; word-break: keep-all;"></div>
             </div>
             <button type="button" class="modal-btn" id="btn-retry">다시 처방 고르기</button>
         </div>
     </div>
 
-    <!-- 4. 최종 인증서 모달 (뷰포트 고정) -->
+    <!-- 4. 최종 인증서 & 6대 처방 요약 모달 -->
     <div id="final-modal" class="modal-overlay">
-        <div class="modal-inner">
+        <div class="modal-inner" style="max-width: 580px;">
             <div class="modal-emoji">🏆🩺🎉</div>
-            <div class="modal-title" style="color: var(--accent-green);">전원 소생 성공!<br>명예 평가 닥터 인증</div>
-            <div class="modal-card" style="border: 2px solid var(--accent-green); background: #e6fffa;">
-                <div style="border: 1.5px solid #38a169; color: #276749; display: inline-block; padding: 3px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; margin-bottom: 10px; transform: rotate(-1deg);">ASSESSMENT ER · 공식 인증</div>
-                <div style="font-size: 1.05rem; font-weight: 800; color: #1a202c; margin-bottom: 6px;">4명의 위기 수업 환자 완벽 처방 완료!</div>
-                <p style="font-size: 0.85rem; color: #2f855a; margin: 0; line-height: 1.45; word-break: keep-all;">차시 · 중단원(LOI) · 대단원(UOI)의 균형 잡힌 평가 처방 능력을 인정합니다.</p>
+            <div class="modal-title" style="color: var(--accent-green);">전원 소생 완료! 평가 닥터 인증</div>
+            
+            <!-- 사원증 스타일 ID 카드 -->
+            <div class="id-card">
+                <div class="id-card-header">
+                    <span>ASSESSMENT ER · 공식 인증서</span>
+                    <span class="rank-badge" id="final-rank-badge">S등급 수석 평가 닥터</span>
+                </div>
+                <div style="font-size: 0.98rem; font-weight: 800; color: #14532d;">
+                    6명의 위기 수업 환자 완벽 심폐소생 완료!
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-label">총 소요 시간</div>
+                        <div class="stat-val" id="final-time">00:00</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">첫 시도 정확도</div>
+                        <div class="stat-val" id="final-accuracy">100%</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">최고 연속 콤보</div>
+                        <div class="stat-val" id="final-max-combo">6콤보</div>
+                    </div>
+                </div>
             </div>
-            <p style="font-size: 0.88rem; color: var(--text-sub); margin: 0 0 18px 0; word-break: keep-all;">
-                이제 오늘 연수에서 살펴본 <strong>평가 프레임워크</strong>를 우리 반 수업에도 멋지게 처방해 보세요! 👏
-            </p>
+
+            <!-- 오늘 처방한 6대 평가 전략 요약 족보 -->
+            <div style="font-size: 0.82rem; font-weight: 800; color: #334155; text-align: left; margin-bottom: 5px;">📋 오늘 처방한 6대 평가 프레임워크 요약</div>
+            <div class="summary-list" id="summary-list"></div>
+
+            <!-- 교실 적용 1순위 다짐 선택 -->
+            <div class="pledge-box">
+                <label for="pledge-select" style="font-size: 0.8rem; font-weight: 800; color: #1e40af;">✨ 내일 우리 반 수업에 바로 적용해 볼 1순위 처방은?</label>
+                <select id="pledge-select" class="pledge-select">
+                    <option value="1">[차시 × 학습을 위한 평가] 수업 중 관찰 및 즉각 피드백 강화</option>
+                    <option value="2">[LOI × 학습으로서의 평가] 탐구나침반 활용 자기·동료평가 도입</option>
+                    <option value="3">[UOI × 학습을 위한 평가] 수행지시어(Command Term) 기반 피드백</option>
+                    <option value="4">[LOI × 학습의 평가] 과정중심평가 결과의 체계적 기록</option>
+                    <option value="5">[UOI × 학습으로서의 평가] 학습자상 및 ATL 성장 스펙트럼 성찰</option>
+                    <option value="6">[UOI × 학습의 평가] 지식 에세이 및 학습 포트폴리오 완성</option>
+                </select>
+            </div>
+
             <button type="button" class="modal-btn" id="btn-restart-final">🔄 처음부터 다시 체험하기</button>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 6명 정예 환자 데이터 (연수 프레임워크 6개 핵심 셀 1:1 매칭)
             const patients = [
                 {
-                    badge: "응급 환자 #1 / 4",
-                    subject: "6학년 사회 '인권 존중' (대단원 마무리)",
-                    desc: "“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 얼마나 성장했는지, 무엇을 더 보완해야 하는지 전혀 모른 채 단원을 끝내버려요!”",
-                    hint: "🔍 <strong>힌트:</strong> [UOI(대단원 끝)]에 아이들이 준거에 따라 자신의 학습 활동을 성찰하고 새로운 목표를 설정하게 하려면?",
-                    targetTime: "UOI",
-                    targetPurpose: "학습으로서의 평가",
-                    answer: "학습자상 및 ATL 성장 스펙트럼",
-                    successMsg: "<strong>정확합니다!</strong> 대단원을 마무리하며 준거에 따라 학습 활동을 성찰하고 새로운 목표를 설정하는 <strong>[UOI × 학습으로서의 평가(학습자상 및 ATL 성장 스펙트럼)]</strong> 처방으로 자기주도적 성찰을 이끌어낼 수 있습니다!"
-                },
-                {
-                    badge: "응급 환자 #2 / 4",
+                    badge: "응급 환자 #1 / 6",
+                    elementTag: "주요 진단: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
                     subject: "5학년 과학 '생태계' (1시간 모둠 수업 중)",
                     desc: "“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”",
-                    hint: "🔍 <strong>힌트:</strong> [차시(1시간 수업)] 중에 교사가 학생의 탐구 수준을 파악하고 맞춤형 피드백을 주려면?",
+                    hint: "🔍 <strong>힌트:</strong> [차시(1시간 수업)] 중에 교사가 학생의 탐구 수준과 참여도를 관찰해 맞춤형 피드백을 주려면?",
                     targetTime: "차시",
                     targetPurpose: "학습을 위한 평가",
                     answer: "학습 결과물 · 학습 활동 관찰",
-                    successMsg: "<strong>훌륭합니다!</strong> 차시 수업 중 학생의 탐구 수준과 개념 이해를 실시간으로 파악해 맞춤형 피드백을 주는 <strong>[차시 × 학습을 위한 평가(학습 결과물 · 학습 활동 관찰)]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
+                    shortSummary: "<strong>#1 [차시 × 학습을 위한 평가]</strong> 학습 결과물 · 학습 활동 관찰 → 모둠 활동 실시간 코칭",
+                    successMsg: "<strong>정확합니다!</strong> 차시 수준에서 학생의 탐구 수준과 개념 이해를 실시간으로 관찰해 맞춤형 피드백을 제공하는 <strong>[차시 × 학습을 위한 평가(학습 결과물 · 학습 활동 관찰)]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
                 },
                 {
-                    badge: "응급 환자 #3 / 4",
-                    subject: "4학년 사회 '우리 지역의 문제' (중단원 탐구 중)",
-                    desc: "“LOI 1이 끝났는데, 아이들이 핵심 개념에서 벗어나 엉뚱한 방향으로 가고 있어요. 다음 탐구로 넘어가기 전에 중간 점검과 피드백이 시급해요!”",
-                    hint: "🔍 <strong>힌트:</strong> [LOI(중단원)] 수준에서 학생의 개념 이해 수준과 탐구 활동을 파악해 맞춤형 피드백을 주려면?",
+                    badge: "응급 환자 #2 / 6",
+                    elementTag: "주요 진단: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
+                    subject: "4학년 사회 '우리 지역의 문제' (LOI 1 탐구 후)",
+                    desc: "“LOI 1이 끝났는데, 아이들이 핵심 개념에서 벗어나 엉뚱한 방향으로 가고 있어요. 다음 탐구로 넘어가기 전에 아이들 스스로 탐구 과정을 돌아보고 동료끼리 점검하게 하고 싶어요!”",
+                    hint: "🔍 <strong>힌트:</strong> [LOI] 단계에서 탐구나침반 등을 활용해 자기평가 및 동료평가를 실시하려면?",
                     targetTime: "LOI",
-                    targetPurpose: "학습을 위한 평가",
-                    answer: "학습 결과물 · 학습 활동 관찰",
-                    successMsg: "<strong>명쾌합니다!</strong> LOI 수준에서 학생의 개념 이해와 탐구 활동을 점검해 맞춤형 피드백(Ongoing assessment)을 제공하는 <strong>[LOI × 학습을 위한 평가(학습 결과물 · 학습 활동 관찰)]</strong> 처방으로 탐구 방향을 올바르게 잡아줄 수 있습니다!"
+                    targetPurpose: "학습으로서의 평가",
+                    answer: "학습 결과물 · 탐구 과정 성찰",
+                    shortSummary: "<strong>#2 [LOI × 학습으로서의 평가]</strong> 학습 결과물 · 탐구 과정 성찰 → 탐구나침반 기반 자기·동료점검",
+                    successMsg: "<strong>명쾌합니다!</strong> LOI 단계에서 탐구나침반을 활용해 학생 스스로 학습 활동을 성찰하고 동료평가를 실시하는 <strong>[LOI × 학습으로서의 평가(학습 결과물 · 탐구 과정 성찰)]</strong> 처방으로 탐구 방향을 스스로 조율할 수 있습니다!"
                 },
                 {
-                    badge: "응급 환자 #4 / 4",
-                    subject: "4학년 국어 '주장하는 글쓰기' (대단원 종합)",
-                    desc: "“수업마다 스티커도 붙이고 칭찬도 많이 했는데, 정작 단원이 끝나고 나니 아이들이 배운 개념을 종합해서 써먹은 최종 결과물이 하나도 안 남았어요.”",
-                    hint: "🔍 <strong>힌트:</strong> [UOI(대단원)]를 통해 학습한 개념들을 연결·적용하고 학습의 과정과 결과를 파악·기록·통지하려면?",
+                    badge: "응급 환자 #3 / 6",
+                    elementTag: "주요 진단: 📖 지식·이해 / 🛠️ 과정·기능",
+                    subject: "6학년 사회 '인권 존중' (UOI 중심아이디어 초안 점검)",
+                    desc: "“단원 중반에 아이들이 중심아이디어 문장을 작성해 왔는데 개념 연결이 모호하고, 탐구 기능 수준도 들쭉날쭉해요. 교사가 수행지시어(Command Term)를 활용해 구체적인 피드백을 주고 싶어요!”",
+                    hint: "🔍 <strong>힌트:</strong> [UOI] 수준에서 중심아이디어 작성 내용을 파악하고 ATL POI 및 수행지시어로 피드백을 제공하려면?",
+                    targetTime: "UOI",
+                    targetPurpose: "학습을 위한 평가",
+                    answer: "중심아이디어 작성 · ATL 성장 스펙트럼",
+                    shortSummary: "<strong>#3 [UOI × 학습을 위한 평가]</strong> 중심아이디어 작성 · ATL 성장 스펙트럼 → 수행지시어 활용 피드백",
+                    successMsg: "<strong>훌륭합니다!</strong> 명시된 개념에 따라 작성한 중심아이디어 내용을 파악하고, ATL POI 및 수행지시어(Command Term)를 활용해 피드백을 주는 <strong>[UOI × 학습을 위한 평가(중심아이디어 작성 · ATL 성장 스펙트럼)]</strong> 처방이 딱 맞습니다!"
+                },
+                {
+                    badge: "응급 환자 #4 / 6",
+                    elementTag: "주요 진단: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
+                    subject: "3학년 과학 '물질의 상태' (LOI별 성취 기록 시점)",
+                    desc: "“소주제별 탐구 활동은 열심히 했는데, 정작 학기 말 통지표나 생활기록부에 아이들의 개념 이해와 수행 수준을 근거 있게 기록하려니 체계적인 근거 자료가 부족해요!”",
+                    hint: "🔍 <strong>힌트:</strong> [LOI] 학습 과정에서 필요한 시점에 개념 이해 또는 수행 수준을 파악하고 기록(총괄적 기록)하려면?",
+                    targetTime: "LOI",
+                    targetPurpose: "학습의 평가",
+                    answer: "LOI 관련 과정중심평가 결과",
+                    shortSummary: "<strong>#4 [LOI × 학습의 평가]</strong> LOI 관련 과정중심평가 결과 → 탐구 시점별 수행 수준 파악 및 기록",
+                    successMsg: "<strong>정확한 진단입니다!</strong> LOI 학습 과정에서 필요한 시점에 학생의 개념 이해와 수행 수준을 파악하고 체계적으로 기록하는 <strong>[LOI × 학습의 평가(LOI 관련 과정중심평가 결과)]</strong> 처방으로 탄탄한 평가 근거를 남길 수 있습니다!"
+                },
+                {
+                    badge: "응급 환자 #5 / 6",
+                    elementTag: "주요 진단: ❤️ 가치·태도 / 🛠️ 과정·기능",
+                    subject: "5학년 도덕 '공정한 사회' (대단원 마무리 자기성찰)",
+                    desc: "“한 달 동안 열심히 탐구하고 단원을 마무리했는데, 정작 아이들은 자신이 처음보다 어떤 학습자상과 태도를 길렀는지, 앞으로 어떤 새로운 목표를 세워야 할지 모른 채 단원을 끝내버려요!”",
+                    hint: "🔍 <strong>힌트:</strong> [UOI] 마무리 단계에서 준거에 따라 자신의 가치·태도와 학습 활동을 성찰하고 새로운 목표를 설정하게 하려면?",
+                    targetTime: "UOI",
+                    targetPurpose: "학습으로서의 평가",
+                    answer: "학습자상 및 ATL 성장 스펙트럼",
+                    shortSummary: "<strong>#5 [UOI × 학습으로서의 평가]</strong> 학습자상 및 ATL 성장 스펙트럼 → 준거 기반 자기성찰 및 목표 설정",
+                    successMsg: "<strong>탁월합니다!</strong> 준거에 따라 자신의 학습 활동과 가치·태도를 스스로 성찰하고 새로운 목표를 설정하는 <strong>[UOI × 학습으로서의 평가(학습자상 및 ATL 성장 스펙트럼)]</strong> 처방으로 진정한 자기주도 학습자를 길러낼 수 있습니다!"
+                },
+                {
+                    badge: "응급 환자 #6 / 6",
+                    elementTag: "주요 진단: 📖 지식·이해 / 🛠️ 과정·기능 / ❤️ 가치·태도",
+                    subject: "4학년 국어 '주장하는 글쓰기' (대단원 종합 평가)",
+                    desc: "“수업마다 칭찬도 많이 하고 활동지도 모았는데, 정작 UOI가 끝나고 나니 아이들이 배운 개념들을 연결해 새로운 문제 상황에 적용해 본 최종 결과물과 종합 통지 자료가 안 남았어요!”",
+                    hint: "🔍 <strong>힌트:</strong> [UOI]를 통해 학습한 개념을 연결·적용하고 학습의 과정·결과·가치태도를 종합 파악·기록·통지하려면?",
                     targetTime: "UOI",
                     targetPurpose: "학습의 평가",
                     answer: "지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼",
-                    successMsg: "<strong>완벽합니다!</strong> UOI를 통해 학습한 개념을 새로운 문제 상황에 적용하고 학습 과정·결과·가치태도를 종합 기록하는 <strong>[UOI × 학습의 평가(지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼)]</strong> 처방으로 의미 있는 최종 결과물을 완성할 수 있습니다!"
+                    shortSummary: "<strong>#6 [UOI × 학습의 평가]</strong> 지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼 → 개념 적용 및 종합 통지",
+                    successMsg: "<strong>완벽한 마무리입니다!</strong> UOI에서 배운 개념을 연결해 새로운 문제 상황에 활용하고, 포트폴리오와 자기평가를 통해 과정·결과·태도를 종합 파악·기록·통지하는 <strong>[UOI × 학습의 평가]</strong> 처방으로 6명의 환자를 모두 살려냈습니다!"
                 }
             ];
 
+            // 상태 변수
             let currentIdx = 0;
             let selectedDrug = null;
             let selectedTime = null;
             let selectedPurpose = null;
+            let selectedIcons = null;
 
+            let attemptCount = 0;
+            let firstTrySuccessCount = 0;
+            let currentCombo = 0;
+            let maxCombo = 0;
+
+            let secondsElapsed = 0;
+            let timerInterval = null;
+            let soundEnabled = true;
+
+            // DOM 요소
             const introModal = document.getElementById('intro-modal');
             const successModal = document.getElementById('success-modal');
             const failModal = document.getElementById('fail-modal');
@@ -676,14 +1059,105 @@
             const selectedDisplay = document.getElementById('selected-display');
             const hintBanner = document.getElementById('patient-hint');
             const btnToggleHint = document.getElementById('btn-toggle-hint');
+            const timerDisplay = document.getElementById('timer-display');
+            const comboStatus = document.getElementById('combo-status');
 
-            // 바이탈 모니터 요소
             const patientPanel = document.getElementById('patient-panel');
             const vitalStatus = document.getElementById('vital-status-text');
             const bpmDisplay = document.getElementById('bpm-display');
             const ecgLine = document.getElementById('ecg-line');
 
-            // 바이탈 상태 전환 함수
+            // Web Audio API 초경량 사운드 합성기
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            let audioCtx = null;
+
+            function playTone(type) {
+                if (!soundEnabled) return;
+                try {
+                    if (!audioCtx) audioCtx = new AudioCtx();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+
+                    const now = audioCtx.currentTime;
+                    if (type === 'click') {
+                        osc.type = 'sine';
+                        osc.frequency.setValueAtTime(520, now);
+                        gain.gain.setValueAtTime(0.08, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                        osc.start(now);
+                        osc.stop(now + 0.08);
+                    } else if (type === 'success') {
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(523.25, now);       // C5
+                        osc.frequency.setValueAtTime(659.25, now + 0.1); // E5
+                        osc.frequency.setValueAtTime(783.99, now + 0.2); // G5
+                        osc.frequency.setValueAtTime(1046.5, now + 0.3); // C6
+                        gain.gain.setValueAtTime(0.12, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+                        osc.start(now);
+                        osc.stop(now + 0.55);
+                    } else if (type === 'fail') {
+                        osc.type = 'sawtooth';
+                        osc.frequency.setValueAtTime(190, now);
+                        osc.frequency.setValueAtTime(145, now + 0.15);
+                        gain.gain.setValueAtTime(0.1, now);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                        osc.start(now);
+                        osc.stop(now + 0.35);
+                    }
+                } catch (e) {}
+            }
+
+            // 소리 토글 버튼
+            const btnSound = document.getElementById('btn-sound');
+            btnSound.addEventListener('click', () => {
+                soundEnabled = !soundEnabled;
+                btnSound.innerText = soundEnabled ? '🔊 소리 켬' : '🔇 소리 끔';
+            });
+
+            // 타이머 제어
+            function formatTime(sec) {
+                const m = String(Math.floor(sec / 60)).padStart(2, '0');
+                const s = String(sec % 60).padStart(2, '0');
+                return `${m}:${s}`;
+            }
+
+            function startTimer() {
+                clearInterval(timerInterval);
+                secondsElapsed = 0;
+                timerDisplay.innerText = "00:00";
+                timerInterval = setInterval(() => {
+                    secondsElapsed++;
+                    timerDisplay.innerText = formatTime(secondsElapsed);
+                }, 1000);
+            }
+
+            function stopTimer() {
+                clearInterval(timerInterval);
+            }
+
+            // 대기 환자 하트 상태 업데이트
+            function updateWardHearts() {
+                for (let i = 0; i < patients.length; i++) {
+                    const slot = document.getElementById(`slot-${i}`);
+                    slot.classList.remove('active', 'saved');
+                    if (i < currentIdx) {
+                        slot.classList.add('saved');
+                        slot.innerText = `💚 #${i + 1}`;
+                    } else if (i === currentIdx) {
+                        slot.classList.add('active');
+                        slot.innerText = `❤️‍🔥 #${i + 1}`;
+                    } else {
+                        slot.innerText = `🤍 #${i + 1}`;
+                    }
+                }
+            }
+
+            // 바이탈 상태 전환
             function setVitalStable(isStable) {
                 if (isStable) {
                     patientPanel.classList.add('stable');
@@ -702,94 +1176,180 @@
                 }
             }
 
-            // 인트로 닫기
+            // 인트로 시작
             document.getElementById('btn-start').addEventListener('click', () => {
+                playTone('click');
                 introModal.style.display = 'none';
+                loadPatient(0);
+                startTimer();
             });
 
             // 힌트 토글
             btnToggleHint.addEventListener('click', () => {
+                playTone('click');
                 const isHidden = hintBanner.style.display === 'none' || hintBanner.style.display === '';
                 hintBanner.style.display = isHidden ? 'block' : 'none';
                 btnToggleHint.innerText = isHidden ? '🙈 수간호사 힌트 숨기기' : '🔍 수간호사 힌트 보기';
             });
 
-            // 약품 셀 클릭 이벤트
+            // 약품 셀 클릭
             const drugCells = document.querySelectorAll('.drug-cell:not(.disabled)');
             drugCells.forEach(cell => {
                 cell.addEventListener('click', () => {
+                    playTone('click');
                     drugCells.forEach(c => c.classList.remove('selected'));
                     cell.classList.add('selected');
+
                     selectedDrug = cell.getAttribute('data-drug');
                     selectedTime = cell.getAttribute('data-time');
                     selectedPurpose = cell.getAttribute('data-purpose');
-                    
-                    selectedDisplay.innerHTML = `💊 <strong style="color:var(--accent-blue);">[${selectedTime}] ${selectedDrug}</strong>`;
-                    selectedDisplay.style.color = "var(--text-main)";
-                    selectedDisplay.style.borderColor = "var(--accent-blue)";
-                    selectedDisplay.style.backgroundColor = "#ebf8ff";
+                    selectedIcons = cell.getAttribute('data-icons');
+
+                    selectedDisplay.classList.remove('stamped');
+                    void selectedDisplay.offsetWidth; // 리플로우 트리거
+                    selectedDisplay.classList.add('stamped');
+
+                    selectedDisplay.innerHTML = `
+                        <div style="font-size:0.74rem; color:#2563eb; font-weight:800; margin-bottom:2px;">
+                            [${selectedTime} × ${selectedPurpose}] · ${selectedIcons}
+                        </div>
+                        <div style="font-weight:800; color:#1e3a8a;">💊 ${selectedDrug}</div>
+                    `;
                 });
             });
 
-            // 맞춤형 부작용 메시지 생성 함수
+            // 부작용 메시지 생성
             function generateSideEffectMessage(patient, chosenDrug, chosenTime, chosenPurpose) {
                 const timeMatch = (chosenTime === patient.targetTime);
                 const purposeMatch = (chosenPurpose === patient.targetPurpose);
 
                 if (!timeMatch && !purposeMatch) {
-                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 현재 환자의 증상 시기와 평가 목적을 모두 다시 확인해 주세요!`;
+                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 환자의 수업 시기와 평가 목적을 모두 다시 확인해 주세요!`;
                 } else if (!timeMatch) {
                     return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 현재 환자는 '${chosenTime}' 단계가 아닌 다른 시기의 처방이 필요합니다.`;
                 } else {
-                    return `적용 시기(${chosenTime})는 정확합니다! 하지만 지금은 '${chosenPurpose}'보다 다른 목적의 평가 처방이 더 시급한 상황입니다.`;
+                    return `적용 시기(${chosenTime})는 정확합니다! 하지만 지금은 '${chosenPurpose}'보다 다른 목적의 평가 처방이 더 시급합니다.`;
                 }
             }
 
             // 처방 투여하기
             document.getElementById('btn-prescribe').addEventListener('click', () => {
                 if (!selectedDrug) {
-                    alert("⚠️ 캐비닛에서 처방할 약품 1개를 먼저 클릭해주세요!");
+                    alert("⚠️ 오른쪽 캐비닛에서 처방할 약품 1개를 먼저 클릭해주세요!");
                     return;
                 }
 
                 const currentPatient = patients[currentIdx];
-                if (selectedTime === currentPatient.targetTime && selectedPurpose === currentPatient.targetPurpose && selectedDrug === currentPatient.answer) {
+                const isCorrect = (
+                    selectedTime === currentPatient.targetTime &&
+                    selectedPurpose === currentPatient.targetPurpose &&
+                    selectedDrug === currentPatient.answer
+                );
+
+                if (isCorrect) {
+                    playTone('success');
                     setVitalStable(true);
+
+                    // 원샷 원킬 및 콤보 판정
+                    const oneshotBadge = document.getElementById('oneshot-badge');
+                    if (attemptCount === 0) {
+                        firstTrySuccessCount++;
+                        currentCombo++;
+                        if (currentCombo > maxCombo) maxCombo = currentCombo;
+                        oneshotBadge.style.display = 'inline-block';
+                        oneshotBadge.innerText = currentCombo >= 2
+                            ? `🔥 ${currentCombo}연속 원샷 명의 처방!`
+                            : `✨ 원샷 원킬! 첫 시도 명의 처방`;
+                    } else {
+                        currentCombo = 0;
+                        oneshotBadge.style.display = 'none';
+                    }
+                    comboStatus.innerText = `🔥 연속 원샷 처방: ${currentCombo}콤보`;
+
                     document.getElementById('success-explanation').innerHTML = currentPatient.successMsg;
-                    
                     const btnNext = document.getElementById('btn-next');
-                    btnNext.innerText = (currentIdx === patients.length - 1) ? "최종 인증서 받기 🏆" : "다음 환자 보기 ➔";
-                    
-                    successModal.style.display = 'flex';
+                    btnNext.innerText = (currentIdx === patients.length - 1) ? "최종 인증서 & 족보 받기 🏆" : "다음 환자 보기 ➔";
+
+                    // 0.35초 바이탈 안정화 연출 후 모달 표시
+                    setTimeout(() => {
+                        successModal.style.display = 'flex';
+                    }, 350);
                 } else {
+                    playTone('fail');
+                    attemptCount++;
+                    currentCombo = 0;
+                    comboStatus.innerText = `🔥 연속 원샷 처방: 0콤보`;
+
                     const sideEffectText = generateSideEffectMessage(currentPatient, selectedDrug, selectedTime, selectedPurpose);
                     document.getElementById('side-effect-msg').innerText = sideEffectText;
                     document.getElementById('fail-hint-text').innerHTML = currentPatient.hint;
                     failModal.style.display = 'flex';
+
+                    // 오답 시 메인 화면 힌트 자동 오픈 (시간 지연 방지)
+                    hintBanner.style.display = 'block';
+                    btnToggleHint.innerText = '🙈 수간호사 힌트 숨기기';
                 }
             });
 
             // 다음 환자 보기
             document.getElementById('btn-next').addEventListener('click', () => {
+                playTone('click');
                 successModal.style.display = 'none';
                 currentIdx++;
                 if (currentIdx < patients.length) {
                     loadPatient(currentIdx);
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                 } else {
-                    finalModal.style.display = 'flex';
+                    showFinalCertificate();
                 }
             });
 
             // 오답 모달 닫기
             document.getElementById('btn-retry').addEventListener('click', () => {
+                playTone('click');
                 failModal.style.display = 'none';
             });
 
-            // 리셋
+            // 최종 인증서 표시
+            function showFinalCertificate() {
+                stopTimer();
+                // 마지막 하트까지 초록색 완료 처리
+                for (let i = 0; i < patients.length; i++) {
+                    const slot = document.getElementById(`slot-${i}`);
+                    slot.classList.remove('active');
+                    slot.classList.add('saved');
+                    slot.innerText = `💚 #${i + 1}`;
+                }
+
+                const accuracy = Math.round((firstTrySuccessCount / patients.length) * 100);
+                document.getElementById('final-time').innerText = formatTime(secondsElapsed);
+                document.getElementById('final-accuracy').innerText = `${accuracy}%`;
+                document.getElementById('final-max-combo').innerText = `${maxCombo}콤보`;
+
+                const rankBadge = document.getElementById('final-rank-badge');
+                if (accuracy === 100 && secondsElapsed <= 420) {
+                    rankBadge.innerText = "👑 S등급 수석 평가 닥터";
+                } else if (accuracy >= 70) {
+                    rankBadge.innerText = "🏅 A등급 평가 전문의";
+                } else {
+                    rankBadge.innerText = "🩺 B등급 열정 평가의";
+                }
+
+                const summaryList = document.getElementById('summary-list');
+                summaryList.innerHTML = patients.map(p => `<div class="summary-item">${p.shortSummary}</div>`).join('');
+
+                finalModal.style.display = 'flex';
+            }
+
+            // 전체 리셋
             const resetAll = () => {
+                playTone('click');
+                stopTimer();
                 currentIdx = 0;
-                loadPatient(0);
+                firstTrySuccessCount = 0;
+                currentCombo = 0;
+                maxCombo = 0;
+                comboStatus.innerText = `🔥 연속 원샷 처방: 0콤보`;
                 finalModal.style.display = 'none';
                 successModal.style.display = 'none';
                 failModal.style.display = 'none';
@@ -801,23 +1361,26 @@
             // 환자 정보 로드
             function loadPatient(idx) {
                 setVitalStable(false);
+                attemptCount = 0;
+                updateWardHearts();
+
                 const p = patients[idx];
                 document.getElementById('patient-step-badge').innerText = p.badge;
+                document.getElementById('patient-element-tag').innerText = p.elementTag;
                 document.getElementById('patient-subject').innerText = p.subject;
                 document.getElementById('patient-desc').innerText = p.desc;
                 hintBanner.innerHTML = p.hint;
-                
+
                 hintBanner.style.display = 'none';
                 btnToggleHint.innerText = '🔍 수간호사 힌트 보기';
 
                 selectedDrug = null;
                 selectedTime = null;
                 selectedPurpose = null;
+                selectedIcons = null;
                 drugCells.forEach(c => c.classList.remove('selected'));
-                selectedDisplay.innerHTML = "아래 캐비닛에서 처방 약품 1개를 클릭하세요";
-                selectedDisplay.style.color = "var(--text-sub)";
-                selectedDisplay.style.borderColor = "#a0aec0";
-                selectedDisplay.style.backgroundColor = "white";
+                selectedDisplay.classList.remove('stamped');
+                selectedDisplay.innerHTML = "오른쪽 캐비닛에서 처방 약품을 클릭하세요";
             }
         });
     </script>
