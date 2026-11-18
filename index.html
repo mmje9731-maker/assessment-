@@ -30,7 +30,7 @@
 
         .container {
             width: 100%;
-            max-width: 1100px;
+            max-width: 1120px;
             background: var(--card-bg);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.08);
@@ -40,11 +40,11 @@
             overflow: hidden;
         }
 
-        /* 공통 모달 오버레이 스타일 */
+        /* 공통 모달 오버레이 */
         .modal-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.96);
             backdrop-filter: blur(6px);
             z-index: 100;
             display: none;
@@ -85,11 +85,11 @@
             border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3);
-            transition: all 0.2s ease;
+            transition: transform 0.2s ease;
         }
         .modal-btn:hover { transform: translateY(-2px); }
 
-        /* 헤더 스타일 */
+        /* 헤더 */
         header {
             display: flex;
             justify-content: space-between;
@@ -99,17 +99,8 @@
             margin-bottom: 25px;
         }
 
-        h1 {
-            font-size: 1.4rem;
-            margin: 0;
-            color: var(--text-main);
-        }
-
-        .subtitle {
-            font-size: 0.85rem;
-            color: var(--text-sub);
-            margin-top: 4px;
-        }
+        h1 { font-size: 1.4rem; margin: 0; color: var(--text-main); }
+        .subtitle { font-size: 0.85rem; color: var(--text-sub); margin-top: 4px; }
 
         .reset-btn {
             background: none;
@@ -119,73 +110,125 @@
             cursor: pointer;
             font-weight: 600;
             color: var(--text-sub);
-            transition: all 0.2s;
         }
         .reset-btn:hover { background: #f8fafc; color: var(--text-main); }
 
         /* 메인 레이아웃 */
         .game-layout {
             display: grid;
-            grid-template-columns: 1fr 1.2fr;
+            grid-template-columns: 1fr 1.25fr;
             gap: 25px;
         }
+        @media(max-width: 850px) { .game-layout { grid-template-columns: 1fr; } }
 
-        @media(max-width: 850px) {
-            .game-layout { grid-template-columns: 1fr; }
-        }
-
-        /* 처방전 컨셉 환자 패널 */
+        /* 환자 패널 */
         .patient-panel {
             background: #fffdfd;
-            border: 2px dashed #feb2b2;
+            border: 2px solid #fed7d7;
             border-radius: 15px;
-            padding: 25px;
+            padding: 22px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
         }
 
-        .vital-box {
+        /* 바이탈 사인 & 심전도 파형 모니터 */
+        .vital-monitor {
+            background: #1a202c;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .vital-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #fff5f5;
-            padding: 10px 15px;
-            border-radius: 8px;
-            border: 1px solid #feb2b2;
-            margin-bottom: 15px;
         }
 
         .vital-status {
-            color: var(--accent-red);
+            color: #fc8181;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
         .bpm-display {
             font-size: 1.3rem;
             font-weight: 900;
-            color: var(--accent-red);
-            animation: pulseBpm 0.8s infinite alternate;
+            color: #fc8181;
+            animation: pulseBpm 0.7s infinite alternate;
         }
 
         @keyframes pulseBpm {
             0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.06); opacity: 1; text-shadow: 0 0 8px rgba(229,62,62,0.4); }
+            100% { transform: scale(1.08); opacity: 1; text-shadow: 0 0 10px rgba(252,129,129,0.7); }
+        }
+
+        .ecg-container {
+            width: 100%;
+            height: 36px;
+            overflow: hidden;
+            position: relative;
+            background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+            background-size: 12px 12px;
+            border-radius: 4px;
+        }
+
+        .ecg-line {
+            stroke: #f56565;
+            stroke-width: 2.5;
+            fill: none;
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            animation: ecgSweep 2.2s linear infinite;
+        }
+
+        @keyframes ecgSweep {
+            0% { stroke-dashoffset: 400; }
+            100% { stroke-dashoffset: 0; }
+        }
+
+        /* 환자 정보 */
+        .patient-header-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .patient-badge {
+            background: #fed7d7;
+            color: #c53030;
+            font-weight: 800;
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            white-space: nowrap;
+        }
+
+        .patient-subject {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-main);
         }
 
         .patient-symptom-box {
             background: #fff5f5;
             border-left: 4px solid var(--accent-red);
-            padding: 15px;
+            padding: 14px;
             border-radius: 0 8px 8px 0;
-            margin-bottom: 15px;
+            margin-bottom: 14px;
         }
 
         .patient-desc {
-            font-size: 1rem;
-            line-height: 1.5;
+            font-size: 0.98rem;
+            line-height: 1.55;
             font-weight: 600;
             color: #1a202c;
             margin: 0;
@@ -198,18 +241,19 @@
             border-radius: 8px;
             font-size: 0.85rem;
             color: #744210;
-            margin-bottom: 15px;
-            font-weight: 500;
+            margin-bottom: 16px;
+            line-height: 1.45;
         }
 
-        /* 실제 처방전 스타일 박스 */
+        /* 실제 처방전 디테일 */
         .prescription-paper {
             background: #f7fafc;
-            border: 2px solid #cbd5e0;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 15px;
-            position: relative;
+            border: 1px solid #cbd5e0;
+            border-top: 4px solid var(--accent-blue);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 14px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
         }
 
         .prescription-header {
@@ -217,18 +261,25 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 8px;
-            font-weight: bold;
+            border-bottom: 1px dashed #cbd5e0;
+            padding-bottom: 6px;
+        }
+
+        .rx-symbol {
+            font-size: 1.15rem;
+            font-weight: 900;
             color: var(--accent-blue);
-            font-size: 0.95rem;
+            font-family: Georgia, serif;
         }
 
         .selected-prescription {
             background: white;
             padding: 10px 12px;
             border-radius: 6px;
-            border: 1px dashed #cbd5e0;
+            border: 1px dashed #a0aec0;
             font-size: 0.9rem;
             color: var(--text-sub);
+            text-align: center;
         }
 
         .action-btn {
@@ -240,10 +291,9 @@
             font-weight: bold;
             border-radius: 10px;
             cursor: pointer;
-            transition: background 0.2s;
-            text-align: center;
             width: 100%;
             box-shadow: 0 4px 10px rgba(229,62,62,0.3);
+            transition: background 0.2s;
         }
         .action-btn:hover { background-color: #c53030; }
 
@@ -252,7 +302,7 @@
             background: #f8fafc;
             border: 2px solid var(--border-color);
             border-radius: 15px;
-            padding: 25px;
+            padding: 22px;
         }
 
         .matrix-table {
@@ -262,14 +312,14 @@
             border-radius: 10px;
             overflow: hidden;
             border: 1px solid var(--border-color);
-            margin-top: 10px;
+            margin-top: 12px;
         }
 
         .matrix-table th, .matrix-table td {
             border: 1px solid var(--border-color);
-            padding: 10px 8px;
+            padding: 12px 8px;
             text-align: center;
-            font-size: 0.8rem;
+            font-size: 0.82rem;
         }
 
         .matrix-table th {
@@ -277,12 +327,12 @@
             color: var(--text-main);
         }
 
-        /* 약품 셀 버튼 스타일 */
         .drug-cell {
             cursor: pointer;
             transition: all 0.15s ease;
             background: white;
-            font-weight: 500;
+            font-weight: 600;
+            line-height: 1.4;
         }
 
         .drug-cell:hover {
@@ -293,71 +343,72 @@
         .drug-cell.selected {
             background-color: #bee3f8 !important;
             border: 2px solid var(--accent-blue);
-            font-weight: bold;
+            color: #1a365d;
+            font-weight: 800;
         }
 
-        /* '차시 단위 총괄평가 지양' - 밑줄 없이 오직 클릭만 차단 */
+        /* 클릭만 불가능한 비활성 셀 (밑줄 없음) */
         .drug-cell.disabled {
-            background-color: #edf2f7 !important;
-            color: #a0aec0 !important;
+            background-color: #f1f5f9 !important;
+            color: #94a3b8 !important;
             cursor: not-allowed;
         }
         .drug-cell.disabled:hover {
-            background-color: #edf2f7 !important;
-            color: #a0aec0 !important;
+            background-color: #f1f5f9 !important;
+            color: #94a3b8 !important;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- 1. 인트로(도입) 화면 -->
+        <!-- 1. 인트로 화면 -->
         <div id="intro-modal" class="modal-overlay" style="display: flex;">
-            <div style="font-size: 3rem; margin-bottom: 10px;">🩺🚨🏆</div>
+            <div style="font-size: 3rem; margin-bottom: 10px;">🩺🚨</div>
             <div class="modal-title" style="color: var(--accent-red);">수업 평가 응급실 (ASSESSMENT ER)</div>
             <p style="font-size: 1.05rem; line-height: 1.6; color: var(--text-main); margin-bottom: 30px;">
                 선생님, 학교 현장에서 IB PYP 평가 불균형으로 인한 응급 환자들이 속출하고 있습니다!<br>
-                올바른 시기와 목적에 맞는 <strong>평가 처방</strong>을 내려 위기의 환자들을 살려주세요.
+                올바른 시기와 목적에 맞는 <strong>평가 처방</strong>을 내려 위기의 환자 3명을 살려주세요.
             </p>
-            <button class="modal-btn" onclick="startSimulation()">응급실 입장하기 🩺</button>
+            <button type="button" class="modal-btn" id="btn-start">응급실 입장하기 🩺</button>
         </div>
 
-        <!-- 2. 정답 성공 팝업 모달 -->
+        <!-- 2. 정답 성공 모달 -->
         <div id="success-modal" class="modal-overlay">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">🩺✨</div>
-            <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 명의의 처방입니다!</div>
-            <div class="modal-card">
-                <p id="success-explanation" style="margin: 0; line-height: 1.5; font-size: 0.95rem; color: var(--text-main);"></p>
+            <div style="font-size: 3rem; margin-bottom: 10px;">🩺✨</div>
+            <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 명의 처방입니다!</div>
+            <div class="modal-card" style="background: #f8fafc;">
+                <p id="success-explanation" style="margin: 0; line-height: 1.6; font-size: 0.98rem; color: var(--text-main);"></p>
             </div>
-            <button class="modal-btn" onclick="nextPatientModal()">다음 환자 보기 ➔</button>
+            <button type="button" class="modal-btn" id="btn-next">다음 환자 보기 ➔</button>
         </div>
 
-        <!-- 3. 오답(아쉽습니다) 팝업 모달 -->
+        <!-- 3. 오답 모달 -->
         <div id="fail-modal" class="modal-overlay">
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">💡</div>
+            <div style="font-size: 3rem; margin-bottom: 10px;">💡</div>
             <div class="modal-title" style="color: #d69e2e;">조금 아쉽습니다! 힌트를 다시 볼까요?</div>
-            <div class="modal-card" style="background: #fffbeb; border-color: #f6e05e;">
-                <p style="margin: 0 0 10px 0; font-size: 0.9rem; color: #744210;">
+            <div class="modal-card" style="background: #f8fafc;">
+                <p style="margin: 0 0 12px 0; font-size: 0.95rem; color: var(--text-main); line-height: 1.5;">
                     선택하신 약품도 좋지만, 환자 차트의 <strong>노란색 힌트(시기와 목적)</strong>를 보고 딱 맞는 칸을 다시 골라보세요!
                 </p>
-                <div id="fail-hint-text" style="font-weight: bold; font-size: 0.9rem; color: #b7791f;"></div>
+                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.92rem; color: #744210; background: #fefcbf; padding: 10px; border-radius: 8px;"></div>
             </div>
-            <button class="modal-btn" style="background-color: #3182ce;" onclick="closeFailModal()">다시 처방 고르기</button>
+            <button type="button" class="modal-btn" id="btn-retry">다시 처방 고르기</button>
         </div>
 
-        <!-- 4. 최종 수료증 모달 -->
+        <!-- 4. 최종 인증서 모달 -->
         <div id="final-modal" class="modal-overlay">
-            <div style="font-size: 3rem; margin-bottom: 5px;">🏆🩺🎉</div>
-            <div class="modal-title" style="color: var(--accent-green); margin-bottom: 15px;">전원 소생 성공! 명예 평가 닥터 인증</div>
-            <div class="modal-card" style="border: 2px solid var(--accent-green); background: #f0fff4;">
-                <div style="background: #38a169; color: white; display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; margin-bottom: 10px;">IB PYP ASSESSMENT ER · 공식 인증</div>
-                <div style="font-size: 1.1rem; font-weight: bold; color: #22543d; margin-bottom: 8px;">3명의 위기 수업 환자 완벽 처방 완료!</div>
-                <p style="font-size: 0.85rem; color: #2f855a; margin: 0;">차시 · 중단원(LOI) · 대단원(UOI)의 균형 잡힌 평가 처방 능력을 인정합니다.</p>
+            <div style="font-size: 3rem; margin-bottom: 8px;">🏆🩺🎉</div>
+            <div class="modal-title" style="color: var(--accent-green); margin-bottom: 18px;">전원 소생 성공! 명예 평가 닥터 인증</div>
+            <div class="modal-card" style="border: 2px solid var(--accent-green); background: #e6fffa;">
+                <div style="border: 1.5px solid #38a169; color: #276749; display: inline-block; padding: 4px 14px; border-radius: 8px; font-size: 0.85rem; font-weight: 800; margin-bottom: 12px; transform: rotate(-1deg);">IB PYP ASSESSMENT ER · 공식 인증</div>
+                <div style="font-size: 1.15rem; font-weight: 800; color: #1a202c; margin-bottom: 8px;">3명의 위기 수업 환자 완벽 처방 완료!</div>
+                <p style="font-size: 0.9rem; color: #2f855a; margin: 0; line-height: 1.5;">차시 · 중단원(LOI) · 대단원(UOI)의 균형 잡힌 평가 처방 능력을 인정합니다.</p>
             </div>
-            <p style="font-size: 0.9rem; color: var(--text-sub); margin-bottom: 20px;">
+            <p style="font-size: 0.95rem; color: var(--text-sub); margin-bottom: 22px;">
                 이제 오늘 연수에서 살펴볼 <strong>IB PYP 평가 프레임워크</strong>를 우리 반 수업에도 멋지게 처방해 보세요! 👏
             </p>
-            <button class="modal-btn" style="background-color: var(--accent-green);" onclick="resetGame()">🔄 처음부터 다시 체험하기</button>
+            <button type="button" class="modal-btn" id="btn-restart-final">🔄 처음부터 다시 체험하기</button>
         </div>
 
         <!-- 헤더 -->
@@ -366,22 +417,34 @@
                 <h1>🚨 수업 평가 응급실 (ASSESSMENT ER)</h1>
                 <div class="subtitle">IB PYP 평가 매트릭스 기반 수업 심폐소생 클리닉</div>
             </div>
-            <button class="reset-btn" onclick="resetGame()">🔄 처음부터</button>
+            <button type="button" class="reset-btn" id="btn-reset">🔄 처음부터</button>
         </header>
 
-        <!-- 게임 본문 영역 -->
+        <!-- 메인 게임 영역 -->
         <div class="game-layout">
-            <!-- 환자 정보 패널 (처방전 컨셉) -->
+            <!-- 환자 차트 & 처방전 패널 -->
             <div class="patient-panel">
                 <div>
-                    <div class="vital-box">
-                        <span class="vital-status" id="vital-status-text">CRITICAL · 평가 불균형 위기</span>
-                        <span class="bpm-display" id="bpm-display">148 BPM</span>
+                    <!-- 심전도 바이탈 모니터 -->
+                    <div class="vital-monitor">
+                        <div class="vital-top">
+                            <span class="vital-status" id="vital-status-text">CRITICAL · 평가 불균형 위기</span>
+                            <span class="bpm-display" id="bpm-display">148 BPM</span>
+                        </div>
+                        <div class="ecg-container">
+                            <svg width="100%" height="36" viewBox="0 0 400 36" preserveAspectRatio="none">
+                                <polyline class="ecg-line" points="0,18 40,18 50,6 60,30 70,10 80,24 90,18 140,18 150,4 160,32 170,8 180,25 190,18 240,18 250,6 260,30 270,10 280,24 290,18 340,18 350,4 360,32 370,8 380,25 390,18 400,18" />
+                            </svg>
+                        </div>
                     </div>
-                    <div style="font-size: 0.85rem; color: var(--accent-red); font-weight: bold; margin-bottom: 8px;" id="patient-step-title">응급 환자 #1 / 3</div>
+
+                    <div class="patient-header-row">
+                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 3</span>
+                        <span class="patient-subject" id="patient-subject">6학년 사회 '인권 존중' (대단원 마무리)</span>
+                    </div>
                     
                     <div class="patient-symptom-box">
-                        <div style="font-size: 0.75rem; font-weight: bold; color: var(--accent-red); margin-bottom: 4px;">🩺 주호소 (수업 실패 증상)</div>
+                        <div style="font-size: 0.78rem; font-weight: bold; color: var(--accent-red); margin-bottom: 6px;">🩺 주호소 (수업 실패 증상)</div>
                         <p class="patient-desc" id="patient-desc">“한 달 내내 토론만 하다가, 대단원 마지막 날 갑자기 포스터 그리기로 수행평가를 봤더니 애들이 뭘 그려야 할지 몰라 멘붕에 빠졌어요!”</p>
                     </div>
 
@@ -391,54 +454,53 @@
                 </div>
 
                 <div>
-                    <!-- 실제 처방전 디테일 디자인 -->
+                    <!-- 처방전 박스 -->
                     <div class="prescription-paper">
                         <div class="prescription-header">
-                            <span>℞ 처방전 (PRESCRIPTION)</span>
-                            <span style="font-size: 0.75rem; color: var(--text-sub);">딱 1개만 골라 처방하세요!</span>
+                            <span class="rx-symbol">℞ 처방전</span>
+                            <span style="font-size: 0.78rem; color: var(--text-sub); font-weight: 600;">딱 1개만 골라 처방하세요!</span>
                         </div>
                         <div class="selected-prescription" id="selected-display">
-                            오른쪽 캐비닛에서 처방 약품 1개를 클릭하세요
+                            오른쪽에서 처방 약품 1개를 클릭하세요
                         </div>
                     </div>
-                    <button class="action-btn" onclick="applyPrescription()">⚡ 처방 투여하기</button>
+                    <button type="button" class="action-btn" id="btn-prescribe">⚡ 처방 투여하기</button>
                 </div>
             </div>
 
             <!-- 약품 캐비닛 패널 -->
             <div class="cabinet-panel">
                 <div style="margin-bottom: 12px;">
-                    <strong style="font-size: 0.95rem;">💊 평가 처방 약품 캐비닛 (IB PYP 매트릭스)</strong>
-                    <div style="font-size: 0.75rem; color: var(--text-sub);">시기와 목적이 일치하는 올바른 약품을 선택하세요.</div>
+                    <strong style="font-size: 1rem;">💊 평가 처방 약품 캐비닛 (IB PYP 매트릭스)</strong>
+                    <div style="font-size: 0.8rem; color: var(--text-sub); margin-top: 2px;">시기와 목적이 일치하는 올바른 약품을 선택하세요.</div>
                 </div>
 
                 <table class="matrix-table">
                     <thead>
                         <tr>
-                            <th>시기 \ 목적</th>
-                            <th>학습을 위한 평가<br><span style="font-size:0.7rem; font-weight:normal;">교사 관찰·피드백</span></th>
-                            <th>학습으로서의 평가<br><span style="font-size:0.7rem; font-weight:normal;">자기성찰·동료점검</span></th>
-                            <th>학습의 평가<br><span style="font-size:0.7rem; font-weight:normal;">최종 결과물·기록</span></th>
+                            <th style="width: 19%;">시기 \ 목적</th>
+                            <th style="width: 27%;">학습을 위한 평가<br><span style="font-size:0.72rem; font-weight:normal;">교사 관찰·피드백</span></th>
+                            <th style="width: 27%;">학습으로서의 평가<br><span style="font-size:0.72rem; font-weight:normal;">자기성찰·동료점검</span></th>
+                            <th style="width: 27%;">학습의 평가<br><span style="font-size:0.72rem; font-weight:normal;">최종 결과물·기록</span></th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">UOI<br><span style="font-size:0.7rem; font-weight:normal;">대단원 끝</span></td>
-                            <td class="drug-cell" onclick="selectDrug('중심아이디어 피드백')">중심아이디어 피드백</td>
-                            <td class="drug-cell" onclick="selectDrug('성장 스펙트럼 자기성찰')">성장 스펙트럼 자기성찰</td>
-                            <td class="drug-cell" onclick="selectDrug('지식 에세이 & 포트폴리오')">지식 에세이 & 포트폴리오</td>
+                            <td style="background-color: #edf2f7; font-weight: bold;">UOI<br><span style="font-size:0.72rem; font-weight:normal;">대단원 끝</span></td>
+                            <td class="drug-cell" data-drug="중심아이디어 피드백">중심아이디어 피드백</td>
+                            <td class="drug-cell" data-drug="성장 스펙트럼 자기성찰">성장 스펙트럼 자기성찰</td>
+                            <td class="drug-cell" data-drug="지식 에세이 & 포트폴리오">지식 에세이 & 포트폴리오</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">LOI<br><span style="font-size:0.7rem; font-weight:normal;">중단원</span></td>
-                            <td class="drug-cell" onclick="selectDrug('소주제 결과물 피드백')">소주제 결과물 피드백</td>
-                            <td class="drug-cell" onclick="selectDrug('탐구나침반 & 동료평가')">탐구나침반 & 동료평가</td>
-                            <td class="drug-cell" onclick="selectDrug('LOI 과정중심평가 기록')">LOI 과정중심평가 기록</td>
+                            <td style="background-color: #edf2f7; font-weight: bold;">LOI<br><span style="font-size:0.72rem; font-weight:normal;">중단원</span></td>
+                            <td class="drug-cell" data-drug="소주제 결과물 피드백">소주제 결과물 피드백</td>
+                            <td class="drug-cell" data-drug="탐구나침반 & 동료평가">탐구나침반 & 동료평가</td>
+                            <td class="drug-cell" data-drug="LOI 과정중심평가 기록">LOI 과정중심평가 기록</td>
                         </tr>
                         <tr>
-                            <td style="background-color: #edf2f7; font-weight: bold;">차시<br><span style="font-size:0.7rem; font-weight:normal;">1시간 수업</span></td>
-                            <td class="drug-cell" onclick="selectDrug('수업 중 관찰 & 즉각 코칭')">수업 중 관찰 & 즉각 코칭</td>
-                            <td class="drug-cell" onclick="selectDrug('수업 마무리 자기점검')">수업 마무리 자기점검</td>
-                            <!-- 밑줄 없이 클릭만 원천 차단된 셀 -->
+                            <td style="background-color: #edf2f7; font-weight: bold;">차시<br><span style="font-size:0.72rem; font-weight:normal;">1시간 수업</span></td>
+                            <td class="drug-cell" data-drug="수업 중 관찰 & 즉각 코칭">수업 중 관찰 & 즉각 코칭</td>
+                            <td class="drug-cell" data-drug="수업 마무리 자기점검">수업 마무리 자기점검</td>
                             <td class="drug-cell disabled">차시 단위 총괄평가 지양</td>
                         </tr>
                     </tbody>
@@ -448,56 +510,124 @@
     </div>
 
     <script>
-        // 3명의 환자 데이터 및 정답, 힌트 매칭
-        const patients = [
-            {
-                step: 1,
-                title: "응급 환자 #1 / 3 | 6학년 사회 '인권 존중' (대단원 마무리)",
-                desc: "“한 달 내내 토론만 하다가, 대단원 마지막 날 갑자기 포스터 그리기로 수행평가를 봤더니 애들이 뭘 그려야 할지 몰라 멘붕에 빠졌어요!”",
-                hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 시기에 아이들이 스스로 기준표(루브릭)를 보고 점검하게 하려면?",
-                answer: "성장 스펙트럼 자기성찰",
-                successMsg: "<strong>정확합니다!</strong> 대단원 수행평가 전에 평가 기준표(루브릭)를 보고 아이들 스스로 점검하는 [UOI(대단원) × 학습으로서의 평가] 처방이 있으면 멘붕을 막 수 있습니다!"
-            },
-            {
-                step: 2,
-                title: "응급 환자 #2 / 3 | 5학년 과학 '생태계' (1시간 모둠 수업 중)",
-                desc: "“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”",
-                hint: "🔍 <strong>힌트:</strong> [1시간 수업(차시)] 중에 [교사가 관찰하고 피드백]을 주려면?",
-                answer: "수업 중 관찰 & 즉각 코칭",
-                successMsg: "<strong>훌륭합니다!</strong> 모둠 활동 중에 교사가 직접 돌며 관찰하고 실시간 피드백을 주는 [차시(1시간) × 학습을 위한 평가] 처방으로 무임승차를 방지할 수 있습니다!"
-            },
-            {
-                step: 3,
-                title: "응급 환자 #3 / 3 | 4학년 국어 '주장하는 글쓰기' (대단원 종합)",
-                desc: "“수업마다 스티커도 붙이고 칭찬도 많이 했는데, 정작 단원이 끝나고 나니 아이들이 배운 개념을 종합해서 써먹은 최종 결과물이 하나도 안 남았어요.”",
-                hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 끝에 배운 개념을 연결한 [최종 결과물(학습의 평가)]을 남기려면?",
-                answer: "지식 에세이 & 포트폴리오",
-                successMsg: "<strong>완벽합니다!</strong> 대단원 학습이 끝날 때 개념을 연결한 최종 결과물을 기록하는 [UOI(대단원) × 학습의 평가] 처방으로 훌륭한 포트폴리오가 남게 됩니다!"
-            }
-        ];
+        document.addEventListener('DOMContentLoaded', () => {
+            const patients = [
+                {
+                    badge: "응급 환자 #1 / 3",
+                    subject: "6학년 사회 '인권 존중' (대단원 마무리)",
+                    desc: "“한 달 내내 토론만 하다가, 대단원 마지막 날 갑자기 포스터 그리기로 수행평가를 봤더니 애들이 뭘 그려야 할지 몰라 멘붕에 빠졌어요!”",
+                    hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 시기에 아이들이 스스로 기준표(루브릭)를 보고 점검하게 하려면?",
+                    answer: "성장 스펙트럼 자기성찰",
+                    successMsg: "<strong>정확합니다!</strong> 대단원 수행평가 전에 평가 기준표(루브릭)를 보고 아이들 스스로 점검하는 <strong>[UOI(대단원) × 학습으로서의 평가]</strong> 처방이 있으면 멘붕을 막을 수 있습니다!"
+                },
+                {
+                    badge: "응급 환자 #2 / 3",
+                    subject: "5학년 과학 '생태계' (1시간 모둠 수업 중)",
+                    desc: "“모둠 토의 시간인데 글씨 잘 쓰는 1명만 다 적고 나머지 3명은 멍하니 놀고 있어요. 수업 중에 바로 개입해서 고쳐주고 싶어요!”",
+                    hint: "🔍 <strong>힌트:</strong> [1시간 수업(차시)] 중에 [교사가 관찰하고 피드백]을 주려면?",
+                    answer: "수업 중 관찰 & 즉각 코칭",
+                    successMsg: "<strong>훌륭합니다!</strong> 모둠 활동 중에 교사가 직접 돌며 관찰하고 실시간 피드백을 주는 <strong>[차시(1시간) × 학습을 위한 평가]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
+                },
+                {
+                    badge: "응급 환자 #3 / 3",
+                    subject: "4학년 국어 '주장하는 글쓰기' (대단원 종합)",
+                    desc: "“수업마다 스티커도 붙이고 칭찬도 많이 했는데, 정작 단원이 끝나고 나니 아이들이 배운 개념을 종합해서 써먹은 최종 결과물이 하나도 안 남았어요.”",
+                    hint: "🔍 <strong>힌트:</strong> [대단원(UOI)] 끝에 배운 개념을 연결한 [최종 결과물(학습의 평가)]을 남기려면?",
+                    answer: "지식 에세이 & 포트폴리오",
+                    successMsg: "<strong>완벽합니다!</strong> 대단원 학습이 끝날 때 배운 개념을 연결해 최종 결과물을 남기는 <strong>[UOI(대단원) × 학습의 평가]</strong> 처방으로 의미 있는 포트폴리오를 완성할 수 있습니다!"
+                }
+            ];
 
-        let currentPatientIndex = 0;
-        let selectedDrugName = null;
+            let currentIdx = 0;
+            let selectedDrug = null;
 
-        // 게임 시작
-        function startSimulation() {
-            document.getElementById('intro-modal').style.display = 'none';
-        }
+            const introModal = document.getElementById('intro-modal');
+            const successModal = document.getElementById('success-modal');
+            const failModal = document.getElementById('fail-modal');
+            const finalModal = document.getElementById('final-modal');
+            const selectedDisplay = document.getElementById('selected-display');
 
-        // 약품 선택 함수
-        function selectDrug(drugName) {
-            // 비활성화된 항목 클릭 방지
-            if (drugName === '차시 단위 총괄평가 지양') return;
-
-            selectedDrugName = drugName;
-            
-            // 모든 셀의 선택 효과 제거
-            document.querySelectorAll('.drug-cell').forEach(cell => {
-                cell.classList.remove('selected');
+            // 인트로 닫기
+            document.getElementById('btn-start').addEventListener('click', () => {
+                introModal.style.display = 'none';
             });
 
-            // 클릭한 셀에 선택 효과 부여
-            event.currentTarget.classList.add('selected');
+            // 약품 셀 클릭 이벤트 바인딩 (disabled 제외)
+            const drugCells = document.querySelectorAll('.drug-cell:not(.disabled)');
+            drugCells.forEach(cell => {
+                cell.addEventListener('click', () => {
+                    drugCells.forEach(c => c.classList.remove('selected'));
+                    cell.classList.add('selected');
+                    selectedDrug = cell.getAttribute('data-drug');
+                    
+                    selectedDisplay.innerHTML = `💊 <strong style="color:var(--accent-blue);">${selectedDrug}</strong>`;
+                    selectedDisplay.style.color = "var(--text-main)";
+                    selectedDisplay.style.borderColor = "var(--accent-blue)";
+                    selectedDisplay.style.backgroundColor = "#ebf8ff";
+                });
+            });
 
-            // 처방전 박스에 선택된 약품명 반영
-            document.getElementById('selected-display').innerHTML =
+            // 처방 투여하기
+            document.getElementById('btn-prescribe').addEventListener('click', () => {
+                if (!selectedDrug) {
+                    alert("⚠️ 오른쪽 캐비닛에서 처방할 약품 1개를 먼저 클릭해주세요!");
+                    return;
+                }
+
+                const currentPatient = patients[currentIdx];
+                if (selectedDrug === currentPatient.answer) {
+                    document.getElementById('success-explanation').innerHTML = currentPatient.successMsg;
+                    successModal.style.display = 'flex';
+                } else {
+                    document.getElementById('fail-hint-text').innerHTML = currentPatient.hint;
+                    failModal.style.display = 'flex';
+                }
+            });
+
+            // 다음 환자 보기
+            document.getElementById('btn-next').addEventListener('click', () => {
+                successModal.style.display = 'none';
+                currentIdx++;
+                if (currentIdx < patients.length) {
+                    loadPatient(currentIdx);
+                } else {
+                    finalModal.style.display = 'flex';
+                }
+            });
+
+            // 오답 모달 닫기
+            document.getElementById('btn-retry').addEventListener('click', () => {
+                failModal.style.display = 'none';
+            });
+
+            // 리셋 버튼들
+            const resetAll = () => {
+                currentIdx = 0;
+                loadPatient(0);
+                finalModal.style.display = 'none';
+                successModal.style.display = 'none';
+                failModal.style.display = 'none';
+                introModal.style.display = 'flex';
+            };
+            document.getElementById('btn-reset').addEventListener('click', resetAll);
+            document.getElementById('btn-restart-final').addEventListener('click', resetAll);
+
+            // 환자 정보 업데이트 함수
+            function loadPatient(idx) {
+                const p = patients[idx];
+                document.getElementById('patient-step-badge').innerText = p.badge;
+                document.getElementById('patient-subject').innerText = p.subject;
+                document.getElementById('patient-desc').innerText = p.desc;
+                document.getElementById('patient-hint').innerHTML = p.hint;
+
+                selectedDrug = null;
+                drugCells.forEach(c => c.classList.remove('selected'));
+                selectedDisplay.innerHTML = "오른쪽에서 처방 약품 1개를 클릭하세요";
+                selectedDisplay.style.color = "var(--text-sub)";
+                selectedDisplay.style.borderColor = "#a0aec0";
+                selectedDisplay.style.backgroundColor = "white";
+            }
+        });
+    </script>
+</body>
+</html>
