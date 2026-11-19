@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>수업 평가 응급실 - 현장 단서 추리 시뮬레이션</title>
+  <title>IB PYP 수업 평가 응급실 - 현장 단서 추리 시뮬레이션</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
     :root {
@@ -40,7 +40,7 @@
 
     .container {
       width: 100%;
-      max-width: 1300px;
+      max-width: 1360px;
       background: var(--card-bg);
       border-radius: 20px;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
@@ -421,7 +421,7 @@
     /* 메인 2단 레이아웃 */
     .game-layout {
       display: grid;
-      grid-template-columns: 1.05fr 1.25fr;
+      grid-template-columns: 0.96fr 1.34fr;
       gap: 20px;
       align-items: start;
     }
@@ -604,7 +604,7 @@
       word-break: keep-all;
     }
 
-    /* 교실 현장 증거 3종 탭 시스템 (일기 · 학생 증언 · 현장 채증물) */
+    /* 교실 현장 증거 3종 탭 시스템 */
     .clue-system {
       background: var(--surface-sub);
       border: 1.5px solid var(--border-color);
@@ -668,7 +668,6 @@
       color: #334155;
     }
 
-    /* 증거 유형별 실제감 연출 */
     .clue-content-box {
       background: #ffffff;
       border-radius: 10px;
@@ -811,15 +810,15 @@
       cursor: not-allowed;
     }
 
-    /* 우측: 약품 캐비닛 패널 */
+    /* 우측: IB PYP 약품 캐비닛 패널 */
     .cabinet-panel {
       background: var(--surface-sub);
       border: 1.5px solid var(--border-color);
       border-radius: 16px;
-      padding: 20px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .cabinet-top-bar {
@@ -842,10 +841,10 @@
       font-size: 0.8rem;
       font-weight: 700;
       background: #ffffff;
-      padding: 6px 10px;
+      padding: 6px 11px;
       border-radius: 8px;
       border: 1px solid var(--border-color);
-      color: var(--text-sub);
+      color: var(--text-body);
     }
 
     .mobile-scroll-hint {
@@ -873,18 +872,44 @@
     .matrix-table th,
     .matrix-table td {
       border: 1px solid #cbd5e1;
-      padding: 12px 9px;
-      text-align: center;
-      font-size: 0.85rem;
-      line-height: 1.45;
+      padding: 9px 8px;
+      font-size: 0.83rem;
+      line-height: 1.42;
       word-break: keep-all;
     }
 
-    .group-header-process {
+    .corner-header {
       background-color: #fef3c7 !important;
-      color: #92400e !important;
+      color: #78350f !important;
+      text-align: left !important;
+      vertical-align: middle;
+      width: 128px;
+      padding: 9px 10px !important;
+    }
+
+    .corner-title {
+      font-weight: 800;
+      font-size: 0.82rem;
+      border-bottom: 1px dashed #d97706;
+      padding-bottom: 4px;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .corner-elements {
+      font-size: 0.75rem;
+      font-weight: 700;
+      line-height: 1.45;
+      color: #451a03;
+    }
+
+    .group-header-process {
+      background-color: #fef9c3 !important;
+      color: #854d0e !important;
       font-weight: 800 !important;
       font-size: 0.88rem !important;
+      text-align: center;
     }
 
     .group-header-result {
@@ -892,67 +917,115 @@
       color: #166534 !important;
       font-weight: 800 !important;
       font-size: 0.88rem !important;
+      text-align: center;
     }
 
     .sub-header {
       background-color: #f8fafc !important;
-      color: #1e293b !important;
+      color: #0f172a !important;
       font-weight: 800 !important;
+      text-align: center;
+      font-size: 0.82rem !important;
     }
 
-    .time-col {
-      background-color: #f8fafc;
-      font-weight: 800;
-      color: #0f172a;
-      font-size: 0.86rem !important;
-      width: 84px;
+    .sub-header small {
+      display: block;
+      font-weight: 600;
+      font-size: 0.72rem;
+      color: var(--text-sub);
     }
 
-    .drug-cell {
+    .area-col {
+      background-color: #fffbeb;
+      text-align: left !important;
+      vertical-align: top;
+      padding: 10px 9px !important;
+    }
+
+    .area-badge {
+      display: inline-block;
+      background: #f59e0b;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 0.82rem;
+      padding: 2px 8px;
+      border-radius: 6px;
+      margin-bottom: 7px;
+    }
+
+    .area-focus-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #334155;
+      line-height: 1.35;
+    }
+
+    .matrix-cell {
+      background: #ffffff;
+      vertical-align: top;
+      text-align: left !important;
+      padding: 7px !important;
+    }
+
+    .matrix-cell.disabled {
+      background-color: #f8fafc !important;
+      color: #94a3b8 !important;
+      text-align: center !important;
+      vertical-align: middle;
+      font-weight: 600;
+      font-size: 0.8rem;
+    }
+
+    .drug-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .drug-item {
+      border: 1.5px solid #e2e8f0;
+      background: #ffffff;
+      border-radius: 9px;
+      padding: 8px 9px;
       cursor: pointer;
       transition: all 0.15s ease;
-      background: #ffffff;
-      vertical-align: middle;
     }
 
-    .drug-cell:hover:not(.disabled):not(.eliminated) {
+    .drug-item:hover:not(.eliminated) {
+      border-color: #93c5fd;
       background-color: #eff6ff;
     }
 
-    .drug-cell.selected {
+    .drug-item.selected {
       background-color: #dbeafe !important;
-      box-shadow: inset 0 0 0 2.5px var(--accent-blue);
+      border-color: var(--accent-blue) !important;
+      box-shadow: 0 0 0 1.5px var(--accent-blue);
+    }
+
+    .drug-item.eliminated {
+      background-color: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
+      opacity: 0.38;
+      cursor: not-allowed;
+      text-decoration: line-through;
     }
 
     .drug-title {
-      font-weight: 700;
+      font-weight: 800;
+      font-size: 0.82rem;
       color: #0f172a;
-      line-height: 1.4;
-      margin-bottom: 6px;
+      margin-bottom: 3px;
+      line-height: 1.35;
     }
 
-    .drug-icons {
-      display: inline-block;
-      font-size: 0.78rem;
-      font-weight: 600;
+    .drug-desc {
+      font-size: 0.75rem;
       color: #475569;
-      background: #f1f5f9;
-      padding: 2px 7px;
-      border-radius: 6px;
-    }
-
-    .drug-cell.disabled {
-      background-color: #f8fafc !important;
-      color: #94a3b8 !important;
-      cursor: not-allowed;
-      font-weight: 600;
-    }
-
-    .drug-cell.eliminated {
-      background-color: #e2e8f0 !important;
-      opacity: 0.4;
-      cursor: not-allowed;
-      text-decoration: line-through;
+      line-height: 1.38;
+      font-weight: 500;
     }
 
     /* 최종 인증서 카드 */
@@ -1074,8 +1147,8 @@
       color: #1e40af;
     }
 
-    /* 태블릿 이하 (960px 이하: 1단 스택 전환) */
-    @media (max-width: 960px) {
+    /* 태블릿 이하 (1024px 이하: 1단 스택 전환) */
+    @media (max-width: 1024px) {
       body {
         padding: 10px;
       }
@@ -1184,7 +1257,7 @@
         min-height: 105px;
       }
 
-      /* 모바일 하단 고정 처방 바 (스크롤 왕복 최소화) */
+      /* 모바일 하단 고정 처방 바 */
       .prescription-paper {
         position: sticky;
         bottom: 8px;
@@ -1212,13 +1285,7 @@
       }
 
       .matrix-table {
-        min-width: 550px;
-      }
-
-      .matrix-table th,
-      .matrix-table td {
-        padding: 10px 7px;
-        font-size: 0.82rem;
+        min-width: 680px;
       }
 
       /* 모바일 모달 */
@@ -1255,7 +1322,7 @@
       }
 
       .pledge-select {
-        font-size: 16px !important; /* iOS Safari 강제 줌 방지 */
+        font-size: 16px !important;
         min-height: 44px;
       }
     }
@@ -1266,8 +1333,8 @@
 <div class="container">
   <header>
     <div class="header-left">
-      <h1>🏥 수업 평가 응급실</h1>
-      <div class="subtitle">교실 현장 증거(일기·증언·채증물)로 평가 처방을 내리는 추리 시뮬레이션</div>
+      <h1>🏥 IB PYP 수업 평가 응급실</h1>
+      <div class="subtitle">교실 현장 증거(일기·증언·채증물)로 UOI·LOI·차시별 평가 처방을 내리는 시뮬레이션</div>
     </div>
     <div class="header-controls">
       <div class="timer-pill" id="timer-display">⏱ 04:00</div>
@@ -1342,7 +1409,7 @@
           <span style="font-size: 0.78rem; color: var(--text-sub); font-weight: 700;" id="rx-hint">약품표에서 1개 선택</span>
         </div>
         <div class="selected-prescription" id="selected-prescription">
-          우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요
+          우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요
         </div>
         <button class="action-btn locked" id="administer-btn" onclick="submitPrescription()">
           🔒 현장 증거 3종을 먼저 확인하세요
@@ -1350,13 +1417,14 @@
       </div>
     </section>
 
-    <!-- 우측: 2차원 평가 약품 캐비닛 -->
+    <!-- 우측: IB PYP 2차원 평가 약품 캐비닛 -->
     <section class="cabinet-panel">
       <div class="cabinet-top-bar">
-        <span class="cabinet-title">💊 수업 평가 약품 캐비닛</span>
+        <span class="cabinet-title">💊 IB PYP 평가 약품 캐비닛</span>
         <div class="element-legend">
-          <span>🟡 과정 중심</span>
-          <span>🟢 결과 중심</span>
+          <span>📖 지식·이해</span>
+          <span>✍️ 과정·기능</span>
+          <span>❤️ 가치·태도</span>
         </div>
       </div>
       <div class="mobile-scroll-hint">← 좌우로 밀어서 전체 약품표 보기 →</div>
@@ -1365,15 +1433,24 @@
         <table class="matrix-table" id="matrix-table">
           <thead>
             <tr>
-              <th rowspan="2" class="time-col">평가 시기</th>
-              <th colspan="2" class="group-header-process">🟡 과정 중심 (배움의 흐름)</th>
-              <th colspan="2" class="group-header-result">🟢 결과 중심 (도달도 확인)</th>
+              <th rowspan="2" class="corner-header">
+                <div class="corner-title">
+                  <span>영역</span>
+                  <span>평가 요소</span>
+                </div>
+                <div class="corner-elements">
+                  <div>📖 지식·이해</div>
+                  <div>✍️ 과정·기능</div>
+                  <div>❤️ 가치·태도</div>
+                </div>
+              </th>
+              <th colspan="2" class="group-header-process">학습 과정 (형성평가)</th>
+              <th colspan="1" class="group-header-result">학습 결과 (총괄평가)</th>
             </tr>
             <tr>
-              <th class="sub-header">교사 관찰·피드백</th>
-              <th class="sub-header">학생 자기·동료</th>
-              <th class="sub-header">수행·산출물</th>
-              <th class="sub-header">지필·단답</th>
+              <th class="sub-header">학습을 위한 평가<small>(Assessment for Learning)</small></th>
+              <th class="sub-header">학습으로서의 평가<small>(Assessment as Learning)</small></th>
+              <th class="sub-header">학습의 평가<small>(Assessment of Learning)</small></th>
             </tr>
           </thead>
           <tbody id="matrix-body"></tbody>
@@ -1383,12 +1460,12 @@
   </main>
 </div>
 
-<!-- 1. 게임 규칙 안내 모달 (직관적 3단계) -->
+<!-- 1. 게임 규칙 안내 모달 -->
 <div class="modal-overlay" id="guide-modal">
   <div class="modal-inner">
     <div class="modal-emoji">🩺</div>
-    <h2 class="modal-title">수업 평가 응급실 근무 지침</h2>
-    <p class="modal-desc">위기에 빠진 6개 교실의 실제 증거를 분석해 정확한 평가 처방을 내리세요.</p>
+    <h2 class="modal-title">IB PYP 수업 평가 응급실 근무 지침</h2>
+    <p class="modal-desc">위기에 빠진 6개 탐구 교실의 실제 증거를 분석해 정확한 IB 평가 처방을 내리세요.</p>
 
     <div class="flow-diagram">
       <div class="flow-chip">1️⃣ 현장 증거 3종 확인</div>
@@ -1403,11 +1480,11 @@
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">2</div>
-        <div class="step-text-wrap"><strong>시기 × 초점 매칭:</strong> [수업 전/중/후]와 [과정/결과] 교차점에서 약품을 고르세요.</div>
+        <div class="step-text-wrap"><strong>영역 × 평가 목적 매칭:</strong> [UOI / LOI / 차시]와 [학습을 위한·학습으로서의·학습의 평가] 교차점을 찾으세요.</div>
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">3</div>
-        <div class="step-text-wrap"><strong>실천 후속 조치 선택:</strong> 약품 투약 후 교실에 적용할 구체적 실행안을 고르면 완치됩니다.</div>
+        <div class="step-text-wrap"><strong>실천 후속 조치 선택:</strong> 약품 투약 후 탐구 교실에 적용할 구체적 실행안을 고르면 완치됩니다.</div>
       </div>
     </div>
 
@@ -1437,11 +1514,11 @@
 
     <div class="id-card">
       <div class="id-card-header">
-        <span>수업 평가 응급의학 인증서</span>
+        <span>IB PYP 수업 평가 응급의학 인증서</span>
         <span class="rank-badge" id="rank-badge">수석 평가 전문의</span>
       </div>
       <div style="font-size: 0.92rem; font-weight: 800; color: #14532d;" id="result-subtitle">
-        모든 교실의 평가 부작용을 성공적으로 치료했습니다.
+        모든 탐구 교실의 평가 부작용을 성공적으로 치료했습니다.
       </div>
       <div class="stats-grid">
         <div class="stat-box">
@@ -1462,17 +1539,17 @@
     <div class="summary-list" id="summary-list"></div>
 
     <div class="pledge-box">
-      <div class="pledge-label">✍️ 나의 교실 평가 다짐 만들기</div>
+      <div class="pledge-label">✍️ 나의 탐구 교실 평가 다짐 만들기</div>
       <div class="pledge-row">
         <select class="pledge-select" id="pledge-when" onchange="updatePledge()">
-          <option value="수업 시작 전">수업 시작 전</option>
-          <option value="배움이 일어나는 수업 중" selected>배움이 일어나는 수업 중</option>
-          <option value="수행을 마친 직후">수행을 마친 직후</option>
+          <option value="차시 탐구 활동 중">차시 탐구 활동 중</option>
+          <option value="LOI 탐구 과정 중" selected>LOI 탐구 과정 중</option>
+          <option value="UOI 단원을 마무리하며">UOI 단원을 마무리하며</option>
         </select>
         <select class="pledge-select" id="pledge-what" onchange="updatePledge()">
-          <option value="명확한 루브릭으로 구체적 피드백을 주겠습니다." selected>명확한 루브릭으로 구체적 피드백을 주겠습니다.</option>
-          <option value="학생 스스로 성찰하고 동료와 배움을 나누게 하겠습니다.">학생 스스로 성찰하고 동료와 배움을 나누게 하겠습니다.</option>
-          <option value="점수 통보보다 성장을 돕는 관찰 기록을 남기겠습니다.">점수 통보보다 성장을 돕는 관찰 기록을 남기겠습니다.</option>
+          <option value="ATL POI와 수행지시어를 활용해 구체적인 피드백을 주겠습니다." selected>ATL POI와 수행지시어를 활용해 구체적인 피드백을 주겠습니다.</option>
+          <option value="탐구나침반과 준거를 통해 학생 스스로 성찰하고 목표를 세우게 하겠습니다.">탐구나침반과 준거를 통해 학생 스스로 성찰하고 목표를 세우게 하겠습니다.</option>
+          <option value="학습한 개념들을 새로운 문제 상황에 연결·적용하도록 평가하겠습니다.">학습한 개념들을 새로운 문제 상황에 연결·적용하도록 평가하겠습니다.</option>
         </select>
       </div>
       <div class="pledge-preview" id="pledge-preview"></div>
@@ -1493,242 +1570,374 @@
 </div>
 
 <script>
-  // 2차원 평가 약품 매트릭스 (3행 x 4열)
+  // 첨부 이미지 기반 IB PYP 평가 매트릭스 (3행: UOI/LOI/차시 × 3열: 학습을 위한/학습으로서의/학습의 평가)
   const MATRIX_ROWS = [
     {
-      time: "수업 전\n(진단)",
+      area: "UOI",
+      focuses: [
+        "📖 중심아이디어",
+        "✍️ UOI 수준 ATL",
+        "❤️ 학습자 상"
+      ],
       cells: [
-        { id: "pre-diag", title: "출발점 행동 진단 체크리스트", icons: "🔍진단 · 📋관찰" },
-        { id: "pre-goal", title: "배움 목표 자기점검표", icons: "🎯목표 · 🙋자기" },
-        { id: "disabled-1", disabled: true, title: "해당 없음" },
-        { id: "pre-quiz", title: "기초 학력 진단 퀴즈", icons: "📝지필 · 📊수준" }
+        // 1열: 학습을 위한 평가 (Assessment for Learning)
+        {
+          items: [
+            {
+              id: "uoi-for-ci",
+              areaLabel: "UOI · 학습을 위한 평가",
+              title: "중심아이디어 작성 (📖)",
+              desc: "명시된 개념에 따라 학습한 UOI의 중심아이디어 작성 내용 파악 및 피드백 제공"
+            },
+            {
+              id: "uoi-for-atl",
+              areaLabel: "UOI · 학습을 위한 평가",
+              title: "ATL 성장 스펙트럼 (✍️)",
+              desc: "기능 수준을 ATL POI를 활용하여 판단하고 수행지시어(Command Term)를 활용하여 피드백 제공"
+            }
+          ]
+        },
+        // 2열: 학습으로서의 평가 (Assessment as Learning)
+        {
+          items: [
+            {
+              id: "uoi-as-lp",
+              areaLabel: "UOI · 학습으로서의 평가",
+              title: "학습자상 및 ATL 성장 스펙트럼 (❤️, ✍️)",
+              desc: "준거에 따라 자신의 학습 활동 성찰 및 새로운 목표 설정"
+            }
+          ]
+        },
+        // 3열: 학습의 평가 (Assessment of Learning)
+        {
+          items: [
+            {
+              id: "uoi-of-essay",
+              areaLabel: "UOI · 학습의 평가",
+              title: "지식 에세이 (📖)",
+              desc: "UOI를 통해 학습한 개념들을 연결하고 적용하여 새로운 문제 상황에서 어떻게 활용하는지 파악, 기록, 통지"
+            },
+            {
+              id: "uoi-of-port",
+              areaLabel: "UOI · 학습의 평가",
+              title: "학습 포트폴리오 (📖, ✍️)",
+              desc: "UOI 학습 과정에서 자신의 결과물들을 포트폴리오로 작성하여 학습의 과정과 결과를 파악, 기록, 통지"
+            },
+            {
+              id: "uoi-of-lp",
+              areaLabel: "UOI · 학습의 평가",
+              title: "학습자상 및 ATL 성장 스펙트럼 (❤️, ✍️)",
+              desc: "학습자의 자기평가 또는 교사의 관찰을 통해 학습자가 UOI 학습으로 함양한 가치와 태도를 파악, 기록, 통지"
+            }
+          ]
+        }
       ]
     },
     {
-      time: "수업 중\n(형성)",
+      area: "LOI",
+      focuses: [
+        "📖 탐구목록별 일반화 문장",
+        "✍️ LOI 수준 ATL",
+        "❤️ 협업, 주도성, 성찰"
+      ],
       cells: [
-        { id: "mid-obs", title: "단계별 과정 관찰·피드백", icons: "⏱️과정 · 💬교사" },
-        { id: "mid-peer", title: "동료 피드백·자기 성찰일지", icons: "👥동료 · 🪞성찰" },
-        { id: "mid-perf", title: "실기·수행 과정 포트폴리오", icons: "🎨실기 · 📂누적" },
-        { id: "mid-exit", title: "형성평가 3문항 출구티켓", icons: "🎫즉시 · ✏️단답" }
+        // 1열: 학습을 위한 평가
+        {
+          items: [
+            {
+              id: "loi-for-prod",
+              areaLabel: "LOI · 학습을 위한 평가",
+              title: "학습 결과물 (📖)",
+              desc: "LOI 수준에서 학생의 개념이해 수준 파악 및 피드백 제공 (Ongoing assessment)"
+            },
+            {
+              id: "loi-for-obs",
+              areaLabel: "LOI · 학습을 위한 평가",
+              title: "학습 활동 관찰 (✍️, ❤️)",
+              desc: "LOI 수준에서 학생의 탐구 활동 및 개념 이해 수준 파악, 맞춤형 피드백 제공"
+            }
+          ]
+        },
+        // 2열: 학습으로서의 평가
+        {
+          items: [
+            {
+              id: "loi-as-prod",
+              areaLabel: "LOI · 학습으로서의 평가",
+              title: "학습 결과물 (📖)",
+              desc: "자기평가 및 동료평가"
+            },
+            {
+              id: "loi-as-refl",
+              areaLabel: "LOI · 학습으로서의 평가",
+              title: "탐구 과정 성찰 (✍️, ❤️)",
+              desc: "탐구나침반 활용, 자기평가 및 동료평가 실시, 준거에 따라 자신의 학습 활동 성찰"
+            }
+          ]
+        },
+        // 3열: 학습의 평가
+        {
+          items: [
+            {
+              id: "loi-of-ongoing",
+              areaLabel: "LOI · 학습의 평가",
+              title: "LOI 관련 과정중심평가 결과 (📖, ✍️, ❤️)",
+              desc: "LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 또는 학습 수행 수준을 파악하고 기록"
+            }
+          ]
+        }
       ]
     },
     {
-      time: "수업 후\n(총괄)",
+      area: "차시",
+      focuses: [
+        "📖 차시 내 학습한 개념",
+        "✍️ 차시 수준 ATL",
+        "❤️ 협업 및 주도성"
+      ],
       cells: [
-        { id: "post-coach", title: "개별 성장 상담·보충 코칭", icons: "🩺상담 · 🌱성장" },
-        { id: "post-self", title: "성장 포트폴리오 자기평가회", icons: "📖회고 · 🙋주도" },
-        { id: "post-rubric", title: "분석적 채점 기준표(루브릭)", icons: "📏기준 · 🎯산출" },
-        { id: "post-test", title: "단원 성취도 지필평가", icons: "📄총괄 · 💯점수" }
+        // 1열: 학습을 위한 평가
+        {
+          items: [
+            {
+              id: "les-for-prod",
+              areaLabel: "차시 · 학습을 위한 평가",
+              title: "학습 결과물 (📖)",
+              desc: "차시 수준에서 학생의 개념이해 수준 파악 및 피드백 제공"
+            },
+            {
+              id: "les-for-obs",
+              areaLabel: "차시 · 학습을 위한 평가",
+              title: "학습 활동 관찰 (✍️, ❤️)",
+              desc: "차시 수준에서 학생의 탐구 수준 파악 및 맞춤형 피드백 제공"
+            }
+          ]
+        },
+        // 2열: 학습으로서의 평가
+        {
+          items: [
+            {
+              id: "les-as-refl",
+              areaLabel: "차시 · 학습으로서의 평가",
+              title: "학습 결과물 및 활동 내용 (📖, ✍️, ❤️)",
+              desc: "자기평가 및 동료평가, 준거에 따라 자신의 개념 이해 및 학습 활동 성찰"
+            }
+          ]
+        },
+        // 3열: 학습의 평가 (비어 있음)
+        {
+          disabled: true,
+          label: "총괄평가 미실시\n(해당 없음)"
+        }
       ]
     }
   ];
 
-  // 6개 병동 시나리오 (교사 성찰 일기 · 학생 증언 · 현장 채증물)
+  // IB PYP 평가 매트릭스에 100% 매칭되는 6개 병동 시나리오
   const CASES = [
     {
       ward: "1번 병동",
-      subject: "4학년 사회 · 모둠 포스터 프로젝트 (무임승차 증후군)",
+      subject: "UOI 단원 마무리 · 우리가 속한 시간과 공간 (개념 전이 실패)",
       bpm: 142,
-      scene: "• 수업 형태: 3차시 모둠별 우리 고장 안내 포스터 제작\n• 이상 징후: 최종 완성작만 채점해 무임승차와 역할 편중 발생",
+      scene: "• 평가 영역: UOI 단원 전체 마무리 총괄평가(학습의 평가) 단계\n• 이상 징후: 단편 용어 암기 시험만 실시해 개념 연결 및 새 문제 상황 적용 확인 불가",
       clues: [
         {
           type: "diary",
           meta: "📓 10월 14일 교사 성찰 일기",
-          text: "3차시 동안 아이들이 꽤 바쁘게 움직인 것 같았는데, 막상 완성된 포스터만 걷어서 점수를 매기려니 막막하다. <span class='clue-highlight'>수업 도중 누가 자료를 찾고 토의에 참여했는지 기록해 둔 게 전혀 없어서</span> 결과물만 보고 점수를 줄 수밖에 없었다."
+          text: "6주간의 UOI 탐구를 마치고 총괄평가로 단원 핵심 용어 빈칸 채우기 시험을 냈다. 그런데 채점하다 보니 <span class='clue-highlight'>아이들이 UOI를 통해 배운 개념들을 서로 연결해 새로운 문제 상황에 적용할 수 있는지 전혀 알 수가 없었다.</span>"
         },
         {
           type: "student",
-          meta: "💬 쉬는 시간 학생 증언 · 4학년 민준(모둠장)",
-          text: "“어차피 <span class='clue-highlight'>마지막에 내는 포스터 한 장으로 모둠 점수가 똑같이 나오잖아요.</span> 그래서 그림 잘 그리는 지우가 거의 다 그리고, 나머지 애들은 그냥 옆에서 구경만 했어요.”"
+          meta: "💬 쉬는 시간 학생 증언 · 4학년 민준",
+          text: "“단원 내내 ‘변화’랑 ‘인과관계’ 개념을 연결해서 탐구했잖아요. 그런데 <span class='clue-highlight'>총괄평가 시험지에는 외운 단어 뜻만 쓰라고 나와서, 배운 개념을 새로운 사례에 적용해 볼 기회가 없었어요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 사회과 수행평가 기록부 사본",
-          text: "[평가 시기] 단원 마지막 차시 종료 후 일괄 채점<br>[기록 방식] <span class='clue-highlight'>1모둠: 상 / 2모둠: 중 (차시별 개인 과정 기록 없음)</span>"
+          meta: "📎 현장 채증물 · UOI 총괄평가 계획서 사본",
+          text: "[영역 및 목적] UOI 전체 마무리 · 학습의 평가 (기록·통지용)<br>[평가 방식] <span class='clue-highlight'>단순 사실·용어 회상 객관식 15문항 (개념 연결 및 새 문제 적용 과제 없음)</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 완성된 결과물(초록색 열)이 아니라, 수업 중 교사가 개인별 참여 과정을 관찰·기록하는 처방이 필요합니다.",
-      correctDrugId: "mid-obs",
+      consultHint: "💡 자문 핵심: [UOI] 영역의 총괄평가([학습의 평가]) 중 [📖 지식·이해] 개념 연결과 새로운 문제 상황 적용을 확인하는 처방을 고르세요.",
+      correctDrugId: "uoi-of-essay",
       step2: {
-        question: "‘단계별 과정 관찰·피드백’을 교실에 바로 적용하려면 어떤 조치가 가장 적절할까요?",
+        question: "‘지식 에세이(📖)’를 통해 학생의 개념 연결과 전이 능력을 평가하려면 어떤 과제를 제시해야 할까요?",
         choices: [
-          { text: "1~3차시별 핵심 관찰 요소(자료 조사·토의 기여) 체크리스트를 만들고 순회하며 즉시 피드백한다.", correct: true },
-          { text: "포스터 테두리 디자인 완성도 배점을 50%에서 80%로 상향 조정한다.", correct: false, feedback: "결과물 배점만 높이면 무임승차 문제가 더 심해집니다." },
-          { text: "모둠 활동 대신 모든 학생이 각자 포스터를 집에서 그려 오도록 과제를 바꾼다.", correct: false, feedback: "협력적 탐구 목표를 포기하고 가정 과제 부담만 키우는 처방입니다." }
+          { text: "배운 명시된 개념들을 연결해 낯선 실제 사회·생활 문제 상황을 분석하고 해결 방안을 논술하게 한다.", correct: true },
+          { text: "교과서에 나오는 용어 정의 10개를 토씨 하나 틀리지 않고 그대로 베껴 쓰게 한다.", correct: false, feedback: "단순 암기 재생은 개념의 연결과 새로운 상황 적용을 평가하지 못합니다." },
+          { text: "그림 실력만으로 점수를 매기는 포스터 꾸미기 대회를 열어 성적을 산출한다.", correct: false, feedback: "개념적 이해의 논리적 연결을 파악하기 어렵습니다." }
         ]
       },
-      summary: "1번 병동(사회): 결과물 일괄 채점 → 수업 중 단계별 과정 관찰·피드백 처방"
+      summary: "1번 병동(UOI 총괄): 용어 암기 시험 → 지식 에세이(📖)로 개념 연결·적용 평가"
     },
     {
       ward: "2번 병동",
-      subject: "5학년 국어 · 주장하는 글 발표 수업 (일방적 판정 거부감)",
+      subject: "UOI 탐구 진행 중 · 조사 기능 피드백 혼란 (수행지시어 부재)",
       bpm: 136,
-      scene: "• 수업 형태: 학생별 3분 스피치 발표 및 교사 단독 채점\n• 이상 징후: 교사의 일방적 점수 통보에 학생들이 평가 결과를 납득하지 못함",
+      scene: "• 평가 영역: UOI 진행 중 학습을 위한 평가 (✍️ UOI 수준 ATL)\n• 이상 징후: ‘자료를 더 찾아보세요’식 막연한 조언으로 학생이 기능 수준과 개선 방향을 모름",
       clues: [
         {
           type: "diary",
           meta: "📓 10월 19일 교사 성찰 일기",
-          text: "매시간 내가 채점표를 들고 26명의 발표를 혼자 다 기록하려니 진이 빠진다. 정작 아이들은 <span class='clue-highlight'>내가 왜 그 점수를 주었는지 납득하지 못하고</span>, 발표가 끝나면 자기 글의 문제점을 돌아볼 생각조차 하지 않는다."
+          text: "이번 UOI에서 조사 기능(Research Skills)을 기르려고 활동지마다 ‘자료를 더 보완하세요’라고 적어주었다. 하지만 <span class='clue-highlight'>기능 수준을 어떤 단계 기준으로 판단해야 할지, 학생에게 어떤 수행 행동을 요구해야 할지 모호해</span> 아이들이 똑같은 실수를 반복한다."
         },
         {
           type: "student",
-          meta: "💬 학생 익명 설문 증언 · 5학년 서연",
-          text: "“선생님이 제 발표를 보고 ‘목소리가 작음’이라고만 적어주셨어요. <span class='clue-highlight'>친구들한테 제 근거가 설득력 있었는지 직접 듣고 싶고, 저도 고칠 점을 스스로 찾아보고 싶어요.</span>”"
+          meta: "💬 탐구 활동 중 학생 증언 · 5학년 서연",
+          text: "“선생님이 조사 기능을 더 키우라고 하셨는데, 제 수준이 지금 어느 단계인지 모르겠어요. <span class='clue-highlight'>자료를 그냥 ‘나열’하라는 건지, 출처별로 ‘비교·분석’하라는 건지 구체적으로 알려주시면 좋겠어요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 발표 활동지 하단 스캔",
-          text: "[교사 코멘트] 주장과 근거 연결이 약함 (75점)<br>[학생 성찰 및 친구 피드백 칸] <span class='clue-highlight'>항목 자체가 없어 백지로 비어 있음</span>"
+          meta: "📎 현장 채증물 · UOI 기능 피드백 메모장",
+          text: "[영역 및 목적] UOI 진행 중 · 학습을 위한 평가 (✍️ 과정·기능)<br>[피드백 기록] <span class='clue-highlight'>ATL POI 단계 기준 및 수행지시어(Command Term) 미적용</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 교사 혼자 평가하는 칸이 아니라, 수업 중 학생 스스로와 친구가 함께 점검하는 처방을 고르세요.",
-      correctDrugId: "mid-peer",
+      consultHint: "💡 자문 핵심: [UOI] 진행 중 교사가 피드백하는 [학습을 위한 평가]에서 [✍️ 과정·기능] ATL POI와 수행지시어를 활용하는 처방입니다.",
+      correctDrugId: "uoi-for-atl",
       step2: {
-        question: "학생들이 서로의 배움을 돕고 스스로 성찰하도록 돕는 실행 전략은?",
+        question: "‘ATL 성장 스펙트럼(✍️)’을 활용한 가장 효과적인 형성평가 피드백 방식은?",
         choices: [
-          { text: "‘배운 점 1가지 + 보완할 점 1가지’ 구조화된 동료 피드백 카드와 자기 성찰일지를 작성하게 한다.", correct: true },
-          { text: "친구들끼리 1점부터 10점까지 인기투표 방식으로 점수를 매겨 성적에 그대로 반영한다.", correct: false, feedback: "근거 없는 점수 매기기는 교우 관계 갈등과 왜곡을 부릅니다." },
-          { text: "발표 녹화 영상을 교사 혼자 주말에 다시 보며 감점 사유를 10줄씩 적어준다.", correct: false, feedback: "여전히 학생 주체성이 빠진 교사 일방 평가입니다." }
+          { text: "ATL POI 단계로 현재 기능 수준을 진단하고 ‘자료의 신뢰성을 비교(Compare)하여 정리하시오’처럼 수행지시어로 안내한다.", correct: true },
+          { text: "기능 수준 안내 없이 ‘노력이 부족함(C등급)’이라고 점수만 적어 돌려준다.", correct: false, feedback: "학습을 위한 평가는 등급 통보가 아니라 성장을 돕는 구체적 피드백이 핵심입니다." },
+          { text: "UOI가 완전히 끝난 방학식 날에야 기능 점수를 통지표로 알려준다.", correct: false, feedback: "탐구 진행 중에 즉각 활용되어야 할 피드백 시기를 놓친 처방입니다." }
         ]
       },
-      summary: "2번 병동(국어): 교사 일방 채점 → 수업 중 동료 피드백·자기 성찰일지 처방"
+      summary: "2번 병동(UOI 형성): 모호한 기능 조언 → ATL 성장 스펙트럼(✍️) POI·수행지시어 피드백"
     },
     {
       ward: "3번 병동",
-      subject: "4학년 과학 · 간이 정수기 설계 보고서 (기준 모호성 혼란)",
+      subject: "LOI 탐구 과정 · 두 번째 탐구목록 성찰 누락 (탐구나침반 실종)",
       bpm: 134,
-      scene: "• 수업 형태: 실험 설계 보고서 제출 후 교사 정성 코멘트 부여\n• 이상 징후: ‘참 잘했어요’식 모호한 칭찬으로 학생이 수정 방향을 알지 못함",
+      scene: "• 평가 영역: LOI 수준 학습으로서의 평가 (✍️ 과정·기능, ❤️ 가치·태도)\n• 이상 징후: 모둠 탐구 후 학생 스스로와 동료가 탐구 과정과 성찰 태도를 점검하지 못함",
       clues: [
         {
           type: "diary",
           meta: "📓 10월 22일 교사 성찰 일기",
-          text: "아이들이 과학에 흥미를 잃을까 봐 보고서마다 ‘멋진 생각이에요!’, ‘참 잘했어요!’라고 도장을 찍어주었다. 그런데 <span class='clue-highlight'>다시 제출한 보고서에서도 똑같은 오류가 반복</span>되는 걸 보니 무엇을 고쳐야 할지 전혀 모르는 것 같다."
+          text: "두 번째 탐구목록(LOI) 활동을 마쳤는데 아이들이 결과물만 제출하고 바로 다음 활동으로 넘어가려 한다. <span class='clue-highlight'>자신들이 탐구 과정의 어느 단계를 밟고 있는지, 협업과 주도성 준거에 비추어 무엇을 성찰해야 하는지</span> 스스로 돌아보는 시간이 전혀 없었다."
         },
         {
           type: "student",
-          meta: "💬 쉬는 시간 학생 증언 · 4학년 지호",
-          text: "“저번 보고서에 쌤이 ‘최고예요’라고 써주셔서 이번에도 똑같이 썼거든요? 그런데 <span class='clue-highlight'>왜 이번엔 ‘보완 필요’인지 기준을 모르겠어요. 뭘 어떻게 써야 잘하는 건가요?</span>”"
+          meta: "💬 모둠 활동 후 학생 증언 · 4학년 지호",
+          text: "“우리 모둠이 자료 해석 단계에서 방향을 잃었는데, <span class='clue-highlight'>탐구나침반을 보면서 우리가 지금 뭘 잘하고 있고 뭘 고쳐야 할지 친구들이랑 스스로 점검해 볼 시간이 없었어요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 과학 실험 보고서 안내문",
-          text: "[평가 안내] 자유 형식으로 실험 과정과 결과를 정리해 제출<br>[채점 기준] <span class='clue-highlight'>수준별(상·중·하) 도달 기준표(루브릭) 미제시</span>"
+          meta: "📎 현장 채증물 · LOI 2차시 탐구 활동지",
+          text: "[영역 및 목적] LOI 탐구 과정 · 학습으로서의 평가 (✍️, ❤️)<br>[활동 구성] <span class='clue-highlight'>탐구나침반 활용 및 자기평가·동료평가 성찰 활동 미편성</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 수행 산출물(보고서)의 수준별 도달 기준을 명확히 제시하는 결과 중심 수행 처방이 필요합니다.",
-      correctDrugId: "post-rubric",
+      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생 스스로와 동료가 주체가 되는 [학습으로서의 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 성찰 처방입니다.",
+      correctDrugId: "loi-as-refl",
       step2: {
-        question: "학생이 자신의 현재 수준과 목표 도달 방법을 스스로 알 수 있게 하는 조치는?",
+        question: "‘탐구 과정 성찰(✍️, ❤️)’을 LOI 수업에 내실 있게 적용하는 방법은?",
         choices: [
-          { text: "평가 요소(가설·변인통제·결론)별 상·중·하 수행 수준이 구체적으로 기술된 분석적 루브릭을 사전 공개한다.", correct: true },
-          { text: "칭찬 도장 대신 빨간 펜으로 틀린 부분에 X 표시만 크게 해서 돌려준다.", correct: false, feedback: "구체적 기준 없는 부정은 학습 무기력만 유발합니다." },
-          { text: "보고서 분량을 무조건 3장 이상 채우면 최고 등급을 부여한다.", correct: false, feedback: "형식적 분량은 과학적 탐구 역량을 평가하지 못합니다." }
+          { text: "탐구나침반으로 현재 탐구 위치를 짚어보고, 협업·주도성 준거표에 따라 자기평가와 동료 피드백을 실시한다.", correct: true },
+          { text: "교사 혼자 모둠별 태도 점수를 매겨 칠판에 순위별로 공개한다.", correct: false, feedback: "학생 주체의 성찰(학습으로서의 평가)이 아닌 교사 일방 서열화입니다." },
+          { text: "성찰 시간을 없애고 교사가 준비한 요약 프린트를 암기하게 한다.", correct: false, feedback: "학생의 탐구 주도성과 메타인지 성찰 기회를 박탈합니다." }
         ]
       },
-      summary: "3번 병동(과학): 모호한 인상 채점 → 분석적 채점 기준표(루브릭) 처방"
+      summary: "3번 병동(LOI 성찰): 탐구 과정 점검 생략 → 탐구 과정 성찰(✍️, ❤️) 탐구나침반·동료평가"
     },
     {
       ward: "4번 병동",
-      subject: "3학년 수학 · 분수의 기초 개념 도입 (선수학습 결손 쇼크)",
+      subject: "차시 탐구 활동 · 본시 모둠 활동 방치 쇼크 (즉시 피드백 부재)",
       bpm: 146,
-      scene: "• 수업 형태: 단원 1차시 시작과 동시에 교과서 본시 문제 풀이 진행\n• 이상 징후: 나눗셈·등분할 개념이 없는 학생 다수가 첫 시간부터 수업 이탈",
+      scene: "• 평가 영역: 차시 수준 학습을 위한 평가 (✍️ 차시 수준 ATL, ❤️ 협업·주도성)\n• 이상 징후: 40분 차시 활동 중 교사 순회 관찰이 없어 일부 모둠이 활동 이탈",
       clues: [
         {
           type: "diary",
           meta: "📓 11월 2일 교사 성찰 일기",
-          text: "3학년 분수 단원 첫 시간, 당연히 똑같이 나누기 개념은 다 알 거라 생각하고 바로 진도를 나갔다. 그런데 <span class='clue-highlight'>교실 절반이 첫 활동지부터 손을 대지 못하고 멍하니 앉아 있어</span> 수업 전체가 멈춰버렸다."
+          text: "오늘 40분 차시 수업에서 모둠별 개념 분류 탐구를 시키고 나는 교탁에서 다음 시간 자료를 정리했다. 수업이 끝나고 보니 <span class='clue-highlight'>두 모둠은 협업 규칙조차 정하지 못해 한 명만 일하고 나머지 아이들은 멍하니 앉아 있었다.</span>"
         },
         {
           type: "student",
           meta: "💬 수업 직후 학생 증언 · 3학년 하윤",
-          text: "“선생님이 ‘전체를 똑같이 4로 나눈 것 중 1’을 색칠하라고 하셨는데, <span class='clue-highlight'>‘똑같이 나눈다’는 게 크기가 같아야 한다는 뜻인지 몰라서</span> 아무 칸이나 색칠했어요.”"
+          text: "“모둠에서 역할 분담이 안 돼서 15분 동안 아무것도 못 하고 있었어요. <span class='clue-highlight'>수업 중에 선생님이 우리 모둠 탐구하는 걸 보시고 바로 알려주셨으면 금방 해결했을 텐데 아쉬워요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 3학년 수학 진도 계획표",
-          text: "[1차시 도입 5분] 전시 학습 상기 생략 → 바로 교과서 52쪽 활동 시작<br>[비고] <span class='clue-highlight'>단원 진입 전 선수 개념 파악 기록 없음</span>"
+          meta: "📎 현장 채증물 · 본시 교수·학습 과정안 전개부",
+          text: "[영역 및 목적] 단일 차시 활동 중 · 학습을 위한 평가 (✍️, ❤️)<br>[교사 활동] <span class='clue-highlight'>차시 내 학생 탐구 활동 관찰 및 맞춤형 피드백 계획 누락</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 단원 진도를 나가기 '수업 전' 단계에서 교사가 학생의 출발점 행동을 먼저 확인해야 합니다.",
-      correctDrugId: "pre-diag",
+      consultHint: "💡 자문 핵심: 가장 작은 단위인 [차시] 수준에서 교사가 활동 중에 개입하는 [학습을 위한 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 처방을 찾으세요.",
+      correctDrugId: "les-for-obs",
       step2: {
-        question: "수업 전 진단 결과를 실제 수업 설계에 가장 효과적으로 연결하는 방법은?",
+        question: "차시 수업 중 ‘학습 활동 관찰(✍️, ❤️)’을 통해 즉각적인 배움을 돕는 방법은?",
         choices: [
-          { text: "등분할·나눗셈 기초 체크리스트로 선수 결손 학생을 파악해 구체물 조작 보충 활동을 먼저 배치한다.", correct: true },
-          { text: "진단 결과 하위권 학생들은 단원 끝날 때까지 연산 학습지만 따로 풀게 한다.", correct: false, feedback: "학습 소외를 고착화하는 분리 처방입니다." },
-          { text: "성적을 매겨 교실 게시판에 점수순으로 붙여 경각심을 준다.", correct: false, feedback: "진단평가는 서열화가 아닌 맞춤형 지원이 목적입니다." }
+          { text: "모둠을 순회하며 차시 ATL 기능 발휘와 협업·주도성 모습을 관찰하고, 막히는 지점에 즉각 맞춤형 피드백을 제공한다.", correct: true },
+          { text: "40분 내내 교탁에 앉아 있다가 종 치기 1분 전에 활동지만 걷어간다.", correct: false, feedback: "차시 내 실시간 관찰과 피드백이 전혀 일어나지 않는 방식입니다." },
+          { text: "단원 전체가 끝난 한 달 뒤에야 오늘 수업 태도를 감점 처리한다.", correct: false, feedback: "차시 수준 형성평가의 핵심은 당일 수업 중 적시 지원입니다." }
         ]
       },
-      summary: "4번 병동(수학): 선수 개념 확인 누락 → 수업 전 출발점 행동 진단 체크리스트 처방"
+      summary: "4번 병동(차시 형성): 수업 중 모둠 방치 → 차시 학습 활동 관찰(✍️, ❤️) 맞춤형 피드백"
     },
     {
       ward: "5번 병동",
-      subject: "5학년 음악 · 모둠 리듬 창작 및 합주 (평가 방법 불일치)",
+      subject: "UOI 성찰 단계 · 학습자상 및 ATL 자기성찰과 새 목표 설정 누락",
       bpm: 132,
-      scene: "• 수업 형태: 4차시 동안 모둠별 리듬 창작 및 악기 앙상블 활동\n• 이상 징후: 실제 연주·창작 과정 대신 음악 이론 암기 지필시험으로 성적 산출",
+      scene: "• 평가 영역: UOI 수준 학습으로서의 평가 (❤️ 학습자 상, ✍️ UOI 수준 ATL)\n• 이상 징후: UOI 종료 시 교사 일방 판정만 있고 학생 스스로 성찰·목표 설정 과정 부재",
       clues: [
         {
           type: "diary",
           meta: "📓 11월 6일 교사 성찰 일기",
-          text: "4차시 내내 아이들과 신나게 리듬을 만들고 악기로 합주 수업을 했다. 그런데 평가 주간에 실기 채점이 번거로워 <span class='clue-highlight'>음표 이름과 박자 계산을 묻는 객관식 시험지로 성적을 냈더니</span> 수업 시간 내내 열정적이던 아이들이 허탈해한다."
+          text: "UOI 탐구를 마무리하면서 교사인 내가 일방적으로 학생별 학습자상과 ATL 점수를 체크해 서류철에 넣었다. 정작 <span class='clue-highlight'>아이들은 준거를 보며 이번 UOI에서 자신의 학습 활동을 스스로 성찰하고 다음 단원의 새로운 목표를 세워보지 못했다.</span>"
         },
         {
           type: "student",
-          meta: "💬 쉬는 시간 학생 증언 · 5학년 도윤",
-          text: "“우리 모둠이 리듬 겹치기 연습 진짜 열심히 해서 박수까지 받았잖아요. 그런데 <span class='clue-highlight'>시험지에는 16분음표 길이 계산 문제만 나와서 연주 잘한 건 하나도 소용없었어요.</span>”"
+          meta: "💬 단원 마무리 인터뷰 증언 · 5학년 도윤",
+          text: "“이번 단원 동안 ‘사고하는 사람’이랑 ‘소통하는 사람’ 학습자상을 기르려고 노력했거든요. <span class='clue-highlight'>제가 얼마나 성장했는지 준거를 보고 제 스스로 돌아보면서 다음 단원 목표를 직접 정해보고 싶어요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 5학년 2학기 음악 평가 문항지",
-          text: "[성취기준] 악곡의 특징을 살려 친구들과 어울려 연주한다.<br>[실제 평가] <span class='clue-highlight'>객관식 20문항 지필평가 100% 반영 (실기·연주 기록 0%)</span>"
+          meta: "📎 현장 채증물 · UOI 단원 마무리 성찰지",
+          text: "[영역 및 목적] UOI 성찰 단계 · 학습으로서의 평가 (❤️ 가치·태도, ✍️ 과정·기능)<br>[기록 현황] <span class='clue-highlight'>준거 기반 자기 활동 성찰 및 새로운 목표 설정 항목 공란</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 지필·단답 열이 아니라, 수업 중 실제 수행과 실기 과정을 누적해 보는 수행·산출물 처방을 고르세요.",
-      correctDrugId: "mid-perf",
+      consultHint: "💡 자문 핵심: [UOI] 영역에서 학생 스스로 준거에 따라 성찰하고 새 목표를 세우는 [학습으로서의 평가]([❤️ 가치·태도, ✍️ 과정·기능])를 고르세요.",
+      correctDrugId: "uoi-as-lp",
       step2: {
-        question: "성취기준(연주·창작)과 평가를 일치시키는 가장 현장 친화적인 방법은?",
+        question: "‘학습자상 및 ATL 성장 스펙트럼(❤️, ✍️)’을 학습으로서의 평가로 운영하는 가장 좋은 방법은?",
         choices: [
-          { text: "차시별 모둠 리듬 스케치와 중간 연습 영상을 포트폴리오로 누적해 실제 연주 과정과 표현을 평가한다.", correct: true },
-          { text: "지필시험 문항 난이도를 더 높여서 변별력을 확보한다.", correct: false, feedback: "평가 내용과 목표의 불일치를 더욱 심화시킵니다." },
-          { text: "연주 수업 시간을 줄이고 4차시 모두 이론 문제 풀이를 진행한다.", correct: false, feedback: "평가 편의를 위해 본질적인 음악 경험을 축소하는 오류입니다." }
+          { text: "학생이 UOI 준거표에 근거해 자신의 학습자상·ATL 발휘 사례를 성찰하고 다음 탐구에서 도전할 새 목표를 수립하게 한다.", correct: true },
+          { text: "교사가 모든 학생의 다음 단원 목표를 똑같이 인쇄해서 공책에 붙이게 한다.", correct: false, feedback: "학생의 자기주도적 성찰과 개인별 목표 설정 취지에 어긋납니다." },
+          { text: "학습자상 성찰은 생략하고 단원 어휘 받아쓰기 시험으로 대체한다.", correct: false, feedback: "가치·태도와 기능 성찰 영역을 지식 암기로 왜곡하는 처방입니다." }
         ]
       },
-      summary: "5번 병동(음악): 실기 수업 후 이론 지필평가 → 실기·수행 과정 포트폴리오 처방"
+      summary: "5번 병동(UOI 성찰): 교사 일방 판정 → 학습자상 및 ATL 성장 스펙트럼(❤️, ✍️) 자기성찰·목표설정"
     },
     {
       ward: "6번 병동",
-      subject: "6학년 통합 프로젝트 · 한 학기 배움 정리 (피드백 시효 만료)",
+      subject: "LOI 탐구 진행 중 · 일반화 문장 개념 이해 점검 누락 (Ongoing Assessment)",
       bpm: 130,
-      scene: "• 수업 형태: 한 학기 프로젝트 결과물을 방학식 날 통지표 문구로 일괄 통보\n• 이상 징후: 학생이 자신의 성장 과정을 되돌아보고 다음 배움으로 연결할 기회 상실",
+      scene: "• 평가 영역: LOI 수준 학습을 위한 평가 (📖 탐구목록별 일반화 문장)\n• 이상 징후: LOI 중간 산출물에 대한 교사 피드백 없이 다음 LOI로 넘어가 오개념 고착",
       clues: [
         {
           type: "diary",
           meta: "📓 11월 12일 교사 성찰 일기",
-          text: "학기 동안 모은 프로젝트 활동지를 나 혼자 밤새 읽고 통지표에 ‘성실히 참여함’이라고 적어 방학식 날 나눠주었다. 아이들은 <span class='clue-highlight'>통지표 종이 한 장만 힐끗 보고 가방에 구겨 넣을 뿐</span>, 한 학기 동안 자신이 얼마나 성장했는지 전혀 느끼지 못한다."
+          text: "첫 번째 탐구목록(LOI)의 일반화 문장을 제대로 이해했는지 확인하려고 아이들에게 개념 정리 결과물을 작성하게 했다. 그런데 <span class='clue-highlight'>걷어두기만 하고 개념 이해 수준에 대한 피드백을 주지 않은 채 다음 LOI로 넘어갔더니</span> 오개념이 그대로 굳어져 버렸다."
         },
         {
           type: "student",
-          meta: "💬 졸업 앨범 인터뷰 증언 · 6학년 수빈",
-          text: "“1학기 때 했던 프로젝트 활동지가 다 어디 갔는지도 모르겠어요. <span class='clue-highlight'>제 초기 작품이랑 마지막 작품을 나란히 놓고 제가 얼마나 늘었는지 직접 정리해 보고 싶었어요.</span>”"
+          meta: "💬 수업 후 학생 증언 · 6학년 수빈",
+          text: "“첫 번째 탐구목록에서 정리한 제 개념 지도가 일반화 문장에 맞게 연결된 건지 헷갈렸는데, <span class='clue-highlight'>선생님 피드백을 못 받은 채 다음 탐구목록으로 넘어가서 계속 막혔어요.</span>”"
         },
         {
           type: "artifact",
-          meta: "📎 현장 채증물 · 학기말 생활통지표 발송 대장",
-          text: "[전달 시점] 학기 종료일 하교 직전 일괄 배부<br>[학생 참여] <span class='clue-highlight'>학기말 자기 성장 회고 및 포트폴리오 정리 시간 미편성</span>"
+          meta: "📎 현장 채증물 · LOI 1차 개념 정리 활동지 철",
+          text: "[영역 및 목적] LOI 진행 중 Ongoing assessment · 학습을 위한 평가 (📖 지식·이해)<br>[검토 기록] <span class='clue-highlight'>학생 개념 이해 수준 파악 메모 및 교사 피드백 코멘트 없음</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: 수업·단원 종료 후 교사 통보로 끝내지 않고, 학생이 스스로 성장을 회고하는 과정 중심 처방을 고르세요.",
-      correctDrugId: "post-self",
+      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 Ongoing assessment로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
+      correctDrugId: "loi-for-prod",
       step2: {
-        question: "성장 포트폴리오 자기평가회를 가장 의미 있게 운영하는 방법은?",
+        question: "LOI 수준에서 ‘학습 결과물(📖)’ Ongoing assessment를 효과적으로 수행하는 조치는?",
         choices: [
-          { text: "초기·중기·최종 결과물을 학생 스스로 선별해 ‘나의 변화 근거’를 발표하고 다음 목표를 세우게 한다.", correct: true },
-          { text: "가장 글씨를 예쁘게 쓴 학생 3명의 공책만 교실 뒤에 전시하고 끝낸다.", correct: false, feedback: "소수 우수작 전시만으로는 모든 학생의 자기 성찰이 일어나지 않습니다." },
-          { text: "포트폴리오 파일을 교사가 전부 수거해 학부모에게 등기 우편으로만 보낸다.", correct: false, feedback: "배움의 주체인 학생 본인의 성찰 과정이 빠져 있습니다." }
+          { text: "LOI 핵심 일반화 문장에 대한 학생의 개념 이해 수준을 중간 결과물로 즉시 진단하고 오개념 교정 피드백을 제공한다.", correct: true },
+          { text: "모든 LOI와 UOI가 다 끝난 학기말에야 첫 번째 활동지를 한꺼번에 돌려준다.", correct: false, feedback: "Ongoing assessment의 핵심인 탐구 과정 중 적시 피드백 시효가 지납니다." },
+          { text: "개념 이해 피드백 대신 글씨체와 테두리 색칠 깔끔함만 칭찬해 준다.", correct: false, feedback: "LOI 일반화 문장에 대한 개념적 이해 파악이라는 본질을 놓친 피드백입니다." }
         ]
       },
-      summary: "6번 병동(6학년): 학기말 일방적 문구 통보 → 성장 포트폴리오 자기평가회 처방"
+      summary: "6번 병동(LOI 형성): 중간 산출물 방치 → LOI 학습 결과물(📖) Ongoing assessment 피드백"
     }
   ];
 
@@ -1787,23 +1996,46 @@
     tbody.innerHTML = '';
     MATRIX_ROWS.forEach(row => {
       const tr = document.createElement('tr');
+
+      // 좌측 영역 헤더 (UOI / LOI / 차시 + 평가 요소)
       const th = document.createElement('th');
-      th.className = 'time-col';
-      th.innerHTML = row.time.replace('\n', '<br>');
+      th.className = 'area-col';
+      th.innerHTML = `
+        <div class="area-badge">${row.area}</div>
+        <div class="area-focus-list">
+          ${row.focuses.map(f => `<div>${f}</div>`).join('')}
+        </div>
+      `;
       tr.appendChild(th);
 
+      // 우측 3개 열 (학습을 위한 평가 / 학습으로서의 평가 / 학습의 평가)
       row.cells.forEach(cell => {
         const td = document.createElement('td');
-        td.className = 'drug-cell' + (cell.disabled ? ' disabled' : '');
-        td.dataset.id = cell.id;
         if (cell.disabled) {
-          td.textContent = cell.title;
+          td.className = 'matrix-cell disabled';
+          td.innerHTML = cell.label.replace('\n', '<br>');
         } else {
-          td.innerHTML = `<div class="drug-title">${cell.title}</div><div class="drug-icons">${cell.icons}</div>`;
-          td.onclick = () => selectDrugCell(cell, td);
+          td.className = 'matrix-cell';
+          const stack = document.createElement('div');
+          stack.className = 'drug-stack';
+
+          cell.items.forEach(item => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'drug-item';
+            itemEl.dataset.id = item.id;
+            itemEl.innerHTML = `
+              <div class="drug-title">▶ ${item.title}</div>
+              <div class="drug-desc">- ${item.desc}</div>
+            `;
+            itemEl.onclick = () => selectDrugItem(item, itemEl);
+            stack.appendChild(itemEl);
+          });
+
+          td.appendChild(stack);
         }
         tr.appendChild(td);
       });
+
       tbody.appendChild(tr);
     });
   }
@@ -1858,10 +2090,10 @@
     // 처방전 초기화
     const rxBox = document.getElementById('selected-prescription');
     rxBox.classList.remove('stamped');
-    rxBox.textContent = '우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요';
+    rxBox.textContent = '우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
 
-    // 매트릭스 셀 선택/소거 초기화
-    document.querySelectorAll('.drug-cell').forEach(el => {
+    // 매트릭스 항목 선택/소거 초기화
+    document.querySelectorAll('.drug-item').forEach(el => {
       el.classList.remove('selected', 'eliminated');
     });
 
@@ -1905,17 +2137,17 @@
     updateAdministerButton();
   }
 
-  function selectDrugCell(cell, tdEl) {
-    if (tdEl.classList.contains('eliminated')) return;
+  function selectDrugItem(item, itemEl) {
+    if (itemEl.classList.contains('eliminated')) return;
     playTone(640, 'triangle', 0.09);
 
-    document.querySelectorAll('.drug-cell').forEach(el => el.classList.remove('selected'));
-    tdEl.classList.add('selected');
-    selectedDrug = cell;
+    document.querySelectorAll('.drug-item').forEach(el => el.classList.remove('selected'));
+    itemEl.classList.add('selected');
+    selectedDrug = item;
 
     const rxBox = document.getElementById('selected-prescription');
     rxBox.classList.add('stamped');
-    rxBox.innerHTML = `선택 처방: <strong>${cell.title}</strong> (${cell.icons})`;
+    rxBox.innerHTML = `[${item.areaLabel}] <strong>${item.title}</strong>`;
 
     updateAdministerButton();
   }
@@ -1943,7 +2175,7 @@
       return;
     }
     if (!selectedDrug) {
-      showNotice('💊', '처방 미선택', '우측 약품 캐비닛에서 현재 교실에 맞는 평가 처방을 선택해 주세요.');
+      showNotice('💊', '처방 미선택', '우측 IB 평가 약품 캐비닛에서 현재 교실에 맞는 처방을 선택해 주세요.');
       return;
     }
 
@@ -1955,14 +2187,14 @@
       playTone(210, 'sawtooth', 0.25);
       reputation = Math.max(0, reputation - 10);
       updateReputationUI();
-      showNotice('⚠️', '처방 불일치 (신뢰도 -10)', '증거에서 드러난 평가 시기(전/중/후)와 초점(과정/결과)을 다시 대조해 보세요!');
+      showNotice('⚠️', '처방 불일치 (신뢰도 -10)', '증거에서 드러난 영역(UOI/LOI/차시), 평가 목적(학습을 위한/로서의/의 평가), 평가 요소(📖/✍️/❤️)를 다시 대조해 보세요!');
     }
   }
 
   function openStep2Modal(caseData) {
     const modal = document.getElementById('choice-modal');
     document.getElementById('choice-badge').textContent = '2단계 교실 실천 조치';
-    document.getElementById('choice-title').textContent = '적절한 약품 선택! 구체적 실행안은?';
+    document.getElementById('choice-title').textContent = '적절한 IB 평가 처방! 구체적 실행안은?';
     document.getElementById('choice-desc').textContent = caseData.step2.question;
 
     const optionsWrap = document.getElementById('choice-options');
@@ -2023,25 +2255,25 @@
     document.getElementById('choice-badge').textContent = '📞 돌발 교무실 핫라인';
     document.getElementById('choice-title').textContent = '학부모 상담 전화가 걸려왔습니다!';
     document.getElementById('choice-desc').textContent =
-      '“선생님, 요즘 과정 중심 평가를 하신다는데 점수로 등수가 안 나오면 우리 아이가 잘하고 있는지 어떻게 알 수 있나요?”';
+      '“선생님, IB 수업에서는 지필시험 점수 대신 학습을 위한 평가나 학습으로서의 평가를 많이 하신다는데, 우리 아이가 잘 성장하고 있는지 어떻게 확인할 수 있나요?”';
 
     const optionsWrap = document.getElementById('choice-options');
     optionsWrap.innerHTML = '';
 
     const callChoices = [
       {
-        text: "“등수 대신 성취기준 도달 수준과 수업 중 성장 과정, 다음 보완 방향을 구체적 피드백으로 안내해 드립니다.”",
+        text: "“수업 중 ATL 성장 스펙트럼과 개념 이해 과정에 대한 구체적 피드백, 학생 스스로 성찰한 기록과 총괄 포트폴리오를 종합해 성장 모습을 안내해 드립니다.”",
         correct: true
       },
       {
-        text: "“사실 저도 귀찮아서 대충 상·중·하만 체크하고 있으니 그냥 믿고 맡겨주세요.”",
+        text: "“사실 저도 평가 요소 구분이 헷갈려서 대충 상·중·하만 체크하고 있으니 그냥 믿고 맡겨주세요.”",
         correct: false,
-        feedback: "전문성과 신뢰를 떨어뜨리는 답변입니다. 성장 중심 안내를 선택해 보세요."
+        feedback: "전문성과 신뢰를 떨어뜨리는 답변입니다. IB 평가의 성장 중심 안내를 선택해 보세요."
       },
       {
-        text: "“궁금하시면 학기말에 한꺼번에 점수표로 보내드릴 테니 그때 확인하시면 됩니다.”",
+        text: "“탐구 과정 중에는 피드백을 안 드리고, 학기말에 객관식 시험 점수표만 한꺼번에 보내드릴 테니 그때 확인하시면 됩니다.”",
         correct: false,
-        feedback: "과정 중심 평가의 핵심인 적시 피드백 취지에 어긋납니다."
+        feedback: "학습을 위한 평가 및 학습으로서의 평가 취지에 어긋납니다."
       }
     ];
 
@@ -2055,7 +2287,7 @@
           reputation = Math.min(100, reputation + 10);
           updateReputationUI();
           modal.style.display = 'none';
-          showNotice('🌟', '명쾌한 소통! (신뢰도 +10)', '과정 중심 평가의 취지를 따뜻하고 명확하게 전달했습니다.');
+          showNotice('🌟', '명쾌한 소통! (신뢰도 +10)', 'IB PYP 평가의 취지를 따뜻하고 명확하게 전달했습니다.');
           currentCaseIdx++;
           loadCase(currentCaseIdx);
         } else {
@@ -2100,7 +2332,7 @@
     playTone(660, 'sine', 0.14);
 
     const correctId = CASES[currentCaseIdx].correctDrugId;
-    const candidates = Array.from(document.querySelectorAll('.drug-cell:not(.disabled):not(.eliminated)'))
+    const candidates = Array.from(document.querySelectorAll('.drug-item:not(.eliminated)'))
       .filter(el => el.dataset.id !== correctId);
 
     candidates.sort(() => Math.random() - 0.5).slice(0, 2).forEach(el => {
@@ -2110,7 +2342,7 @@
         el.classList.remove('selected');
         const rxBox = document.getElementById('selected-prescription');
         rxBox.classList.remove('stamped');
-        rxBox.textContent = '우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요';
+        rxBox.textContent = '우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
         updateAdministerButton();
       }
     });
@@ -2162,12 +2394,12 @@
     document.getElementById('result-emoji').textContent = isCleared ? '🏆' : '⏰';
     document.getElementById('result-title').textContent = isCleared ? '전 병동 평가 정상화 완료!' : '당직 시간이 종료되었습니다';
     document.getElementById('result-subtitle').textContent = isCleared
-      ? '교실의 일기와 학생의 목소리를 놓치지 않고 정확한 처방을 내렸습니다.'
+      ? 'UOI·LOI·차시별 증거와 평가 요소를 정확히 연결해 처방을 내렸습니다.'
       : `총 ${CASES.length}개 병동 중 ${savedCount}개 병동을 안정화했습니다.`;
 
-    let rank = '수업 평가 수련의';
-    if (isCleared && reputation >= 90) rank = '수업 평가 마스터 전문의';
-    else if (isCleared) rank = '수업 평가 응급 전문의';
+    let rank = 'IB 수업 평가 수련의';
+    if (isCleared && reputation >= 90) rank = 'IB 수업 평가 마스터 전문의';
+    else if (isCleared) rank = 'IB 수업 평가 응급 전문의';
     document.getElementById('rank-badge').textContent = rank;
 
     document.getElementById('stat-saved').textContent = `${savedCount} / ${CASES.length}`;
