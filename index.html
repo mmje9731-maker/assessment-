@@ -111,16 +111,6 @@
       word-break: keep-all;
     }
 
-    .modal-card {
-      background: var(--surface-sub);
-      border: 1px solid var(--border-color);
-      border-radius: 14px;
-      padding: 16px;
-      width: 100%;
-      margin-bottom: 16px;
-      text-align: left;
-    }
-
     .modal-btn {
       background: var(--accent-blue);
       color: #ffffff;
@@ -343,7 +333,7 @@
       background: #e2e8f0;
     }
 
-    /* 상단 상태바 & 협진 찬스 */
+    /* 상단 상태바 & 협진 찬스 (전체 1회 한정) */
     .status-bar {
       display: flex;
       align-items: center;
@@ -398,6 +388,12 @@
       margin-right: 2px;
     }
 
+    .chance-sub-note {
+      font-weight: 600;
+      color: #64748b;
+      font-size: 0.78rem;
+    }
+
     .chance-btn {
       background: #f5f3ff;
       border: 1.5px solid #ddd6fe;
@@ -449,7 +445,7 @@
       background: #f0fdf4;
     }
 
-    /* 활력 징후 모니터 (시각 방해 최소화) */
+    /* 활력 징후 모니터 */
     .vital-monitor {
       background: #0f172a;
       border-radius: 10px;
@@ -1152,8 +1148,8 @@
       .chance-btn {
         flex: 1 1 auto;
         min-height: 38px;
-        font-size: 0.78rem;
-        padding: 6px 8px;
+        font-size: 0.76rem;
+        padding: 6px 7px;
         text-align: center;
       }
 
@@ -1285,10 +1281,10 @@
   <div class="status-bar">
     <div class="ward-hearts" id="ward-hearts"></div>
     <div class="chance-bar">
-      <span class="chance-label">협진 찬스:</span>
-      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">🩺 수석교사 자문</button>
-      <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 소거</button>
-      <button class="chance-btn" id="chance-time" onclick="useTimeChance()">⏱ +30초 연장</button>
+      <span class="chance-label">협진 찬스 <span class="chance-sub-note">(전체 1회 한정)</span>:</span>
+      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">🩺 수석교사 자문 (1회)</button>
+      <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 소거 (1회)</button>
+      <button class="chance-btn" id="chance-time" onclick="useTimeChance()">⏱ +30초 연장 (1회)</button>
     </div>
   </div>
 
@@ -1416,7 +1412,7 @@
     </div>
 
     <div class="guide-tip-box">
-      💡 <strong>협진 찬스 3종:</strong> 헷갈릴 때는 상단의 [수석교사 자문]이나 [오답 2개 소거]를 활용하세요.
+      💡 <strong>협진 찬스 (모든 턴 통틀어 각 1회 한정):</strong> 매 턴 충전되지 않습니다. 정말 막히는 고비의 병동에서 신중하게 사용하세요.
     </div>
 
     <button class="modal-btn" onclick="startGame()">🚑 응급실 진료 시작하기</button>
@@ -1736,7 +1732,7 @@
     }
   ];
 
-  // 게임 상태 변수
+  // 게임 상태 변수 (협진 찬스는 모든 턴 통틀어 각 1회 한정)
   let currentCaseIdx = 0;
   let selectedDrug = null;
   let checkedClues = [false, false, false];
@@ -1851,12 +1847,12 @@
     document.getElementById('patient-subject').textContent = data.subject;
     document.getElementById('scene-text').innerHTML = data.scene.replace(/\n/g, '<br>');
 
-    // 자문 배너 초기화
+    // 현재 병동의 자문 배너 초기화 (협진 찬스 버튼 소진 상태는 유지됨)
     const consultBanner = document.getElementById('consult-banner');
     consultBanner.style.display = 'none';
     consultBanner.textContent = '';
     const consultTag = document.getElementById('consult-tag');
-    consultTag.textContent = '자문 대기 중';
+    consultTag.textContent = chances.consult ? '자문 대기 중' : '자문 찬스 소진';
     consultTag.classList.add('secret');
 
     // 처방전 초기화
@@ -1972,7 +1968,6 @@
     const optionsWrap = document.getElementById('choice-options');
     optionsWrap.innerHTML = '';
 
-    // 선택지 섞기
     const shuffled = [...caseData.step2.choices].sort(() => Math.random() - 0.5);
     shuffled.forEach(opt => {
       const btn = document.createElement('button');
@@ -2075,11 +2070,14 @@
     modal.style.display = 'flex';
   }
 
-  // 협진 찬스 3종
+  // 협진 찬스 3종 (모든 턴 통틀어 각 1회만 사용 가능)
   function useConsultChance() {
     if (!chances.consult) return;
     chances.consult = false;
-    document.getElementById('chance-consult').disabled = true;
+
+    const btn = document.getElementById('chance-consult');
+    btn.disabled = true;
+    btn.textContent = '🩺 자문 소진됨';
     playTone(700, 'sine', 0.14);
 
     const data = CASES[currentCaseIdx];
@@ -2095,7 +2093,10 @@
   function useEliminateChance() {
     if (!chances.eliminate) return;
     chances.eliminate = false;
-    document.getElementById('chance-eliminate').disabled = true;
+
+    const btn = document.getElementById('chance-eliminate');
+    btn.disabled = true;
+    btn.textContent = '✂️ 소거 소진됨';
     playTone(660, 'sine', 0.14);
 
     const correctId = CASES[currentCaseIdx].correctDrugId;
@@ -2118,11 +2119,15 @@
   function useTimeChance() {
     if (!chances.time) return;
     chances.time = false;
-    document.getElementById('chance-time').disabled = true;
+
+    const btn = document.getElementById('chance-time');
+    btn.disabled = true;
+    btn.textContent = '⏱ 연장 소진됨';
+
     timeRemaining += 30;
     updateTimerUI();
     playTone(820, 'sine', 0.15);
-    showNotice('⏱️', '응급 시간 확보 (+30초)', '진료 제한 시간이 30초 연장되었습니다.');
+    showNotice('⏱️', '응급 시간 확보 (+30초)', '진료 제한 시간이 30초 연장되었습니다. (남은 당직 동안 재사용 불가)');
   }
 
   function updateTimerUI() {
@@ -2195,6 +2200,8 @@
     clearInterval(timerInterval);
     document.getElementById('result-modal').style.display = 'none';
     document.getElementById('choice-modal').style.display = 'none';
+    document.getElementById('notice-modal').style.display = 'none';
+
     currentCaseIdx = 0;
     savedCount = 0;
     timeRemaining = 240;
@@ -2202,9 +2209,17 @@
     suddenCallTriggered = false;
     chances = { consult: true, eliminate: true, time: true };
 
-    document.getElementById('chance-consult').disabled = false;
-    document.getElementById('chance-eliminate').disabled = false;
-    document.getElementById('chance-time').disabled = false;
+    const consultBtn = document.getElementById('chance-consult');
+    consultBtn.disabled = false;
+    consultBtn.textContent = '🩺 수석교사 자문 (1회)';
+
+    const eliminateBtn = document.getElementById('chance-eliminate');
+    eliminateBtn.disabled = false;
+    eliminateBtn.textContent = '✂️ 오답 2개 소거 (1회)';
+
+    const timeBtn = document.getElementById('chance-time');
+    timeBtn.disabled = false;
+    timeBtn.textContent = '⏱ +30초 연장 (1회)';
 
     updateTimerUI();
     updateReputationUI();
