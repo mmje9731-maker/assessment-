@@ -1357,7 +1357,10 @@
 .final-progress span{border-top:4px solid #dbe2ea;padding-top:7px;font-size:.78rem;color:#64748b;font-weight:700}.final-progress span.active{border-color:#b47b18;color:#85560d}.final-progress span.done{border-color:#0f766e;color:#0f766e}
 .final-kicker{color:#64748b;font-weight:800;font-size:.8rem;letter-spacing:.04em}.final-teaser{background:linear-gradient(140deg,#102338,#253d55);color:#fff;border:1px solid #aa925e;border-radius:14px;padding:16px;text-align:center}.final-teaser strong{color:#ffe1a0;font-size:1.05rem}.final-teaser p{font-size:.9rem;line-height:1.6;color:#e2e8f0;margin:8px 0 14px}.final-gold{background:linear-gradient(115deg,#f4d48e,#d8a84f)!important;color:#33220b!important;font-weight:900!important;border:1px solid #d3a244!important;min-height:44px;width:100%;white-space:normal}.final-back{border:0;background:none;color:#475569;font:inherit;font-size:.85rem;cursor:pointer;padding:12px;min-height:44px}.final-teaser .final-back{color:#dbeafe}.final-opinion{background:#effaf7;border:1px solid #b2ddd1;border-radius:12px;text-align:left;padding:14px;color:#14534a}.final-opinion p{font-size:.94rem;line-height:1.65;margin:7px 0 0}.final-mission h2{margin:5px 0;color:#172e43}.final-mission p{font-size:.95rem;line-height:1.65;color:#475569}.final-big-icon{font-size:2.5rem}.final-label{display:block;text-align:left;font-size:.85rem;font-weight:700;margin:12px 0 6px}#personal-pledge{box-sizing:border-box;width:100%;font:inherit;font-size:16px;border:1px solid #aab8c7;border-radius:8px;padding:10px;resize:vertical;color:#172e43;background:white;margin-bottom:10px}.final-medal{background:#fff5d8;border:1px solid #e4bf66;border-radius:10px;padding:12px;margin-top:10px;color:#79520a}.final-stage .modal-btn:disabled{opacity:.5;cursor:not-allowed}.final-stage>*{order:initial!important}.final-stage .result-btn-group{margin-top:0} @keyframes finalReveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){#result-modal .final-stage{animation:none}}@media(max-width:600px){#result-modal .final-stage{gap:9px}.final-teaser{padding:12px}.final-progress span{font-size:.72rem}}
 </style>
-</head>
+<style>
+#signal-modal{z-index:1700;background:#07111dec;backdrop-filter:none;--signal:#fb7185;--signal-rgb:251,113,133;padding:12px}#signal-modal[data-kind="loot"]{--signal:#67e8f9;--signal-rgb:103,232,249}#signal-modal[data-kind="vip"]{--signal:#f5d77a;--signal-rgb:245,215,122;background:#05070ef5}#signal-modal .signal-card{width:min(100%,470px);max-height:calc(100dvh - 24px);overflow:auto;background:linear-gradient(150deg,#172337,#090f1c);color:#f1f5f9;border:1px solid var(--signal);border-radius:18px;padding:20px;text-align:center;box-shadow:0 0 24px rgba(var(--signal-rgb),.2);animation:signalIn .24s ease-out}#signal-modal .signal-label{color:var(--signal);font-size:.8rem;letter-spacing:.1em;font-weight:800}#signal-title{color:var(--signal);font-size:1.55rem;line-height:1.3;margin:12px 0}#signal-desc{font-size:1rem;line-height:1.65;color:#e2e8f0;min-height:3.3em}#signal-art{height:115px;display:grid;place-items:center;margin:12px 0;background:#070e19;border:1px solid #334155;border-radius:12px;color:var(--signal);overflow:hidden}#signal-art svg{width:100%;height:100%;max-width:330px}#signal-modal[data-phase="0"] #signal-art{opacity:.7}#signal-modal[data-phase="1"] .signal-card{animation:signalGlow 1.1s ease-in-out infinite alternate}#signal-status{font-size:.9rem;color:var(--signal);margin:10px 0;min-height:1.5em}#signal-action{width:100%;background:var(--signal);color:#101827;border:0;border-radius:10px;padding:13px;font-weight:800;font-size:1rem;cursor:pointer;min-height:48px}#signal-action:disabled{opacity:.55;cursor:default}#signal-modal[data-phase="2"] .signal-door-left{transform:translateX(-27px)}#signal-modal[data-phase="2"] .signal-door-right{transform:translateX(27px)}.signal-door-left,.signal-door-right{transition:transform .6s ease}.signal-door-light{opacity:0;transition:opacity .5s}#signal-modal[data-phase="2"] .signal-door-light{opacity:1}@keyframes signalIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@keyframes signalGlow{from{box-shadow:0 0 12px rgba(var(--signal-rgb),.12)}to{box-shadow:0 0 30px rgba(var(--signal-rgb),.35)}}
+.container.vip-ward{background:linear-gradient(150deg,#090d18,#202239);border:2px solid #c6a04e;box-shadow:0 0 28px #c6a04e30}.vip-ward .patient-panel,.vip-ward .cabinet-panel{border:2px solid #b9964e;box-shadow:none}.vip-ward .vip-room-strip{display:flex}.vip-room-strip{display:none;align-items:center;justify-content:space-between;gap:8px;background:linear-gradient(100deg,#111827,#302718);color:#f5d77a;border:1px solid #a8843d;padding:10px 14px;border-radius:10px;margin:0 0 10px;font-weight:800;font-size:.9rem}.vip-room-strip small{color:#e5d4a5;font-size:.75rem;font-weight:500;text-align:right}.vip-ward .patient-badge{letter-spacing:.03em}.vip-ward .cabinet-panel .drug-item.selected{outline:2px solid #b58b2f;outline-offset:-2px}.vip-ward .patient-panel.stable{border-color:#86efac}@media(max-width:767px){#signal-modal .signal-card{padding:16px}#signal-title{font-size:1.3rem}#signal-art{height:100px}.container.vip-ward{border-width:0}.vip-room-strip{padding:7px 9px;margin-bottom:6px;font-size:.8rem}.vip-room-strip small{font-size:.68rem}}@media(prefers-reduced-motion:reduce){#signal-modal *,#signal-modal .signal-card{animation:none!important;transition:none!important}}
+</style></head>
 <body>
 
 <div class="container">
@@ -1392,6 +1395,7 @@
 
   <main class="game-layout">
     <section class="patient-panel" id="patient-panel">
+<div class="vip-room-strip"><span>◆ 비밀의 VIP 병동</span><small>특별 접근 승인 · 복합 처방 2개</small></div>
       <div>
         <div class="vital-monitor">
           <div class="vital-top">
@@ -1558,6 +1562,7 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="signal-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="signal-title"><div class="modal-inner signal-card"><div class="signal-label" id="signal-label"></div><div id="signal-art" aria-hidden="true"></div><h2 id="signal-title" aria-live="polite"></h2><p id="signal-desc"></p><p id="signal-status"></p><button id="signal-action" type="button"></button></div></div>
 <div class="modal-overlay" id="entry-modal" role="dialog" aria-modal="true" aria-labelledby="entry-title"><div class="modal-inner entry-card"><div style="font-size:2.5rem">🏥</div><h2 id="entry-title">진료 담당자 등록 완료</h2><p id="entry-name"></p><svg viewBox="0 0 300 45" width="100%"><path d="M0 23H65L75 17L83 32L96 3L108 42L119 23H205L215 17L223 32L236 3L248 42L258 23H300" stroke="#5eead4" stroke-width="2" fill="none"/></svg><div class="entry-check">✓ 병동 상태 확인 완료<br>✓ 평가 약품 준비 완료<br>✓ IB 코디네이터 상담 준비 완료</div><p style="font-size:.85rem;color:#cbd5e1;margin:12px 0 0">4초 후 자동 입장합니다.</p><div class="entry-track"><i></i></div><button class="modal-btn" onclick="endEntry()">바로 진료하기</button></div></div>
 <!-- 2. 병동 전환 안내 모달 (5초 유지) -->
 <div class="modal-overlay" id="transition-modal">
@@ -2126,10 +2131,26 @@
 
   let doctorName='', hasStarted=false;
   let entryTimer=null, protection=0, rareAwards=[], wrongReview=[];
-  function endEntry(){if(entryTimer!==null)clearTimeout(entryTimer);entryTimer=null;document.getElementById('entry-modal').style.display='none';}
+  function endEntry(){const visible=document.getElementById('entry-modal').style.display==='flex';if(entryTimer!==null)clearTimeout(entryTimer);entryTimer=null;document.getElementById('entry-modal').style.display='none';if(visible)maybeCriticalSignal();}
   function drugReview(d){return `${d.area} · ${d.purpose} · ${d.title}`;}
   function recordWrong(stage,wrong,right,feedback){const ward=stage==='응급 미션'?'응급 미션':vipActive?'VIP 병동':`${currentCaseIdx+1}번 병동`;wrongReview.push({ward,subject:stage==='응급 미션'?triageDeck[triageIdx].text:currentCaseData().subject,stage,wrong,right,feedback});}
   function renderWrongReview(){const root=document.getElementById('wrong-review');root.replaceChildren();const add=(parent,tag,txt,cls)=>{const e=document.createElement(tag);e.textContent=txt;if(cls)e.className=cls;parent.append(e);return e;};add(root,'h3','📋 나의 오답 진료 기록');const wards=new Set(wrongReview.filter(x=>x.stage!=='응급 미션').map(x=>x.ward));add(root,'p',`오답 ${wrongReview.length}회 · 재검토한 병동 ${wards.size}곳`,'review-meta');if(!wrongReview.length)add(root,'p','모든 응답을 한 번에 맞혔습니다!','review-right');for(const x of wrongReview){const d=document.createElement('details');root.append(d);add(d,'summary',`${x.ward} · ${x.stage}`);add(d,'p',x.subject);add(d,'p','내 선택: '+x.wrong,'review-wrong');add(d,'p','올바른 선택: '+x.right,'review-right');add(d,'p','성찰: '+x.feedback);}if(rareAwards.length)add(root,'p','획득한 희귀 보급품: '+rareAwards.join(' · '),'review-meta');}
+
+  let signalTimers=[], signalCallback=null, criticalAnnounced=false;
+  function clearSignal(){signalTimers.forEach(clearTimeout);signalTimers=[];signalCallback=null;const m=document.getElementById('signal-modal');m.style.display='none';document.getElementById('signal-action').onclick=null;}
+  const signalECG=`<svg viewBox="0 0 300 100"><defs><pattern id="siggrid" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M15 0H0V15" stroke="#334155" fill="none" opacity=".55"/></pattern></defs><rect width="300" height="100" fill="url(#siggrid)"/><path d="M0 50H22L29 37L36 67L44 10L53 87L63 50H88L95 37L102 67L110 10L119 87L129 50H154L161 37L168 67L176 10L185 87L195 50H220L227 37L234 67L242 10L251 87L261 50H300" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
+  const signalCrate=`<svg viewBox="0 0 300 100"><path d="M30 75H270M50 83H250" stroke="#334155" stroke-width="2"/><rect x="95" y="35" width="110" height="48" rx="6" fill="#254653" stroke="currentColor" stroke-width="2"/><rect x="90" y="25" width="120" height="17" rx="4" fill="#456d79" stroke="currentColor"/><path d="M115 42v40m70-40v40" stroke="#16323f" stroke-width="5"/><path d="M150 49v24m-12-12h24" stroke="currentColor" stroke-width="5"/><path d="M62 38l14 10M238 38l-14 10M150 5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>`;
+  const signalDoor=`<svg viewBox="0 0 300 100"><rect x="70" y="5" width="160" height="93" rx="5" fill="#111827" stroke="currentColor" stroke-width="2"/><rect class="signal-door-light" x="128" y="10" width="44" height="85" fill="#f5d77a" opacity=".1"/><g class="signal-door-left"><path d="M78 12H149V94H78Z" fill="#273044" stroke="#b9964e"/><path d="M88 24h50v58H88z" fill="none" stroke="#6d5b38"/></g><g class="signal-door-right"><path d="M151 12H222V94H151Z" fill="#273044" stroke="#b9964e"/><path d="M162 24h50v58h-50z" fill="none" stroke="#6d5b38"/></g><rect x="140" y="42" width="20" height="18" rx="3" fill="#171b25" stroke="currentColor"/><path d="M144 42v-5a6 6 0 0 1 12 0v5" stroke="currentColor" fill="none" stroke-width="2"/><path d="M150 48v5" stroke="currentColor" stroke-width="2"/></svg>`;
+  function showSignal(kind,next){
+    clearSignal(); const m=document.getElementById('signal-modal'), b=document.getElementById('signal-action');
+    const configs={triage:['중앙 관제실 · 긴급 신호','이상 징후 감지','갑작스러운 평가 응급 상황','긴급 호출 발생!','15초 동안 3개의 평가 상황을 분류하세요. 시작 버튼을 누르면 제한 시간이 시작됩니다.','응급 미션 시작',signalECG],critical:['환자 상태 감시실','심박수 급상승','위급 환자 이송 중','위급 환자 도착!','첫 시도에 두 단계 모두 성공하면 추가 진료점 8점을 획득합니다.','위급 환자 진료하기',signalECG],loot:['응급실 물품 관리실','보급 신호 수신','보급품 도착 확인 중','특별 보급품 도착!','잠긴 보급 상자 3개 중 하나를 선택하세요. 희귀 보급품이 숨어 있을 수도 있습니다.','보급 상자 확인',signalCrate],vip:['제한 구역 · 특별 접근','미등록 병동 신호 감지','보안 권한 확인 중','비밀의 VIP 병동 개방!','일반 병동 6곳을 모두 안정화했습니다. 모든 약품이 다시 선택 가능하며, 이번에는 두 가지 처방이 필요합니다.','VIP 병동 입장',signalDoor]};
+    const c=configs[kind];signalCallback=next;m.dataset.kind=kind;m.dataset.phase='0';document.getElementById('signal-label').textContent=c[0];document.getElementById('signal-art').innerHTML=c[6];document.getElementById('signal-title').textContent=c[1];document.getElementById('signal-desc').textContent='중앙 시스템에서 새로운 신호를 확인하고 있습니다.';document.getElementById('signal-status').textContent='신호 수신 중…';b.textContent='안내 확인 중…';b.disabled=true;m.style.display='flex';playTone(kind==='loot'?520:kind==='vip'?392:440,'sine',.13);
+    const phase1=()=>{m.dataset.phase='1';document.getElementById('signal-title').textContent=c[2];document.getElementById('signal-status').textContent='신호 분석 완료 · 안내 준비';playTone(kind==='loot'?660:kind==='vip'?523:660,'sine',.14);};
+    const phase2=()=>{m.dataset.phase='2';document.getElementById('signal-title').textContent=c[3];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='준비되면 아래 버튼을 눌러 주세요.';b.textContent=c[5];b.disabled=false;try{b.focus({preventScroll:true});}catch(e){}playTone(kind==='vip'?784:kind==='loot'?740:880,'sine',.14);};
+    b.onclick=()=>{if(b.disabled||!signalCallback)return;const cb=signalCallback;clearSignal();cb();};
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){phase2();}else{signalTimers=[setTimeout(phase1,1500),setTimeout(phase2,3500)];}
+  }
+  function maybeCriticalSignal(){if(hasStarted&&!vipActive&&currentCaseIdx===criticalWard&&!criticalAnnounced){criticalAnnounced=true;showSignal('critical',()=>{});}}
 
   let extraPoints = 0, criticalWard = 0, criticalSaved = false;
   let doubledNext = false, lootCount = 0, bossCleared = false, bossMisses = 0;
@@ -2169,7 +2190,8 @@
     const labels={consult:['chance-consult','👩‍🏫 IB 코디네이터에게 물어보기 (2회)'],rowScan:['chance-row','🎯 정답 행 찾기 (1회)'],eliminate:['chance-eliminate','✂️ 오답 2개 지우기 (1회)']};
     const b=document.getElementById(labels[k][0]); b.disabled=false; b.textContent=labels[k][1]; return true;
   }
-  function openLoot(next){
+  function openLoot(next){showSignal('loot',()=>showLootContents(next));}
+  function showLootContents(next){
     lootCount++;
     setupExtra('응급실 물품 관리실 · 보급 도착','특별 보급품 도착!','잠겨 있는 보급 상자 3개 중 하나를 선택하세요.','계속 진료하기',()=>{});
     extraModal().classList.add('loot-mode');
@@ -2238,13 +2260,7 @@
   }
   function currentCaseData(){return vipActive?VIP_CASE:activeCases[currentCaseIdx];}
   function openBoss(){
-    setupExtra('👑','비밀의 VIP 환자 등장','TOP SECRET · 일반 병동 6곳 진료 완료. 극비 특별 병동이 열렸습니다. 모든 약품을 다시 검토하여 두 가지 처방을 선택하세요. 앞선 병동에서 사용한 약품도 선택할 수 있습니다.','VIP 병동 입장',()=>{
-      extraModal().style.display='none';vipActive=true;
-      document.querySelector('.container').classList.add('vip-ward');
-      renderMatrix();loadCase(currentCaseIdx);window.scrollTo(0,0);
-    });
-    extraModal().classList.add('vip-mode');
-    document.getElementById('extra-emoji').innerHTML='<div class="vip-classified">TOP SECRET · SPECIAL CASE</div>👑';
+    showSignal('vip',()=>{vipActive=true;document.querySelector('.container').classList.add('vip-ward');renderMatrix();loadCase(currentCaseIdx);window.scrollTo(0,0);});
   }
   let activeCases = [];
   let currentCaseIdx = 0;
@@ -2650,6 +2666,7 @@
       document.getElementById('vital-status').textContent='◆ TOP SECRET · VIP 특별 진료 중';
       document.getElementById('fever-strip').style.display='none';
     }
+    maybeCriticalSignal();
   }
 
   function selectClueTab(tabIdx) {
@@ -2924,7 +2941,8 @@
     }, 250);
   }
 
-  function startTriageMiniGame() {
+  function startTriageMiniGame() {showSignal('triage',beginTriageMiniGame);}
+  function beginTriageMiniGame() {
     triageEnded=false;
     playTone(880, 'square', 0.12);
     setTimeout(() => playTone(660, 'square', 0.12), 140);
@@ -3340,7 +3358,7 @@
   }
 
   function resetGame() {
-    endEntry();protection=0;rareAwards=[];wrongReview=[];
+    hasStarted=false;endEntry();clearSignal();criticalAnnounced=false;protection=0;rareAwards=[];wrongReview=[];
     if(lootTimer)clearTimeout(lootTimer);lootTimer=null;
     if(triageAnswerTimer)clearTimeout(triageAnswerTimer);triageAnswerTimer=null;triageEnded=true;
     if(transitionPaintTimer)clearTimeout(transitionPaintTimer);transitionPaintTimer=null;
