@@ -1260,6 +1260,29 @@
     @media(max-width:767px){.chance-btn::after {font-size:.72rem;white-space:normal;line-height:1.35;} .guide-help {font-size:.82rem;} .consult-speech {font-size:.87rem;}}
 
 </style>
+
+<style>
+#teacher-chat-modal{z-index:1250;}
+.teacher-chat-card{padding:0;max-width:480px;text-align:left;overflow:hidden;display:flex;flex-direction:column;max-height: min(90dvh,700px);background:#eaf2f5;}
+.teacher-chat-head{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#fff;border-bottom:1px solid #d6e1e6;flex:none;}
+.teacher-chat-avatar{width:46px;height:46px;flex:none;overflow:hidden;border-radius:50%;}
+.teacher-chat-avatar svg{display:block;width:100%;height:100%;}
+.teacher-chat-head strong{font-size:1rem;display:block;color:#182b35;}
+.teacher-chat-head small{font-size:.78rem;color:#16774b;}
+.teacher-chat-body{padding:16px;display:flex;flex-direction:column;gap:8px;overflow-y:auto;min-height:0;overscroll-behavior:contain;}
+.teacher-chat-user,.teacher-chat-reply{padding:11px 13px;border-radius:13px;max-width:88%;font-size:.94rem;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere;color:#172b35;}
+.teacher-chat-user{align-self:flex-end;background:#fee98c;border-top-right-radius:3px;}
+.teacher-chat-reply{align-self:flex-start;background:#fff;border-top-left-radius:3px;border:1px solid #dfe8ec;}
+.teacher-chat-name{font-size:.76rem;color:#506676;font-weight:700;margin-top:5px;}
+.teacher-chat-typing{font-size:.8rem;color:#526c7c;padding:4px 0;min-height:24px;}
+.teacher-chat-dots{animation:teacherTyping 1s infinite alternate;}
+@keyframes teacherTyping{from{opacity:.35}to{opacity:1}}
+.teacher-chat-footer{padding:12px 16px;background:#fff;border-top:1px solid #d6e1e6;flex:none;}
+.teacher-chat-footer button{width:100%;max-width:none;background:#176757;box-shadow:none;min-height:44px;}
+#consult-banner .consult-reopen{width:100%;border:1px solid #87c9bb;background:white;color:#155e53;font:inherit;padding:10px 12px;border-radius:9px;cursor:pointer;text-align:left;min-height:44px;}
+@media(max-width:767px){.teacher-chat-card{max-height:88dvh;width:100%;}.teacher-chat-body{padding:12px;}.teacher-chat-head{padding:12px;}.teacher-chat-footer{padding:10px 12px;}.teacher-chat-user,.teacher-chat-reply{font-size:.91rem;}}
+@media(prefers-reduced-motion:reduce){.teacher-chat-dots{animation:none;}}
+</style>
 </head>
 <body>
 
@@ -1287,7 +1310,7 @@
     <div class="ward-hearts" id="ward-hearts"></div>
     <div class="chance-bar">
       <span class="chance-label">도움 기회 <span class="chance-sub-note">(각 1회 기본 · 보급 복구 가능)</span>:</span>
-      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">👩‍🏫 수석교사 도움 (1회)</button>
+      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">👩‍🏫 IB 코디네이터에게 물어보기 (1회)</button>
       <button class="chance-btn" id="chance-row" onclick="useRowScanChance()">🎯 정답 행 찾기 (1회)</button>
       <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 지우기 (1회)</button>
     </div>
@@ -1422,7 +1445,7 @@
       <div class="guide-step-item"><div class="step-num-badge">2</div><div class="step-text-wrap"><strong>평가 약품표에서 알맞은 처방을 고르세요.</strong><br>평가 시점(UOI·LOI·차시), 목적, 요소를 살펴 약품 1개를 누른 뒤 ‘처방 실행’을 누릅니다.</div></div>
       <div class="guide-step-item"><div class="step-num-badge">3</div><div class="step-text-wrap"><strong>실제 교실에서 적용할 방법을 고르세요.</strong><br>세 가지 방법 중 알맞은 것을 선택하면 병동이 안정됩니다. 틀려도 다시 도전할 수 있습니다.</div></div>
     </div>
-    <div class="guide-help"><strong>💡 막힐 때 사용하는 도움 기회 (각 1회)</strong><div>👩‍🏫 <b>수석교사 도움:</b> 평가 전문가의 조언을 확인합니다.</div><div>🎯 <b>정답 행 찾기:</b> 정답이 있는 UOI·LOI·차시 행을 표시합니다.</div><div>✂️ <b>오답 2개 지우기:</b> 틀린 약품 2개를 제외합니다.</div></div>
+    <div class="guide-help"><strong>💡 막힐 때 사용하는 도움 기회 (각 1회)</strong><div>👩‍🏫 <b>IB 코디네이터에게 물어보기:</b> 대화창에서 조언을 확인합니다.</div><div>🎯 <b>정답 행 찾기:</b> 정답이 있는 UOI·LOI·차시 행을 표시합니다.</div><div>✂️ <b>오답 2개 지우기:</b> 틀린 약품 2개를 제외합니다.</div></div>
     <details class="guide-more"><summary>점수와 특별 미션 안내</summary><div>첫 시도 성공 +7점, 단서 1개만 확인하면 추가 +4점, 2개면 +2점, 연속 성공 시 추가 +2점. 오진 후 성공하면 +4점입니다.<br>위급 환자, 응급 미션, 2·4병동 뒤 보급 상자, 마지막 VIP 특별 진료도 등장합니다. VIP는 약품 2개를 선택합니다. 추가 진료점은 장비 누적 점수에 반영됩니다.</div></details>
     <button class="modal-btn" onclick="startGame()">🚑 응급실 진료 시작하기</button>
   </div>
@@ -1618,6 +1641,12 @@
     <button class="modal-btn" id="extra-action"></button>
   </div>
 </div>
+<div class="modal-overlay" id="teacher-chat-modal" role="dialog" aria-modal="true" aria-labelledby="teacher-chat-title">
+<div class="modal-inner teacher-chat-card">
+<div class="teacher-chat-head"><div class="teacher-chat-avatar"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" role="img" aria-label="IB 코디네이터 프로필 일러스트"><rect width="80" height="80" rx="40" fill="#dcece8"/><path d="M15 80V72Q18 53 40 53T65 72V80" fill="#38586a"/><path d="M32 51h16v12l-8 8-8-8" fill="#f1c0a2"/><path d="M16 35Q14 8 40 8Q66 8 65 34L61 57H19Z" fill="#343039"/><ellipse cx="40" cy="34" rx="18" ry="23" fill="#f7d0b4"/><path d="M21 28Q19 11 40 11Q58 11 60 29Q48 26 39 17Q33 26 21 28" fill="#343039"/><g fill="none" stroke="#51454b" stroke-width="1.8"><rect x="24" y="30" width="13" height="10" rx="4"/><rect x="43" y="30" width="13" height="10" rx="4"/><path d="M37 34h6"/></g><g fill="#41373a"><circle cx="31" cy="35" r="1.5"/><circle cx="49" cy="35" r="1.5"/></g><path d="M35 46Q40 50 45 46" fill="none" stroke="#a85d56" stroke-width="1.8" stroke-linecap="round"/><path d="M28 57l12 14-9 9H23l-2-13M52 57L40 71l9 9h8l2-13" fill="#f6f7f4"/></svg></div><div><strong id="teacher-chat-title">IB 코디네이터</strong><small>● 상담 가능</small></div></div>
+<div class="teacher-chat-body" id="teacher-chat-body" aria-live="polite"></div>
+<div class="teacher-chat-footer"><button class="modal-btn" id="teacher-chat-close" onclick="closeTeacherChat()">조언 모두 보기</button></div>
+</div></div>
 <script>
   const memoryFallback = {};
   const safeStorage = {
@@ -1678,7 +1707,7 @@
     { id: 'thinker', icon: '🧠', title: '사고하는 사람 (Thinker)', hint: '오진 0회 + 응급 미션 3문제 모두 정답', desc: '복잡한 교실 단서와 긴급 분류 상황을 논리적으로 분석해 해결했습니다.' },
     { id: 'knowledgeable', icon: '📚', title: '지식이 풍부한 사람 (Knowledgeable)', hint: '최종 신뢰도 95점 이상 달성', desc: 'UOI·LOI·차시와 평가 목적·요소에 대한 탄탄한 이해를 보여주었습니다.' },
     { id: 'balanced', icon: '☯️', title: '균형 잡힌 사람 (Balanced)', hint: '영역(UOI·LOI·차시) 오판 없이 전 병동 완주', desc: '거시적인 단원 총괄과 미시적인 차시 형성평가의 균형을 유지했습니다.' },
-    { id: 'communicator', icon: '🗣️', title: '소통하는 사람 (Communicator)', hint: '수석교사 도움를 활용해 동료와 협력하며 완주', desc: '동료 교사의 자문을 경청하고 교실 현장의 목소리와 연결해 해법을 찾았습니다.' },
+    { id: 'communicator', icon: '🗣️', title: '소통하는 사람 (Communicator)', hint: 'IB 코디네이터 도움을 활용해 동료와 협력하며 완주', desc: '동료 교사의 자문을 경청하고 교실 현장의 목소리와 연결해 해법을 찾았습니다.' },
     { id: 'open-minded', icon: '🌈', title: '열린 마음을 지닌 사람 (Open-minded)', hint: '2단계 실천 처방(교실 적용 방안)을 한 번도 틀리지 않고 완주', desc: '학생 성찰과 과정 중심 피드백 관점을 열린 태도로 수용했습니다.' },
     { id: 'caring', icon: '💚', title: '배려하는 사람 (Caring)', hint: '누적 2회차 이상 응급실 당직 완주', desc: '지속적인 평가 개선 노력으로 학생들의 배움과 성장을 지원했습니다.' }
   ];
@@ -1830,7 +1859,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 4학년 민준 & 지수", text: "“지금 단원 마무리 연습 문제 풀고 있는데, 민수는 ‘변화’랑 ‘인과관계’ 개념을 연결해서 새로운 사례에 적용해 보고 있고, 지수는 외운 단어 뜻만 빈칸에 적고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 총괄평가 계획서 초안", text: "[영역 및 목적] UOI 전체 마무리 · 학습의 평가 (기록·통지용)<br>[현재 초안] <span class='clue-highlight'>단순 사실·용어 회상 위주 문항 (개념 연결 및 새 문제 적용 과제 미구성)</span>" }
       ],
-      consultHint: "[UOI] 영역의 총괄평가([학습의 평가]) 중 [📖 지식·이해] 개념 연결과 새로운 문제 상황 적용을 확인하는 처방을 고르세요.",
+      consultHint: "선생님, 이제 단원 전체를 마무리할 때군요. 개념의 뜻을 아는 것과 실제로 활용하는 건 다르잖아요? 처음 보는 문제에도 배운 개념을 연결해서 설명할 수 있는지 확인해 보시면 좋겠어요.", consultMessages: ["선생님, 이제 단원 전체를 마무리할 때군요.", "개념의 뜻을 아는 것과 실제로 활용하는 건 다르잖아요?", "처음 보는 문제에도 배운 개념을 연결해서 설명할 수 있는지 확인해 보시면 좋겠어요."],
       correctDrugId: "uoi-of-essay",
       step2: {
         question: "‘지식 에세이(📖)’를 통해 학생의 개념 연결과 전이 능력을 평가하려면 어떤 과제를 제시해야 할까요?",
@@ -1853,7 +1882,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 5학년 서연 & 현우", text: "“지금 조사 활동지 고치고 있는데, 민수는 백과사전 문장을 그대로 옮겨 적고 있고, 서연이는 자료를 어떤 기준으로 비교·분석해야 할지 몰라서 빈칸만 보고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 기능 피드백 메모장", text: "[영역 및 목적] UOI 진행 중 · 학습을 위한 평가 (✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>ATL POI 단계 기준 및 수행지시어 미적용 상태</span>" }
       ],
-      consultHint: "[UOI] 진행 중 교사가 피드백하는 [학습을 위한 평가]에서 [✍️ 과정·기능] ATL POI와 수행지시어를 활용하는 처방입니다.",
+      consultHint: "아이들이 자료 조사를 하면서 막히는 부분이 있나 봐요. 그냥 더 보완하라고 하면 어디부터 고쳐야 할지 모르겠죠. 단원에서 기르려는 조사 기능의 현재 수준을 살펴보고, 다음에 할 행동을 구체적으로 안내해 보세요.", consultMessages: ["아이들이 자료 조사를 하면서 막히는 부분이 있나 봐요.", "그냥 더 보완하라고 하면 어디부터 고쳐야 할지 모르겠죠.", "단원에서 기르려는 조사 기능의 현재 수준을 살펴보고, 다음에 할 행동을 구체적으로 안내해 보세요."],
       correctDrugId: "uoi-for-atl",
       step2: {
         question: "‘ATL 성장 스펙트럼(✍️)’을 활용한 가장 효과적인 형성평가 피드백 방식은?",
@@ -1876,7 +1905,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 4학년 지호 & 모둠원", text: "“지금 우리 모둠 자료 해석하고 있는데, 민수가 혼자 자기 생각대로 표를 다 그리고 있고 다른 친구들은 탐구 방향을 못 잡아서 아무것도 못 하고 구경만 하고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · LOI 2차시 탐구 활동지", text: "[영역 및 목적] LOI 탐구 과정 · 학습으로서의 평가 (✍️, ❤️)<br>[진행 현황] <span class='clue-highlight'>탐구나침반 활용 및 자기평가·동료평가 성찰 활동 미편성</span>" }
       ],
-      consultHint: "[LOI] 수준에서 학생 스스로와 동료가 주체가 되는 [학습으로서의 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 성찰 처방입니다.",
+      consultHint: "모둠이 지금 어디까지 탐구했는지 서로 잘 모르고 있네요. 이번에는 선생님이 대신 판단해 주기보다 아이들이 직접 돌아보게 하면 어떨까요? 함께 정한 기준을 보며 자신의 역할과 탐구 과정을 점검하고, 다음에 무엇을 할지 이야기하게 해 보세요.", consultMessages: ["모둠이 지금 어디까지 탐구했는지 서로 잘 모르고 있네요.", "이번에는 선생님이 대신 판단해 주기보다 아이들이 직접 돌아보게 하면 어떨까요?", "함께 정한 기준을 보며 자신의 역할과 탐구 과정을 점검하고, 다음에 무엇을 할지 이야기하게 해 보세요."],
       correctDrugId: "loi-as-refl",
       step2: {
         question: "‘탐구 과정 성찰(✍️, ❤️)’을 LOI 수업에 내실 있게 적용하는 방법은?",
@@ -1899,7 +1928,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 3학년 하윤 & 모둠원", text: "“지금 모둠에서 개념 카드를 나누고 있는데, 민수가 혼자 카드를 다 분류하고 있고 나머지 친구들은 분류 기준을 몰라서 아무것도 못 하고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · 본시 교수·학습 과정안 전개부", text: "[영역 및 목적] 단일 차시 활동 중 · 학습을 위한 평가 (✍️, ❤️)<br>[진행 현황] <span class='clue-highlight'>차시 내 학생 탐구 활동 관찰 관점 및 맞춤형 피드백 계획 미반영</span>" }
       ],
-      consultHint: "가장 작은 단위인 [차시] 수준에서 교사가 활동 중에 개입하는 [학습을 위한 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 처방을 찾으세요.",
+      consultHint: "지금 수업 시간 안에서 바로 도움을 줄 수 있는 상황이네요. 모둠마다 막히는 지점이 조금씩 다를 것 같아요. 아이들이 참여하는 모습과 역할을 직접 살펴보고, 그 자리에서 필요한 도움을 주시면 좋겠어요.", consultMessages: ["지금 수업 시간 안에서 바로 도움을 줄 수 있는 상황이네요.", "모둠마다 막히는 지점이 조금씩 다를 것 같아요.", "아이들이 참여하는 모습과 역할을 직접 살펴보고, 그 자리에서 필요한 도움을 주시면 좋겠어요."],
       correctDrugId: "les-for-obs",
       step2: {
         question: "차시 수업 중 ‘학습 활동 관찰(✍️, ❤️)’을 통해 즉각적인 배움을 돕는 방법은?",
@@ -1922,7 +1951,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 5학년 도윤 & 예진", text: "“지금 단원 마무리 학습지 쓰고 있는데, 민수는 ‘사고하는 사람’ 칸에 활동 이름만 적고 있고, 예진이는 다음 단원 목표 칸에 뭘 써야 할지 몰라서 연필만 들고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 단원 마무리 성찰지", text: "[영역 및 목적] UOI 성찰 단계 · 학습으로서의 평가 (❤️ 가치·태도, ✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>준거 기반 자기 활동 성찰 및 새로운 목표 설정 항목 미구성</span>" }
       ],
-      consultHint: "[UOI] 영역에서 학생 스스로 준거에 따라 성찰하고 새 목표를 세우는 [학습으로서의 평가]([❤️ 가치·태도, ✍️ 과정·기능])를 고르세요.",
+      consultHint: "단원 전체를 돌아볼 좋은 기회네요. 아이들이 어떤 태도를 보여 주었고 어떤 기능이 성장했는지 구체적인 사례를 떠올리게 해 보세요. 스스로 기준에 비추어 돌아보고 다음 탐구에서 해 보고 싶은 목표를 정하면 좋겠어요.", consultMessages: ["단원 전체를 돌아볼 좋은 기회네요.", "아이들이 어떤 태도를 보여 주었고 어떤 기능이 성장했는지 구체적인 사례를 떠올리게 해 보세요.", "스스로 기준에 비추어 돌아보고 다음 탐구에서 해 보고 싶은 목표를 정하면 좋겠어요."],
       correctDrugId: "uoi-as-lp",
       step2: {
         question: "‘학습자상 및 ATL 성장 스펙트럼(❤️, ✍️)’을 학습으로서의 평가로 운영하는 가장 좋은 방법은?",
@@ -1945,7 +1974,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 6학년 수빈 & 민수", text: "“지금 첫 번째 탐구목록 개념 지도 그리고 있는데, 민수는 예시 단어만 잔뜩 적고 있고 수빈이는 일반화 문장이랑 개념을 어떻게 연결하는지 몰라서 멈춰 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · LOI 1차 개념 정리 활동지", text: "[영역 및 목적] LOI 진행 중 수시 점검 · 학습을 위한 평가 (📖 지식·이해)<br>[진행 현황] <span class='clue-highlight'>LOI 중간 결과물 기반 개념 이해 수준 파악 및 피드백 단계 미편성</span>" }
       ],
-      consultHint: "[LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 탐구 과정 중 수시로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
+      consultHint: "다음 탐구로 넘어가기 전에 잠깐 짚고 가면 좋겠네요. 지금까지 아이들이 만든 개념 지도나 활동지를 보면 어떤 생각을 하고 있는지 알 수 있을 거예요. 개념 사이의 관계를 어떻게 이해했는지 살펴보고, 부족한 부분은 다음 탐구 전에 피드백해 주세요.", consultMessages: ["다음 탐구로 넘어가기 전에 잠깐 짚고 가면 좋겠네요.", "지금까지 아이들이 만든 개념 지도나 활동지를 보면 어떤 생각을 하고 있는지 알 수 있을 거예요.", "개념 사이의 관계를 어떻게 이해했는지 살펴보고, 부족한 부분은 다음 탐구 전에 피드백해 주세요."],
       correctDrugId: "loi-for-prod",
       step2: {
         question: "LOI 수준에서 ‘학습 결과물(📖)’ 과정 중 수시 평가를 효과적으로 수행하는 조치는?",
@@ -1991,7 +2020,7 @@
     const used=Object.keys(chances).filter(k=>!chances[k]);
     if(!used.length) return false;
     const k=used[Math.floor(Math.random()*used.length)]; chances[k]=true;
-    const labels={consult:['chance-consult','👩‍🏫 수석교사 도움 (1회)'],rowScan:['chance-row','🎯 정답 행 찾기 (1회)'],eliminate:['chance-eliminate','✂️ 오답 2개 지우기 (1회)']};
+    const labels={consult:['chance-consult','👩‍🏫 IB 코디네이터에게 물어보기 (1회)'],rowScan:['chance-row','🎯 정답 행 찾기 (1회)'],eliminate:['chance-eliminate','✂️ 오답 2개 지우기 (1회)']};
     const b=document.getElementById(labels[k][0]); b.disabled=false; b.textContent=labels[k][1]; return true;
   }
   function openLoot(next){
@@ -2033,7 +2062,7 @@
       {type:'student',meta:'💬 학생 증언 · VIP 교실',text:'처음 보고서와 고친 보고서를 함께 보여주고 싶어요. 또 제가 어떤 학습자상을 실천했고 조사 기능이 얼마나 성장했는지 스스로 돌아보고 다음 목표를 정하고 싶어요.'},
       {type:'artifact',meta:'📎 평가 기록물 · UOI 마무리 계획',text:'[자료 A] 초기 개념 지도, 보고서 초안·수정본, 최종 발표 자료 → 학습 과정과 결과 기록·통지<br>[자료 B] 학습자상 및 ATL 준거표 → <span class="clue-highlight">학생의 자기성찰과 새로운 목표 설정</span>'}
     ],
-    consultHint:'두 처방 모두 UOI 수준입니다. 하나는 여러 결과물을 종합해 기록·통지하는 학습의 평가, 다른 하나는 학습자상과 ATL을 성찰하고 목표를 정하는 학습으로서의 평가입니다.',
+    consultHint:'선생님, 이번에는 단원 마무리에 필요한 일이 두 가지네요. 처음 만든 자료와 수정한 자료, 최종 결과물을 함께 살펴 성장의 근거를 정리해 보세요. 그리고 아이들 스스로 자신의 태도와 기능을 돌아보고 다음 목표를 정하는 기회도 마련하면 좋겠어요.', consultMessages: ["선생님, 이번에는 단원 마무리에 필요한 일이 두 가지네요.", "처음 만든 자료와 수정한 자료, 최종 결과물을 함께 살펴 성장의 근거를 정리해 보세요.", "그리고 아이들 스스로 자신의 태도와 기능을 돌아보고 다음 목표를 정하는 기회도 마련하면 좋겠어요."],
     correctDrugId:'uoi-of-port', correctDrugIds:['uoi-of-port','uoi-as-lp'],
     step2:{question:'두 가지 평가 처방을 함께 적용하는 가장 적절한 방법은?',choices:[
       {text:'여러 시점의 결과물을 모아 학습 과정과 결과를 기록·통지하고, 학생이 학습자상과 ATL 준거에 따라 자신의 성장을 성찰해 다음 목표를 설정하게 한다.',correct:true},
@@ -2823,30 +2852,50 @@
     });
   }
 
+  let teacherChatTimer = null;
+  let teacherChatMessages = [];
+  let teacherChatIndex = 0;
+  function stopTeacherChatTimer(){if(teacherChatTimer!==null){clearTimeout(teacherChatTimer);teacherChatTimer=null;}}
+  function teacherChatBubble(text,cls){const node=document.createElement('div');node.className=cls;node.textContent=text;return node;}
+  function renderTeacherChat(all=false){
+    stopTeacherChatTimer();
+    const body=document.getElementById('teacher-chat-body');
+    body.replaceChildren(teacherChatBubble('선생님, 이 교실에서는 어떤 평가를 활용하면 좋을까요?','teacher-chat-user'),teacherChatBubble('IB 코디네이터','teacher-chat-name'));
+    if(all) teacherChatIndex=teacherChatMessages.length;
+    teacherChatMessages.slice(0,teacherChatIndex).forEach(t=>body.append(teacherChatBubble(t,'teacher-chat-reply')));
+    const complete=teacherChatIndex>=teacherChatMessages.length;
+    document.getElementById('teacher-chat-close').textContent=complete?'조언 확인':'조언 모두 보기';
+    if(!complete){
+      const typing=teacherChatBubble('IB 코디네이터가 답변을 작성 중입니다…','teacher-chat-typing teacher-chat-dots');body.append(typing);
+      teacherChatTimer=setTimeout(()=>{teacherChatIndex++;renderTeacherChat();},850);
+    }
+    body.scrollTop=body.scrollHeight;
+  }
+  function openTeacherChat(messages,immediate=false){
+    teacherChatMessages=messages.slice();teacherChatIndex=0;
+    document.getElementById('teacher-chat-modal').style.display='flex';renderTeacherChat(immediate);
+    document.getElementById('teacher-chat-close').focus({preventScroll:true});
+  }
+  function closeTeacherChat(){
+    if(teacherChatIndex<teacherChatMessages.length){renderTeacherChat(true);return;}
+    stopTeacherChatTimer();document.getElementById('teacher-chat-modal').style.display='none';
+    const reopen=document.querySelector('#consult-banner .consult-reopen');if(reopen)reopen.focus({preventScroll:true});
+  }
   function useConsultChance() {
     if (caseComplete || !chances.consult) return;
     chances.consult = false;
     usedConsultThisRun = true;
-
     const btn = document.getElementById('chance-consult');
     btn.disabled = true;
     btn.textContent = '교사 도움 사용 완료';
     playTone(700, 'sine', 0.14);
-
-    const data = currentCaseData();
-    const banner = document.getElementById('consult-banner');
-    banner.replaceChildren();
-    const head=document.createElement('div');head.className='consult-doctor-head';
-    const avatar=document.createElement('span');avatar.className='consult-avatar';avatar.textContent='👩‍🏫';
-    const label=document.createElement('div');label.innerHTML='<strong>수석교사</strong><small>수업 평가 전문가의 조언</small>';
-    head.append(avatar,label);
-    const speech=document.createElement('div');speech.className='consult-speech';speech.textContent=data.consultHint;
-    banner.append(head,speech);banner.style.display = 'block';
-    showNotice('👩‍🏫','수석교사의 조언',data.consultHint);
-
-    const tag = document.getElementById('consult-tag');
-    tag.textContent = '수석교사 도움 받음';
-    tag.classList.remove('secret');
+    const data=currentCaseData();
+    const messages=data.consultMessages || [data.consultHint];
+    const banner=document.getElementById('consult-banner');banner.replaceChildren();
+    const reopen=document.createElement('button');reopen.type='button';reopen.className='consult-reopen';reopen.textContent='💬 IB 코디네이터 조언 다시 읽기';reopen.onclick=()=>openTeacherChat(messages,true);
+    banner.append(reopen);banner.style.display='block';
+    const tag=document.getElementById('consult-tag');tag.textContent='IB 코디네이터 도움 받음';tag.classList.remove('secret');
+    openTeacherChat(messages);
   }
 
   function useRowScanChance() {
@@ -3094,6 +3143,7 @@
   }
 
   function resetGame() {
+    stopTeacherChatTimer();document.getElementById('teacher-chat-modal').style.display='none';
     if(completionTimer) clearTimeout(completionTimer); completionTimer=null;
     extraModal().style.display='none';
     vipActive=false;vipSelected=[];document.querySelector('.container').classList.remove('vip-ward');
@@ -3140,7 +3190,7 @@
 
     const consultBtn = document.getElementById('chance-consult');
     consultBtn.disabled = false;
-    consultBtn.textContent = '👩‍🏫 수석교사 도움 (1회)';
+    consultBtn.textContent = '👩‍🏫 IB 코디네이터에게 물어보기 (1회)';
 
     const rowBtn = document.getElementById('chance-row');
     rowBtn.disabled = false;
@@ -3199,7 +3249,7 @@
   function adaptMobileMenu(){closeMobileMenu();menuNodes.forEach((node,i)=>{if(mobileQuery.matches)mobileMenuPanel.append(node);else menuHomes[i].after(node);});}
   mobileQuery.addEventListener('change',adaptMobileMenu);
   adaptMobileMenu();
-  [['chance-consult','👩‍🏫 교사 도움','사용 완료'],['chance-row','🎯 정답 행 찾기','사용 완료'],['chance-eliminate','✂️ 오답 2개 지우기','사용 완료']].forEach(([id,short,used])=>{const el=document.getElementById(id);el.dataset.short=short;el.dataset.used=used;});
+  [['chance-consult','👩‍🏫 교사에게 묻기','사용 완료'],['chance-row','🎯 정답 행 찾기','사용 완료'],['chance-eliminate','✂️ 오답 2개 지우기','사용 완료']].forEach(([id,short,used])=>{const el=document.getElementById(id);el.dataset.short=short;el.dataset.used=used;});
   const vitalStatus=document.getElementById('vital-status');
   function syncVitalShort(){const t=vitalStatus.textContent;vitalStatus.dataset.short=t.includes('안정화')||t.includes('MISSION COMPLETE')?'● 안정화':t.includes('VIP')?'◆ VIP 진료':'● 진료 중';}
   new MutationObserver(syncVitalShort).observe(vitalStatus,{childList:true,characterData:true,subtree:true});syncVitalShort();
