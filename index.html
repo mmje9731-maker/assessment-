@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>IB PYP 수업 평가 응급실 - 현장 단서 추리 시뮬레이션</title>
   <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
   <style>
@@ -1018,6 +1018,84 @@
     .vip-ward .cabinet-panel {border:2px solid #d4af37;}
     .vip-ward .action-btn:not(.locked) {background:#d4af37;color:#111827;}
     .vip-ward .patient-panel.stable {border-color:#86efac;}
+  
+    /* Smartphone layout: original matrix and prescription nodes are reused. */
+    #mobile-dock, .mobile-area-filter { display:none; }
+    @media (max-width: 767px) {
+      html { overflow-x:hidden; scroll-padding-bottom:220px; }
+      body { padding:0; display:block; overflow-x:hidden; }
+      .container { width:100%; max-width:100%; min-width:0; padding:12px 12px calc(var(--mobile-dock-height,190px) + 16px); border-radius:0; box-shadow:none; }
+      .container.vip-ward { border-width:0; }
+      header { gap:9px; margin-bottom:10px; }
+      .header-left, .header-controls, .status-bar, .game-layout, .patient-panel, .cabinet-panel { min-width:0; max-width:100%; }
+      .header-left h1 { font-size:1.15rem; }
+      .header-controls { width:100%; justify-content:flex-start; gap:6px; }
+      .header-controls .icon-btn { min-height:44px; padding:8px; }
+      .skin-badge-pill,.reputation-pill { overflow-wrap:anywhere; min-width:0; font-size:.78rem; }
+      .status-bar { padding:9px; gap:8px; margin-bottom:10px; }
+      .ward-hearts { gap:4px; }
+      .heart-slot { padding:4px 6px; font-size:.72rem; }
+      .chance-bar { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); width:100%; gap:5px; }
+      .chance-label { grid-column:1/-1; }
+      .chance-btn { min-height:44px; padding:6px 3px; font-size:.73rem; overflow-wrap:anywhere; }
+      .game-layout { display:block; }
+      .patient-panel,.cabinet-panel { padding:12px; gap:10px; }
+      .container.mobile-cabinet .patient-panel { display:none; }
+      .container:not(.mobile-cabinet) .cabinet-panel { display:none; }
+      .clue-tab { min-height:48px; font-size:.77rem; padding:8px 3px; }
+      .clue-content-box,.scene-text,.drug-desc { overflow-wrap:anywhere; }
+      .scene-text,.clue-content-box { font-size:.95rem; line-height:1.65; }
+      .mobile-scroll-hint { display:none; }
+      .element-legend { flex-wrap:wrap; gap:6px; font-size:.75rem; }
+      .mobile-area-filter { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:5px; }
+      .mobile-area-filter button { min-height:44px; border:1px solid #cbd5e1; background:#fff; color:#334155; font:inherit; font-size:.85rem; font-weight:800; border-radius:8px; touch-action:manipulation; }
+      .mobile-area-filter button[aria-pressed=true] { background:#1e40af; color:#fff; border-color:#1e40af; }
+      .table-scroll-wrap { overflow:visible; }
+      .matrix-table { display:block; min-width:0; width:100%; border:0; background:transparent; overflow:visible; }
+      .matrix-table thead { display:none; }
+      .matrix-table tbody { display:grid; gap:12px; width:100%; }
+      .matrix-table tr { display:block; border:1px solid #cbd5e1; border-radius:12px; overflow:hidden; background:white; }
+      .matrix-table tr.mobile-filtered { display:none; }
+      .matrix-table th,.matrix-table td { display:block; width:100%; border:0; border-bottom:1px solid #e2e8f0; padding:9px!important; }
+      .matrix-table td:last-child { border-bottom:0; }
+      .area-col { display:flex!important; flex-wrap:wrap; align-items:center; gap:8px; }
+      .area-badge { margin:0; }
+      .area-focus-list { display:flex; flex-direction:row; flex-wrap:wrap; gap:5px 10px; font-size:.73rem; }
+      .matrix-cell::before { content:attr(data-mobile-label); display:block; font-size:.83rem; font-weight:800; color:#854d0e; background:#fef9c3; padding:6px 8px; margin-bottom:7px; border-radius:6px; text-align:left; }
+      .matrix-cell:last-child::before { background:#dcfce7; color:#166534; }
+      .matrix-cell.disabled { text-align:left!important; }
+      .drug-item { min-height:52px; padding:10px; touch-action:manipulation; }
+      .drug-title { font-size:.91rem; }
+      .drug-desc { font-size:.82rem; line-height:1.5; }
+      .drug-item.selected { border-width:2px; }
+      #mobile-dock { display:block; position:fixed; bottom:0; left:0; right:0; z-index:90; background:#fff; border-top:1px solid #cbd5e1; box-shadow:0 -5px 20px #0f172a25; padding:7px 12px calc(7px + env(safe-area-inset-bottom,0px)); }
+      .mobile-nav { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+      .mobile-nav button { min-height:44px; font:inherit; font-size:.87rem; font-weight:800; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; border-radius:9px; touch-action:manipulation; }
+      .mobile-nav button[aria-pressed=true] { color:white; background:#2563eb; border-color:#2563eb; }
+      #mobile-dock .prescription-paper { position:static; box-shadow:none; margin-top:6px; padding:7px 9px; gap:5px; border-top-width:2px; }
+      #mobile-dock .prescription-header { padding-bottom:3px; }
+      #mobile-dock .selected-prescription { padding:5px 8px; font-size:.78rem; line-height:1.35; max-height:70px; overflow:auto; overflow-wrap:anywhere; }
+      #mobile-dock .action-btn { min-height:44px; padding:8px; font-size:.85rem; }
+      #mobile-dock.vip-dock { background:#111827; border-color:#d4af37; }
+      #mobile-dock.vip-dock .action-btn:not(.locked),#mobile-dock.vip-dock .mobile-nav button[aria-pressed=true] { background:#d4af37; color:#111827; border-color:#d4af37; }
+      .modal-overlay { padding:8px; padding-top:max(8px,env(safe-area-inset-top)); padding-bottom:max(8px,env(safe-area-inset-bottom)); overflow-x:hidden; }
+      .modal-inner { width:100%; min-width:0; max-height:calc(100dvh - 24px); overflow-y:auto; overflow-x:hidden; padding:17px 12px; }
+      .modal-inner > * { min-width:0; max-width:100%; }
+      .modal-desc,.choice-btn,.modal-btn,.stat-val,.persona-compact-desc,.lp-card-desc { overflow-wrap:anywhere; }
+      .choice-btn,.modal-btn,.triage-btn { min-height:48px; }
+      #extra-options button { min-width:0; overflow-wrap:anywhere; font-size:.82rem; }
+      #result-modal .stats-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:4px; }
+      #result-modal .stat-box { padding:6px 3px; min-width:0; }
+      #result-modal .stat-val { font-size:.87rem; }
+      #result-modal .id-card { padding:12px; }
+      #result-modal .id-card-main-rank { font-size:1.05rem; }
+      #result-modal .pledge-select { font-size:16px!important; }
+      #result-modal .modal-inner { max-height:calc(100dvh - 24px); }
+      button { touch-action:manipulation; }
+    }
+    @media(max-width:360px) { .clue-tab { font-size:.71rem; } .mobile-nav button { font-size:.8rem; } .container { padding-left:8px; padding-right:8px; } .chance-btn { font-size:.68rem; } }
+    @media(prefers-reduced-motion:reduce) { .ecg-line,.floating-score,.surprise-siren-banner { animation:none!important; } }
+
   </style>
 </head>
 <body>
@@ -1103,7 +1181,7 @@
           <span style="font-size: 0.78rem; color: var(--text-sub); font-weight: 700;" id="rx-hint">약품표에서 1개 선택</span>
         </div>
         <div class="selected-prescription" id="selected-prescription">
-          우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요
+          IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요
         </div>
         <button class="action-btn locked" id="administer-btn" onclick="submitPrescription()">
           💊 약품 캐비닛에서 처방을 선택하세요
@@ -1123,7 +1201,9 @@
           <span>❤️ 가치·태도</span>
         </div>
       </div>
-      <div class="mobile-scroll-hint">← 좌우로 밀어서 전체 약품표 보기 →</div>
+      <div class="mobile-area-filter" aria-label="평가 약품 영역 필터">
+        <button type="button" data-area="all" aria-pressed="true">전체</button><button type="button" data-area="UOI" aria-pressed="false">UOI</button><button type="button" data-area="LOI" aria-pressed="false">LOI</button><button type="button" data-area="차시" aria-pressed="false">차시</button>
+      </div><div class="mobile-scroll-hint">← 좌우로 밀어서 전체 약품표 보기 →</div>
 
       <div class="table-scroll-wrap">
         <table class="matrix-table" id="matrix-table">
@@ -1154,6 +1234,13 @@
       </div>
     </section>
   </main>
+</div>
+
+<div id="mobile-dock">
+  <div class="mobile-nav" aria-label="진료 화면 전환">
+    <button type="button" id="mobile-patient" aria-pressed="true">🔍 교실 상황 · 단서</button>
+    <button type="button" id="mobile-cabinet" aria-pressed="false">💊 평가 약품표</button>
+  </div>
 </div>
 
 <!-- 1. 게임 규칙 안내 모달 -->
@@ -1808,7 +1895,7 @@
     document.querySelectorAll('.drug-item').forEach(el=>el.classList.toggle('selected',vipSelected.some(d=>d.id===el.dataset.id)));
     const rx=document.getElementById('selected-prescription');
     rx.classList.toggle('stamped',vipSelected.length>0);
-    rx.innerHTML=vipSelected.length?vipSelected.map((d,i)=>`${i+1}. [${d.areaLabel}] <strong>${d.title}</strong>`).join('<br>'):'우측 약품 캐비닛에서 두 가지 처방을 선택하세요';
+    rx.innerHTML=vipSelected.length?vipSelected.map((d,i)=>`${i+1}. [${d.areaLabel}] <strong>${d.title}</strong>`).join('<br>'):'약품 캐비닛에서 두 가지 처방을 선택하세요';
     updateAdministerButton();
   }
   function currentCaseData(){return vipActive?VIP_CASE:activeCases[currentCaseIdx];}
@@ -2105,8 +2192,9 @@
       `;
       tr.appendChild(th);
 
-      row.cells.forEach(cell => {
+      row.cells.forEach((cell, cellIndex) => {
         const td = document.createElement('td');
+        td.dataset.mobileLabel = ['학습을 위한 평가 (FOR)','학습으로서의 평가 (AS)','학습의 평가 (OF)'][cellIndex];
         if (cell.disabled) {
           td.className = 'matrix-cell disabled';
           td.innerHTML = cell.label.replace('\n', '<br>');
@@ -2125,7 +2213,10 @@
               <div class="drug-title">▶ ${item.title}</div>
               <div class="drug-desc">- ${item.desc}</div>
             `;
+            itemEl.setAttribute('role','button');
+            itemEl.tabIndex=0;
             itemEl.onclick = () => selectDrugItem(item, itemEl);
+            itemEl.onkeydown = e => { if(e.key==='Enter'||e.key===' '){e.preventDefault();selectDrugItem(item,itemEl);} };
             stack.appendChild(itemEl);
           });
 
@@ -2198,7 +2289,7 @@
 
     const rxBox = document.getElementById('selected-prescription');
     rxBox.classList.remove('stamped');
-    rxBox.textContent = vipActive?'우측 약품 캐비닛에서 두 가지 처방을 선택하세요':'우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
+    rxBox.textContent = vipActive?'약품 캐비닛에서 두 가지 처방을 선택하세요':'IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
 
     document.querySelectorAll('#matrix-body tr').forEach(tr => tr.classList.remove('row-scanned'));
     document.querySelectorAll('.drug-item').forEach(el => {
@@ -2211,6 +2302,7 @@
     }
     selectClueTab(0);
     renderWardHearts();
+    if(typeof mobileResetView==='function') mobileResetView();
     if(vipActive){
       document.getElementById('patient-ward').textContent='👑 VIP 특별 병동';
       document.getElementById('vital-status').textContent='◆ TOP SECRET · VIP 특별 진료 중';
@@ -2328,7 +2420,7 @@
       return;
     }
     if (!selectedDrug) {
-      showNotice('💊', '처방 미선택', '우측 IB 평가 약품 캐비닛에서 현재 교실에 맞는 처방을 선택해 주세요.');
+      showNotice('💊', '처방 미선택', 'IB 평가 약품 캐비닛에서 현재 교실에 맞는 처방을 선택해 주세요.');
       return;
     }
 
@@ -2415,7 +2507,7 @@
       document.getElementById('bpm-display').textContent='72 BPM';
       document.getElementById('bpm-display').classList.add('stable');document.getElementById('ecg-line').classList.add('stable');
       playSuccessFanfare(true);
-      setupExtra('👑','VIP 특별 진료 성공!','학습 포트폴리오와 학습자상·ATL 성장 스펙트럼 복합 처방 완료. 추가 진료 +'+pts+'점!','최종 인증서 확인',()=>{extraModal().style.display='none';vipActive=false;document.querySelector('.container').classList.remove('vip-ward');finishGame();});
+      setupExtra('👑','VIP 특별 진료 성공!','학습 포트폴리오와 학습자상·ATL 성장 스펙트럼 복합 처방 완료. 추가 진료 +'+pts+'점!','최종 인증서 확인',()=>{extraModal().style.display='none';vipActive=false;document.querySelector('.container').classList.remove('vip-ward');mobileDock.classList.remove('vip-dock');finishGame();});
       extraModal().classList.add('vip-mode','vip-cleared');return;
     }
     const currentCase = currentCaseData();
@@ -2636,7 +2728,7 @@
         el.classList.remove('selected');
         const rxBox = document.getElementById('selected-prescription');
         rxBox.classList.remove('stamped');
-        rxBox.textContent = '우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
+        rxBox.textContent = 'IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요';
         updateAdministerButton();
       }
     });
@@ -2902,6 +2994,45 @@
     loadCase(0);
     openGuideModal();
   }
+
+
+  // Mobile navigation uses the same game elements, not duplicate controls.
+  const mobileQuery = window.matchMedia('(max-width:767px)');
+  const mobileDock = document.getElementById('mobile-dock');
+  const mobileRx = document.querySelector('.prescription-paper');
+  const mobileHome = document.createComment('desktop prescription position');
+  mobileRx.before(mobileHome);
+  let mobileArea = 'all';
+  function mobileFilter(area){
+    mobileArea=area;
+    document.querySelectorAll('.mobile-area-filter button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.area===area)));
+    document.querySelectorAll('#matrix-body tr').forEach(tr=>tr.classList.toggle('mobile-filtered',area!=='all'&&tr.dataset.area!==area));
+  }
+  function mobileShowCabinet(show,scroll=true){
+    document.querySelector('.container').classList.toggle('mobile-cabinet',show);
+    document.getElementById('mobile-patient').setAttribute('aria-pressed',String(!show));
+    document.getElementById('mobile-cabinet').setAttribute('aria-pressed',String(show));
+    if(scroll&&mobileQuery.matches) (show?document.querySelector('.cabinet-panel'):document.getElementById('patient-panel')).scrollIntoView({block:'start'});
+  }
+  function mobileResetView(){
+    mobileFilter('all'); mobileShowCabinet(false,false);
+    mobileDock.classList.toggle('vip-dock',vipActive);
+    if(mobileQuery.matches) window.scrollTo(0,0);
+  }
+  function mobileAdapt(){
+    if(mobileQuery.matches){
+      if(mobileRx.parentElement!==mobileDock) mobileDock.append(mobileRx);
+      mobileDock.classList.toggle('vip-dock',vipActive);
+    } else {
+      if(mobileRx.parentElement===mobileDock) mobileHome.after(mobileRx);
+    }
+  }
+  document.getElementById('mobile-patient').onclick=()=>mobileShowCabinet(false);
+  document.getElementById('mobile-cabinet').onclick=()=>mobileShowCabinet(true);
+  document.querySelectorAll('.mobile-area-filter button').forEach(b=>b.onclick=()=>mobileFilter(b.dataset.area));
+  mobileQuery.addEventListener('change',mobileAdapt);
+  if(window.ResizeObserver) new ResizeObserver(()=>{if(mobileQuery.matches)document.documentElement.style.setProperty('--mobile-dock-height',mobileDock.offsetHeight+'px');}).observe(mobileDock);
+  mobileAdapt();
 
   resetGame();
 </script>
