@@ -1498,8 +1498,21 @@
     </div>
     <div class="guide-help"><strong>💡 막힐 때 사용하는 도움 기회 (코디네이터 2회, 나머지 각 1회)</strong><div>👩‍🏫 <b>IB 코디네이터에게 물어보기:</b> 대화창에서 조언을 확인합니다.</div><div>🎯 <b>정답 행 찾기:</b> 정답이 있는 UOI·LOI·차시 행을 표시합니다.</div><div>✂️ <b>오답 2개 지우기:</b> 틀린 약품 2개를 제외합니다.</div></div>
     <details class="guide-more"><summary>점수와 특별 미션 안내</summary><div>첫 시도 성공 +7점, 단서 1개만 확인하면 추가 +4점, 2개면 +2점, 연속 성공 시 추가 +2점. 오진 후 성공하면 +4점입니다.<br>위급 환자, 응급 미션, 2·4병동 뒤 보급 상자, 마지막 VIP 특별 진료도 등장합니다. VIP는 약품 2개를 선택합니다. 보급 상자는 도움 기회 전체 복구 및 추가 점수, 다음 병동 진료점 3배, 추가 진료점 40점 중 하나를 제공합니다. 추가 진료점은 장비 누적 점수에 반영됩니다.</div></details>
-    <div id="name-entry" class="name-entry"><label for="doctor-name">진료 담당자 이름</label><input id="doctor-name" type="text" maxlength="20" autocomplete="off" placeholder="이름 또는 별명 입력 (선택)"><small>입력한 이름은 내 인증서에 표시됩니다.</small></div>
-    <button class="modal-btn" id="guide-start" onclick="startGame()">🚑 응급실 진료 시작하기</button>
+    <button class="modal-btn" id="guide-start" onclick="advanceGuide()">닉네임 입력하기 ➔</button>
+  </div>
+</div>
+
+<!-- 진료 담당자 등록: 게임 설명 다음 단계 -->
+<div class="modal-overlay" id="nickname-modal" role="dialog" aria-modal="true" aria-labelledby="nickname-title">
+  <div class="modal-inner" style="max-width:420px">
+    <div class="modal-emoji">👩‍⚕️</div>
+    <h2 class="modal-title" id="nickname-title">진료 담당자 등록</h2>
+    <p class="modal-desc">닉네임을 입력하고 응급실 진료를 시작하세요.</p>
+    <form onsubmit="event.preventDefault();startGame()">
+      <div id="name-entry" class="name-entry"><label for="doctor-name">닉네임</label><input id="doctor-name" type="text" maxlength="20" autocomplete="off" placeholder="이름 또는 별명 입력 (선택)"><small>입력한 닉네임은 최종 인증서에 표시됩니다.</small></div>
+      <button class="modal-btn" type="submit">🚑 응급실 진료 시작하기</button>
+      <button type="button" onclick="openGuideModal()" style="display:block;margin:12px auto 0;border:0;background:transparent;color:#475569;font:inherit;cursor:pointer;padding:8px">← 게임 설명 다시 보기</button>
+    </form>
   </div>
 </div>
 
@@ -2257,8 +2270,8 @@
   }
 
   function openGuideModal() {
-    document.getElementById('name-entry').hidden=hasStarted;
-    document.getElementById('guide-start').textContent=hasStarted?'진료 계속하기':'🚑 응급실 진료 시작하기';
+    document.getElementById('nickname-modal').style.display='none';
+    document.getElementById('guide-start').textContent=hasStarted?'진료 계속하기':'닉네임 입력하기 ➔';
     document.getElementById('guide-modal').style.display = 'flex';
   }
 
@@ -3210,7 +3223,14 @@
     }
   }
 
+  function advanceGuide() {
+    document.getElementById('guide-modal').style.display='none';
+    if(hasStarted)return;
+    document.getElementById('nickname-modal').style.display='flex';
+  }
+
   function startGame() {
+    document.getElementById('nickname-modal').style.display='none';
     if(!hasStarted){doctorName=document.getElementById('doctor-name').value.trim().replace(/[\r\n]/g,' ').slice(0,20);hasStarted=true;}
     document.getElementById('guide-modal').style.display = 'none';
   }
