@@ -71,6 +71,11 @@
       z-index: 1200;
     }
 
+    #transition-modal {
+      z-index: 1100;
+      background: rgba(15, 23, 42, 0.78);
+    }
+
     .modal-inner {
       background: #ffffff;
       border-radius: 22px;
@@ -129,6 +134,76 @@
     .modal-btn:hover {
       background: #1d4ed8;
       transform: translateY(-1px);
+    }
+
+    /* 병동 전환 안내 모달 전용 */
+    .transition-card {
+      max-width: 500px;
+      border: 2px solid #86efac;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 42%);
+    }
+
+    .transition-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 12px 0 14px;
+      flex-wrap: wrap;
+    }
+
+    .trans-chip {
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .trans-chip.done {
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #86efac;
+    }
+
+    .trans-chip.next {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+    }
+
+    .trans-arrow {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--text-sub);
+    }
+
+    .next-ward-preview {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 14px;
+      margin-bottom: 14px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .transition-bar-track {
+      width: 100%;
+      height: 6px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .transition-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--accent-blue);
+      transition: width 1.4s linear;
     }
 
     /* 직관적 3단계 흐름도 & 가이드 */
@@ -247,7 +322,25 @@
       margin-bottom: 8px;
     }
 
-    /* 15초 긴급 트리아제 미니게임 모달 전용 */
+    /* 깜짝 긴급 트리아제 미니게임 모달 전용 */
+    .surprise-siren-banner {
+      background: linear-gradient(90deg, #dc2626, #ea580c);
+      color: #ffffff;
+      font-size: 0.84rem;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      animation: sirenPulse 0.9s infinite alternate;
+    }
+
+    @keyframes sirenPulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 rgba(220, 38, 38, 0.3); }
+      100% { transform: scale(1.03); box-shadow: 0 4px 14px rgba(220, 38, 38, 0.45); }
+    }
+
     .triage-header-bar {
       display: flex;
       justify-content: space-between;
@@ -405,7 +498,7 @@
       font-size: 0.88rem;
       padding: 6px 12px;
       border-radius: 9px;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
 
     .reputation-pill.high {
@@ -414,15 +507,28 @@
       color: #15803d;
     }
 
+    .reputation-pill.bump {
+      transform: scale(1.08);
+      box-shadow: 0 0 12px rgba(37, 99, 235, 0.35);
+    }
+
+    /* 연승 피버 배지 */
     .combo-pill {
       display: none;
-      background: #fffbeb;
-      border: 1.5px solid #fde68a;
-      color: #b45309;
-      font-weight: 800;
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border: 1.5px solid #f59e0b;
+      color: #92400e;
+      font-weight: 900;
       font-size: 0.85rem;
-      padding: 6px 10px;
+      padding: 6px 11px;
       border-radius: 9px;
+      box-shadow: 0 2px 10px rgba(245, 158, 11, 0.28);
+      animation: feverGlow 1.3s infinite alternate;
+    }
+
+    @keyframes feverGlow {
+      0% { box-shadow: 0 2px 8px rgba(245, 158, 11, 0.25); }
+      100% { box-shadow: 0 2px 16px rgba(245, 158, 11, 0.55); }
     }
 
     .icon-btn {
@@ -545,12 +651,78 @@
       flex-direction: column;
       gap: 12px;
       transition: all 0.3s ease;
+      position: relative;
+    }
+
+    /* 연승 피버 활성화 시 패널 연출 */
+    .patient-panel.fever-mode:not(.stable) {
+      border-color: #fcd34d;
+      border-top-color: #f59e0b;
+      box-shadow: 0 8px 24px rgba(245, 158, 11, 0.16);
     }
 
     .patient-panel.stable {
       border-color: #86efac;
       border-top-color: var(--accent-green);
       background: #f0fdf4;
+      box-shadow: 0 8px 24px rgba(22, 163, 74, 0.18);
+    }
+
+    /* 플로팅 점수 타격감 연출 */
+    .floating-score {
+      position: absolute;
+      top: 56px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 60;
+      pointer-events: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      animation: floatScoreUp 1.45s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .floating-score-main {
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff;
+      font-size: 1.38rem;
+      font-weight: 900;
+      padding: 6px 18px;
+      border-radius: 999px;
+      box-shadow: 0 8px 20px rgba(22, 163, 74, 0.38);
+      border: 2px solid #bbf7d0;
+      white-space: nowrap;
+    }
+
+    .floating-score-sub {
+      background: #0f172a;
+      color: #fde047;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.25);
+    }
+
+    @keyframes floatScoreUp {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 14px) scale(0.8);
+      }
+      18% {
+        opacity: 1;
+        transform: translate(-50%, 0px) scale(1.06);
+      }
+      75% {
+        opacity: 1;
+        transform: translate(-50%, -26px) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -44px) scale(0.96);
+      }
     }
 
     /* 활력 징후 모니터 */
@@ -568,6 +740,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 6px;
     }
 
     .vital-status {
@@ -595,6 +768,18 @@
     @keyframes pulseBpm {
       0% { opacity: 0.85; }
       100% { opacity: 1; }
+    }
+
+    .fever-strip {
+      display: none;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(251, 191, 36, 0.5);
+      color: #fde68a;
+      font-size: 0.74rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 5px;
+      text-align: center;
     }
 
     .ecg-container {
@@ -1575,7 +1760,7 @@
     </div>
     <div class="header-controls">
       <div class="attempt-pill" id="attempt-display">♾️ 무제한 재진료</div>
-      <div class="combo-pill" id="combo-display">🔥 2연속 명처방</div>
+      <div class="combo-pill" id="combo-display">🔥 2연속 피버!</div>
       <div class="reputation-pill" id="reputation-display">신뢰도 50점 (수습의)</div>
       <button class="icon-btn" onclick="openGuideModal()">❓ 규칙</button>
       <button class="icon-btn" id="sound-btn" onclick="toggleSound()">🔊</button>
@@ -1602,6 +1787,7 @@
             <span class="vital-status" id="vital-status">● 진행 중 · 실시간 교실 평가 점검</span>
             <span class="bpm-display" id="bpm-display">138 BPM</span>
           </div>
+          <div class="fever-strip" id="fever-strip">🔥 연속 명처방 피버 가동 중 · 첫 시도 성공 시 +2점 추가 보너스!</div>
           <div class="ecg-container">
             <svg viewBox="0 0 400 20" width="100%" height="100%" preserveAspectRatio="none">
               <polyline id="ecg-line" class="ecg-line" points="0,10 60,10 70,4 80,16 90,2 100,18 110,10 180,10 190,4 200,16 210,2 220,18 230,10 310,10 320,4 330,16 340,2 350,18 360,10 400,10" />
@@ -1701,7 +1887,7 @@
   </main>
 </div>
 
-<!-- 1. 게임 규칙 안내 모달 -->
+<!-- 1. 게임 규칙 안내 모달 (트리아제는 깜짝 미션으로 비밀 유지) -->
 <div class="modal-overlay" id="guide-modal">
   <div class="modal-inner">
     <div class="modal-emoji">🩺</div>
@@ -1710,22 +1896,22 @@
 
     <div class="flow-diagram">
       <div class="flow-chip">1️⃣ 조기 처방 직관 보너스</div>
-      <div class="flow-chip">2️⃣ 15초 긴급 트리아제</div>
+      <div class="flow-chip">2️⃣ 연승 피버 & 실천 처방</div>
       <div class="flow-chip">3️⃣ 도감 스탬프 & 배지</div>
     </div>
 
     <div class="guide-steps">
       <div class="guide-step-item">
         <div class="step-num-badge">1</div>
-        <div class="step-text-wrap"><strong>조기 처방 리스크-리턴:</strong> 단서 3개를 다 열지 않아도 즉시 투약할 수 있습니다. <strong>단서 1개만 보고 맞히면 +4점</strong>, <strong>2개 보고 맞히면 +2점</strong> 보너스가 주어집니다!</div>
+        <div class="step-text-wrap"><strong>조기 처방 리스크-리턴:</strong> 단서 3개를 다 열지 않아도 즉시 투약할 수 있습니다. <strong>단서 1개만 보고 맞히면 +4점</strong>, <strong>2개 보고 맞히면 +2점</strong> 직관 보너스가 주어집니다!</div>
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">2</div>
-        <div class="step-text-wrap"><strong>15초 긴급 응급실 트리아제:</strong> 3번째 병동 완료 후 15초 동안 교실 상황 카드 3장을 <strong>형성평가 vs 총괄평가</strong>로 빠르게 분류하는 보너스 라운드가 열립니다.</div>
+        <div class="step-text-wrap"><strong>연속 명처방 피버:</strong> 첫 시도에 오진 없이 연속으로 병동을 안정화하면 <strong>피버 모드(+2점 추가 보너스)</strong>가 발동됩니다. (기회 무제한)</div>
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">3</div>
-        <div class="step-text-wrap"><strong>도감 스탬프 & 히든 업적:</strong> 처방에 성공한 약품에는 <strong>✅ 처방 완료</strong> 도장이 찍히며, 플레이 기록에 따라 특수 업적 배지가 수여됩니다.</div>
+        <div class="step-text-wrap"><strong>도감 스탬프 & 특수 업적:</strong> 처방에 성공한 약품에는 <strong>✅ 처방 완료</strong> 도장이 찍히며, 당직 기록에 따라 히든 업적 배지가 수여됩니다.</div>
       </div>
     </div>
 
@@ -1733,7 +1919,25 @@
   </div>
 </div>
 
-<!-- 2. 2단계 후속 조치 모달 -->
+<!-- 2. 명확한 병동 전환 안내 모달 -->
+<div class="modal-overlay" id="transition-modal">
+  <div class="modal-inner transition-card">
+    <div class="modal-emoji">🏥</div>
+    <h2 class="modal-title" id="transition-title">1번 병동 처방 완료!</h2>
+    <div class="transition-flow">
+      <span class="trans-chip done" id="trans-done-chip">💚 1번 병동 안정화 완료</span>
+      <span class="trans-arrow">➔</span>
+      <span class="trans-chip next" id="trans-next-chip">🚨 2번 병동 이동 중</span>
+    </div>
+    <div class="next-ward-preview" id="next-ward-preview"></div>
+    <div class="transition-bar-track">
+      <div class="transition-bar-fill" id="transition-bar-fill"></div>
+    </div>
+    <button class="modal-btn" id="transition-skip-btn" onclick="skipWardTransition()">다음 병동 바로 입장 ➔</button>
+  </div>
+</div>
+
+<!-- 3. 2단계 후속 조치 모달 -->
 <div class="modal-overlay" id="choice-modal">
   <div class="modal-inner">
     <span class="badge-pill" id="choice-badge">2단계 실천 처방</span>
@@ -1743,12 +1947,12 @@
   </div>
 </div>
 
-<!-- 3. 15초 긴급 트리아제 미니게임 모달 -->
+<!-- 4. 깜짝 긴급 트리아제 미니게임 모달 -->
 <div class="modal-overlay" id="triage-modal">
   <div class="modal-inner" style="max-width: 540px;">
-    <span class="badge-pill" style="background: var(--accent-red);">🚨 15초 긴급 응급실 트리아제</span>
+    <div class="surprise-siren-banner">🚨 깜짝 미션 발생! 긴급 응급실 트리아제 호출</div>
     <h2 class="modal-title">실시간 교실 평가 유형을 빠르게 분류하세요!</h2>
-    <p class="modal-desc" style="margin-bottom: 12px;">제한 시간 15초 안에 상황 카드 3장을 정확히 분류하면 <strong>개당 신뢰도 +3점</strong>을 획득합니다.</p>
+    <p class="modal-desc" style="margin-bottom: 12px;">갑작스러운 응급 분류 요청입니다! 15초 안에 상황 카드 3장을 분류하면 <strong>개당 신뢰도 +3점</strong>을 획득합니다.</p>
 
     <div class="triage-header-bar">
       <span id="triage-counter">진행 카드: 1 / 3</span>
@@ -1773,7 +1977,7 @@
   </div>
 </div>
 
-<!-- 4. 최종 결과 인증서 모달 -->
+<!-- 5. 최종 결과 인증서 모달 -->
 <div class="modal-overlay" id="result-modal">
   <div class="modal-inner">
     <div class="modal-emoji">🏆</div>
@@ -1834,7 +2038,7 @@
   </div>
 </div>
 
-<!-- 5. 커스텀 알림 모달 -->
+<!-- 6. 커스텀 알림 모달 -->
 <div class="modal-overlay" id="notice-modal">
   <div class="modal-inner" style="max-width: 460px;">
     <div class="modal-emoji" id="notice-emoji">💡</div>
@@ -2246,7 +2450,7 @@
     }
   ];
 
-  // 15초 긴급 트리아제 문제 풀 (형성평가 vs 총괄평가)
+  // 깜짝 트리아제 문제 풀 (형성평가 vs 총괄평가)
   const TRIAGE_POOL = [
     { text: "모둠 토의 중 막힌 학생들에게 수행지시어로 즉시 수정 방향을 안내한다.", answer: "formative" },
     { text: "단원을 모두 마친 뒤 명시된 개념 연결 능력을 지식 에세이로 기록·통지한다.", answer: "summative" },
@@ -2274,7 +2478,13 @@
   let chances = { consult: true, rowScan: true, eliminate: true };
   let stampedDrugIds = new Set();
 
-  // 트리아제 미니게임 상태
+  // 병동 전환 & 알림 콜백 상태
+  let transitionTimeout = null;
+  let transitionCallback = null;
+  let noticeCloseCallback = null;
+
+  // 깜짝 트리아제 미니게임 상태
+  let triageTriggerWard = 3;
   let triageTriggered = false;
   let triageDeck = [];
   let triageIdx = 0;
@@ -2300,12 +2510,21 @@
     osc.stop(audioCtx.currentTime + duration);
   }
 
+  function playSuccessFanfare(isFever) {
+    playTone(660, 'sine', 0.12);
+    setTimeout(() => playTone(880, 'sine', 0.16), 90);
+    if (isFever) {
+      setTimeout(() => playTone(1046, 'triangle', 0.22), 180);
+    }
+  }
+
   function toggleSound() {
     soundEnabled = !soundEnabled;
     document.getElementById('sound-btn').textContent = soundEnabled ? '🔊' : '🔇';
   }
 
-  function showNotice(emoji, title, desc) {
+  function showNotice(emoji, title, desc, onClose = null) {
+    noticeCloseCallback = onClose;
     document.getElementById('notice-emoji').textContent = emoji;
     document.getElementById('notice-title').textContent = title;
     document.getElementById('notice-desc').textContent = desc;
@@ -2314,10 +2533,83 @@
 
   function closeNotice() {
     document.getElementById('notice-modal').style.display = 'none';
+    if (noticeCloseCallback) {
+      const cb = noticeCloseCallback;
+      noticeCloseCallback = null;
+      cb();
+    }
   }
 
   function openGuideModal() {
     document.getElementById('guide-modal').style.display = 'flex';
+  }
+
+  // 플로팅 점수 타격감 연출
+  function spawnFloatingScore(points, breakdownText) {
+    const panel = document.getElementById('patient-panel');
+    const floater = document.createElement('div');
+    floater.className = 'floating-score';
+    floater.innerHTML = `
+      <div class="floating-score-main">+${points}점!</div>
+      <div class="floating-score-sub">${breakdownText}</div>
+    `;
+    panel.appendChild(floater);
+
+    const repEl = document.getElementById('reputation-display');
+    repEl.classList.add('bump');
+    setTimeout(() => repEl.classList.remove('bump'), 320);
+
+    setTimeout(() => {
+      if (floater.parentNode) floater.parentNode.removeChild(floater);
+    }, 1500);
+  }
+
+  // 명확한 병동 전환 안내 모달
+  function showWardTransition(completedWardNum, nextWardIdx, callback) {
+    const nextCase = activeCases[nextWardIdx];
+    const nextWardNum = nextWardIdx + 1;
+
+    document.getElementById('transition-title').textContent =
+      `${completedWardNum}번 병동 처방 완료! 다음 병동으로 이동합니다`;
+    document.getElementById('trans-done-chip').textContent =
+      `💚 ${completedWardNum}번 병동 안정화 완료`;
+    document.getElementById('trans-next-chip').textContent =
+      `🚨 ${nextWardNum}번 병동 이동 중`;
+    document.getElementById('next-ward-preview').innerHTML =
+      `<div style="font-size:0.78rem; color:#2563eb; margin-bottom:3px;">다음 진료 교실 (${nextWardNum} / ${activeCases.length}병동)</div>${nextCase.subject}`;
+
+    const fillEl = document.getElementById('transition-bar-fill');
+    fillEl.style.transition = 'none';
+    fillEl.style.width = '0%';
+
+    const modal = document.getElementById('transition-modal');
+    modal.style.display = 'flex';
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        fillEl.style.transition = 'width 1.4s linear';
+        fillEl.style.width = '100%';
+      });
+    });
+
+    transitionCallback = callback;
+    if (transitionTimeout) clearTimeout(transitionTimeout);
+    transitionTimeout = setTimeout(() => {
+      skipWardTransition();
+    }, 1450);
+  }
+
+  function skipWardTransition() {
+    if (transitionTimeout) {
+      clearTimeout(transitionTimeout);
+      transitionTimeout = null;
+    }
+    document.getElementById('transition-modal').style.display = 'none';
+    if (transitionCallback) {
+      const cb = transitionCallback;
+      transitionCallback = null;
+      cb();
+    }
   }
 
   function renderMatrix() {
@@ -2400,14 +2692,17 @@
 
     const panel = document.getElementById('patient-panel');
     panel.classList.remove('stable');
-    document.getElementById('vital-status').textContent = '● 진행 중 · 실시간 교실 평가 점검';
+    if (streak >= 2) panel.classList.add('fever-mode');
+    else panel.classList.remove('fever-mode');
+
+    document.getElementById('vital-status').textContent = `● ${idx + 1}번 병동 진료 중 · 실시간 평가 점검`;
     document.getElementById('vital-status').classList.remove('stable');
     const bpmEl = document.getElementById('bpm-display');
     bpmEl.textContent = `${data.bpm} BPM`;
     bpmEl.classList.remove('stable');
     document.getElementById('ecg-line').classList.remove('stable');
 
-    document.getElementById('patient-ward').textContent = `${idx + 1}번 병동`;
+    document.getElementById('patient-ward').textContent = `${idx + 1}번 병동 (${idx + 1}/${activeCases.length})`;
     document.getElementById('patient-subject').textContent = data.subject;
     document.getElementById('scene-text').innerHTML = data.scene.replace(/\n/g, '<br>');
 
@@ -2515,6 +2810,7 @@
     mistakeCount++;
     streak = 0;
     reputation = Math.max(20, reputation - 5);
+    document.getElementById('patient-panel').classList.remove('fever-mode');
     updateStatusUI();
     showNotice('💡', `${title} (신뢰도 -5 · 다시 처방 가능)`, message);
   }
@@ -2566,7 +2862,6 @@
       btn.textContent = opt.text;
       btn.onclick = () => {
         if (opt.correct) {
-          playTone(880, 'sine', 0.2);
           modal.style.display = 'none';
           completeCurrentCase();
         } else {
@@ -2591,25 +2886,38 @@
     stampedDrugIds.add(currentCase.correctDrugId);
     renderMatrix();
 
-    let statusText = '● 안정화 · 교실 평가 설계 연결 완료';
+    let gainedPoints = 0;
+    const breakdown = [];
+    let isFeverHit = false;
+
     if (!caseHadError) {
       streak++;
       maxStreak = Math.max(maxStreak, streak);
       const streakBonus = streak >= 2 ? 2 : 0;
       const intuitionBonus = cluesUsed === 1 ? 4 : (cluesUsed === 2 ? 2 : 0);
-      reputation = Math.min(100, reputation + 7 + streakBonus + intuitionBonus);
 
-      if (intuitionBonus > 0) {
-        statusText = `● 안정화 · 조기 처방 직관 보너스 +${intuitionBonus}점!`;
+      gainedPoints = 7 + streakBonus + intuitionBonus;
+      breakdown.push('기본 +7');
+      if (intuitionBonus > 0) breakdown.push(`직관 +${intuitionBonus}`);
+      if (streakBonus > 0) {
+        breakdown.push(`피버연승 +${streakBonus}`);
+        isFeverHit = true;
       }
+      reputation = Math.min(100, reputation + gainedPoints);
     } else {
-      reputation = Math.min(100, reputation + 4);
+      gainedPoints = 4;
+      breakdown.push('재검토 완료 +4');
+      reputation = Math.min(100, reputation + gainedPoints);
     }
+
+    playSuccessFanfare(isFeverHit);
+    spawnFloatingScore(gainedPoints, breakdown.join(' · '));
     updateStatusUI();
 
     const panel = document.getElementById('patient-panel');
+    panel.classList.remove('fever-mode');
     panel.classList.add('stable');
-    document.getElementById('vital-status').textContent = statusText;
+    document.getElementById('vital-status').textContent = `● 안정화 · ${savedCount}번 병동 평가 설계 완료`;
     document.getElementById('vital-status').classList.add('stable');
     const bpmEl = document.getElementById('bpm-display');
     bpmEl.textContent = '76 BPM';
@@ -2620,18 +2928,24 @@
     setTimeout(() => {
       if (savedCount === activeCases.length) {
         finishGame();
-      } else if (savedCount === 3 && !triageTriggered) {
+      } else if (savedCount === triageTriggerWard && !triageTriggered) {
         triageTriggered = true;
         startTriageMiniGame();
       } else {
-        currentCaseIdx++;
-        loadCase(currentCaseIdx);
+        showWardTransition(savedCount, currentCaseIdx + 1, () => {
+          currentCaseIdx++;
+          loadCase(currentCaseIdx);
+        });
       }
-    }, 900);
+    }, 1050);
   }
 
-  // 15초 긴급 응급실 트리아제 미니게임
+  // 깜짝 긴급 응급실 트리아제 미니게임
   function startTriageMiniGame() {
+    playTone(880, 'square', 0.12);
+    setTimeout(() => playTone(660, 'square', 0.12), 140);
+    setTimeout(() => playTone(880, 'square', 0.16), 280);
+
     triageDeck = [...TRIAGE_POOL].sort(() => Math.random() - 0.5).slice(0, 3);
     triageIdx = 0;
     triageCorrectCount = 0;
@@ -2700,15 +3014,18 @@
     updateStatusUI();
 
     const titleText = isTimeout
-      ? `⏱️ 시간 종료! 트리아제 ${triageCorrectCount}/3개 분류`
-      : `🚨 긴급 트리아제 완료! (${triageCorrectCount}/3개 정확 분류)`;
+      ? `⏱️ 시간 종료! 깜짝 트리아제 ${triageCorrectCount}/3개 분류`
+      : `🚨 깜짝 트리아제 완료! (${triageCorrectCount}/3개 정확 분류)`;
     const descText = gained > 0
-      ? `빠른 평가 유형 분류로 신뢰도 +${gained}점을 추가로 확보했습니다!`
-      : `아쉽게 보너스 점수는 놓쳤지만, 이어서 남은 병동 진료를 계속 진행합니다.`;
+      ? `돌발 응급 분류 미션 성공으로 신뢰도 +${gained}점을 추가 획득했습니다! 이어서 ${currentCaseIdx + 2}번 병동으로 이동합니다.`
+      : `보너스 점수는 놓쳤지만, 이어서 ${currentCaseIdx + 2}번 병동 진료를 계속 진행합니다.`;
 
-    showNotice('⚡', titleText, descText);
-    currentCaseIdx++;
-    loadCase(currentCaseIdx);
+    showNotice('⚡', titleText, descText, () => {
+      showWardTransition(savedCount, currentCaseIdx + 1, () => {
+        currentCaseIdx++;
+        loadCase(currentCaseIdx);
+      });
+    });
   }
 
   // 협진 찬스 3종 (모든 턴 통틀어 각 1회만 사용 가능)
@@ -2795,11 +3112,14 @@
     else repEl.classList.remove('high');
 
     const comboEl = document.getElementById('combo-display');
+    const feverStrip = document.getElementById('fever-strip');
     if (streak >= 2) {
       comboEl.style.display = 'inline-block';
-      comboEl.textContent = `🔥 ${streak}연속 명처방`;
+      comboEl.textContent = `🔥 ${streak}연속 피버! (+2점)`;
+      feverStrip.style.display = 'block';
     } else {
       comboEl.style.display = 'none';
+      feverStrip.style.display = 'none';
     }
   }
 
@@ -2815,7 +3135,7 @@
       badges.push({ title: '🧠 독고다이 명의', desc: '협진 찬스 미사용 독자 처방 달성' });
     }
     if (triageCorrectCount === 3) {
-      badges.push({ title: '⏱️ 트리아제 에이스', desc: '15초 긴급 평가 분류 3/3 퍼펙트' });
+      badges.push({ title: '⏱️ 트리아제 에이스', desc: '깜짝 긴급 평가 분류 3/3 퍼펙트' });
     }
     if (badges.length === 0) {
       badges.push({ title: '🌱 성실한 탐구 설계자', desc: '6개 탐구 교실 평가 처방 도감 완성' });
@@ -2878,9 +3198,14 @@
       clearInterval(triageTimer);
       triageTimer = null;
     }
+    if (transitionTimeout) {
+      clearTimeout(transitionTimeout);
+      transitionTimeout = null;
+    }
     document.getElementById('result-modal').style.display = 'none';
     document.getElementById('choice-modal').style.display = 'none';
     document.getElementById('triage-modal').style.display = 'none';
+    document.getElementById('transition-modal').style.display = 'none';
     document.getElementById('notice-modal').style.display = 'none';
 
     activeCases = [...CASES].sort(() => Math.random() - 0.5);
@@ -2892,8 +3217,12 @@
     mistakeCount = 0;
     totalCluesOpened = 0;
     wrongPurposes = [];
+
+    // 2~4병동 완료 시점 중 무작위로 깜짝 트리아제 발동
+    triageTriggerWard = Math.floor(Math.random() * 3) + 2;
     triageTriggered = false;
     triageCorrectCount = 0;
+
     stampedDrugIds = new Set();
     chances = { consult: true, rowScan: true, eliminate: true };
 
