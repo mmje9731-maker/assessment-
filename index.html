@@ -1303,7 +1303,7 @@
     @media(max-width:767px){.modal-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;}}
     .loot-crate.chosen .crate-lid,.loot-crate.chosen .crate-light{animation-duration:.38s;}
   
-#entry-modal{z-index:1600;background:#071521;backdrop-filter:none}.entry-card{background:#102535!important;color:#e2e8f0;border:1px solid #397d83;text-align:center;max-width:420px}.entry-card h2{color:#99f6e4;margin:10px 0}.entry-card p{color:#cbd5e1}.entry-check{font-size:.92rem;color:#99f6e4;line-height:1.7}.entry-track{height:5px;background:#263d50;border-radius:5px;overflow:hidden;margin:16px 0}.entry-track i{display:block;height:100%;background:#5eead4;animation:entryFill .9s linear forwards}@keyframes entryFill{from{width:0}to{width:100%}}.loot-crate.rare-won{border-color:#c084fc!important;box-shadow:0 0 16px #a855f766}.loot-crate.legend-won{border-color:#fde68a!important;box-shadow:0 0 20px #fbbf2477}.review-panel{order:6;text-align:left;border:1px solid #cbd5e1;border-radius:12px;padding:12px;margin:10px 0;background:#f8fafc;color:#243449}.review-panel h3{margin:0 0 8px;font-size:1rem}.review-panel details{border-top:1px solid #dbe3ed;padding:10px 0}.review-panel summary{cursor:pointer;font-weight:700;line-height:1.5}.review-panel p{margin:6px 0;font-size:.88rem;line-height:1.55;overflow-wrap:anywhere}.review-wrong{color:#b91c1c}.review-right{color:#166534}.review-panel .review-meta{color:#475569}@media(prefers-reduced-motion:reduce){.entry-track i{animation:none;width:100%}}
+#entry-modal{z-index:1600;background:#071521;backdrop-filter:none}.entry-card{background:#102535!important;color:#e2e8f0;border:1px solid #397d83;text-align:center;max-width:420px}.entry-card h2{color:#99f6e4;margin:10px 0}.entry-card p{color:#cbd5e1}.entry-check{font-size:.92rem;color:#99f6e4;line-height:1.7}.entry-track{height:5px;background:#263d50;border-radius:5px;overflow:hidden;margin:16px 0}.entry-track i{display:block;height:100%;background:#5eead4;animation:entryFill 4s linear forwards}@keyframes entryFill{from{width:0}to{width:100%}}.loot-crate.rare-won{border-color:#c084fc!important;box-shadow:0 0 16px #a855f766}.loot-crate.legend-won{border-color:#fde68a!important;box-shadow:0 0 20px #fbbf2477}.review-panel{order:6;text-align:left;border:1px solid #cbd5e1;border-radius:12px;padding:12px;margin:10px 0;background:#f8fafc;color:#243449}.review-panel h3{margin:0 0 8px;font-size:1rem}.review-panel details{border-top:1px solid #dbe3ed;padding:10px 0}.review-panel summary{cursor:pointer;font-weight:700;line-height:1.5}.review-panel p{margin:6px 0;font-size:.88rem;line-height:1.55;overflow-wrap:anywhere}.review-wrong{color:#b91c1c}.review-right{color:#166534}.review-panel .review-meta{color:#475569}@media(prefers-reduced-motion:reduce){.entry-track i{animation:none;width:100%}}
 
 #guide-modal .guide-info{color:#172b45;text-align:left;margin:14px 0 18px;font-size:14px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
 #guide-modal .guide-info h3{font-size:17px;font-weight:800;margin:16px 0 8px;color:#172b45}
@@ -1558,8 +1558,8 @@
   </div>
 </div>
 
-<div class="modal-overlay" id="entry-modal" role="dialog" aria-modal="true" aria-labelledby="entry-title"><div class="modal-inner entry-card"><div style="font-size:2.5rem">🏥</div><h2 id="entry-title">진료 담당자 등록 완료</h2><p id="entry-name"></p><svg viewBox="0 0 300 45" width="100%"><path d="M0 23H65L75 17L83 32L96 3L108 42L119 23H205L215 17L223 32L236 3L248 42L258 23H300" stroke="#5eead4" stroke-width="2" fill="none"/></svg><div class="entry-check">✓ 병동 상태 확인 완료<br>✓ 평가 약품 준비 완료<br>✓ IB 코디네이터 상담 준비 완료</div><div class="entry-track"><i></i></div><button class="modal-btn" onclick="endEntry()">바로 진료하기</button></div></div>
-<!-- 2. 병동 전환 안내 모달 (7초 유지) -->
+<div class="modal-overlay" id="entry-modal" role="dialog" aria-modal="true" aria-labelledby="entry-title"><div class="modal-inner entry-card"><div style="font-size:2.5rem">🏥</div><h2 id="entry-title">진료 담당자 등록 완료</h2><p id="entry-name"></p><svg viewBox="0 0 300 45" width="100%"><path d="M0 23H65L75 17L83 32L96 3L108 42L119 23H205L215 17L223 32L236 3L248 42L258 23H300" stroke="#5eead4" stroke-width="2" fill="none"/></svg><div class="entry-check">✓ 병동 상태 확인 완료<br>✓ 평가 약품 준비 완료<br>✓ IB 코디네이터 상담 준비 완료</div><p style="font-size:.85rem;color:#cbd5e1;margin:12px 0 0">4초 후 자동 입장합니다.</p><div class="entry-track"><i></i></div><button class="modal-btn" onclick="endEntry()">바로 진료하기</button></div></div>
+<!-- 2. 병동 전환 안내 모달 (5초 유지) -->
 <div class="modal-overlay" id="transition-modal">
   <div class="modal-inner transition-card">
     <div class="modal-emoji">🏥</div>
@@ -2465,14 +2465,14 @@
     }, 1500);
   }
 
-  // 병동 전환 7초 안내 모달
+  // 병동 전환 5초 안내 모달
   function showWardTransition(completedWardNum, nextWardIdx, callback) {
     if (transitionTimeout) {
       clearTimeout(transitionTimeout);
       transitionTimeout = null;
     }
 
-    const transitionSeconds = 0.8;
+    const transitionSeconds = 5;
     const nextCase = activeCases[nextWardIdx];
     const nextWardNum = nextWardIdx + 1;
 
@@ -3336,7 +3336,7 @@
     if(!hasStarted){doctorName=document.getElementById('doctor-name').value.trim().replace(/[\r\n]/g,' ').slice(0,20);hasStarted=true;}
     document.getElementById('guide-modal').style.display = 'none';
     document.getElementById('entry-name').textContent=(doctorName||'진료 담당 선생님')+' · 응급실에 오신 것을 환영합니다.';
-    if(entryTimer!==null)clearTimeout(entryTimer);const entry=document.getElementById('entry-modal');entry.style.display='flex';entryTimer=setTimeout(endEntry,window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:900);
+    if(entryTimer!==null)clearTimeout(entryTimer);const entry=document.getElementById('entry-modal');entry.style.display='flex';entryTimer=setTimeout(endEntry,4000);
   }
 
   function resetGame() {
