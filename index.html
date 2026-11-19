@@ -195,7 +195,7 @@
       font-weight: 800;
     }
 
-    /* 선택형 버튼 (2단계 후속 조치 및 돌발 콜) */
+    /* 선택형 버튼 (2단계 후속 조치) */
     .choice-options {
       display: flex;
       flex-direction: column;
@@ -247,6 +247,113 @@
       margin-bottom: 8px;
     }
 
+    /* 15초 긴급 트리아제 미니게임 모달 전용 */
+    .triage-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .triage-timer-text {
+      color: var(--accent-red);
+      font-variant-numeric: tabular-nums;
+      font-size: 1rem;
+    }
+
+    .triage-progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .triage-progress-fill {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(90deg, #ef4444, #f59e0b);
+      transition: width 0.1s linear;
+    }
+
+    .triage-card {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 16px;
+      padding: 22px 18px;
+      margin-bottom: 16px;
+      font-size: 1.06rem;
+      font-weight: 800;
+      line-height: 1.55;
+      color: var(--text-main);
+      min-height: 108px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      word-break: keep-all;
+      transition: all 0.18s ease;
+    }
+
+    .triage-card.flash-ok {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #14532d;
+      transform: scale(1.02);
+    }
+
+    .triage-card.flash-no {
+      background: #fee2e2;
+      border-color: #ef4444;
+      color: #7f1d1d;
+      animation: shake 0.25s;
+    }
+
+    .triage-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .triage-btn {
+      border: none;
+      border-radius: 14px;
+      padding: 15px 12px;
+      font-size: 0.96rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.12s ease, filter 0.12s ease;
+      line-height: 1.35;
+      word-break: keep-all;
+    }
+
+    .triage-btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(0.97);
+    }
+
+    .triage-btn.formative {
+      background: #fef9c3;
+      border: 2px solid #eab308;
+      color: #713f12;
+    }
+
+    .triage-btn.summative {
+      background: #dcfce7;
+      border: 2px solid #16a34a;
+      color: #14532d;
+    }
+
+    .triage-btn small {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-top: 3px;
+      opacity: 0.85;
+    }
+
     /* 헤더 */
     header {
       display: flex;
@@ -280,15 +387,14 @@
       flex-wrap: wrap;
     }
 
-    .life-pill {
-      background: #fef2f2;
-      border: 1.5px solid #fecaca;
-      color: #b91c1c;
+    .attempt-pill {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      color: #15803d;
       font-weight: 800;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       padding: 6px 12px;
       border-radius: 9px;
-      letter-spacing: 1px;
     }
 
     .reputation-pill {
@@ -606,7 +712,7 @@
       word-break: keep-all;
     }
 
-    /* 교실 현장 증거 3종 탭 시스템 */
+    /* 교실 현장 단서 3종 탭 시스템 (조기 처방 리스크-리턴) */
     .clue-system {
       background: var(--surface-sub);
       border: 1.5px solid var(--border-color);
@@ -619,9 +725,27 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 9px;
-      font-size: 0.82rem;
+      font-size: 0.81rem;
       font-weight: 800;
       color: var(--text-main);
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .intuition-badge {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      color: #92400e;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 999px;
+    }
+
+    .intuition-badge.neutral {
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+      color: #475569;
     }
 
     .clue-tabs {
@@ -646,11 +770,11 @@
     }
 
     .clue-tab.unread::after {
-      content: "미확인";
+      content: "미열람";
       position: absolute;
       top: -7px;
       right: 4px;
-      background: var(--accent-red);
+      background: #64748b;
       color: #ffffff;
       font-size: 0.64rem;
       padding: 1px 5px;
@@ -793,7 +917,7 @@
       color: #ffffff;
       border: none;
       padding: 13px 16px;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 800;
       border-radius: 10px;
       cursor: pointer;
@@ -831,10 +955,27 @@
       gap: 8px;
     }
 
+    .cabinet-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
     .cabinet-title {
       font-weight: 800;
       font-size: 1.02rem;
       color: var(--text-main);
+    }
+
+    .dex-pill {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #15803d;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 999px;
     }
 
     .element-legend {
@@ -1009,6 +1150,7 @@
       padding: 8px 9px;
       cursor: pointer;
       transition: all 0.15s ease;
+      position: relative;
     }
 
     .drug-item:hover:not(.eliminated) {
@@ -1030,6 +1172,24 @@
       text-decoration: line-through;
     }
 
+    /* 약품 도감 스탬프 스타일 */
+    .drug-item.stamped-done {
+      background-color: #f0fdf4;
+      border-color: #86efac;
+    }
+
+    .stamp-tag {
+      display: inline-block;
+      background: #16a34a;
+      color: #ffffff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 1px 6px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
     .drug-title {
       font-weight: 800;
       font-size: 0.82rem;
@@ -1045,7 +1205,7 @@
       font-weight: 500;
     }
 
-    /* 최종 인증서 카드 */
+    /* 최종 인증서 카드 & 히든 배지 */
     .id-card {
       background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
       border: 2px solid #22c55e;
@@ -1102,6 +1262,49 @@
       margin-top: 2px;
     }
 
+    /* 히든 업적 배지 진열장 */
+    .achievement-showcase {
+      background: #fffbeb;
+      border: 1.5px solid #fde68a;
+      border-radius: 12px;
+      padding: 11px 13px;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .achievement-header {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #92400e;
+      margin-bottom: 7px;
+    }
+
+    .badge-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .ach-badge {
+      background: #ffffff;
+      border: 1.5px solid #f59e0b;
+      color: #78350f;
+      border-radius: 9px;
+      padding: 6px 10px;
+      font-size: 0.8rem;
+      font-weight: 800;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.12);
+    }
+
+    .ach-badge small {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: #92400e;
+    }
+
     .persona-box {
       background: #f5f3ff;
       border: 1.5px solid #ddd6fe;
@@ -1122,7 +1325,7 @@
       padding: 10px 13px;
       margin-bottom: 14px;
       text-align: left;
-      max-height: 150px;
+      max-height: 135px;
       overflow-y: auto;
     }
 
@@ -1226,7 +1429,7 @@
         justify-content: space-between;
       }
 
-      .life-pill,
+      .attempt-pill,
       .reputation-pill,
       .icon-btn {
         font-size: 0.8rem;
@@ -1299,7 +1502,7 @@
 
       .action-btn {
         min-height: 46px;
-        font-size: 0.95rem;
+        font-size: 0.92rem;
         padding: 11px;
       }
 
@@ -1347,6 +1550,10 @@
         font-size: 0.88rem;
       }
 
+      .triage-btn-grid {
+        grid-template-columns: 1fr;
+      }
+
       .pledge-row {
         flex-direction: column;
       }
@@ -1367,7 +1574,7 @@
       <div class="subtitle">지금 진행 중인 교실 현장 단서(일기·증언·기록물)를 분석해 알맞은 평가 처방을 연결하세요</div>
     </div>
     <div class="header-controls">
-      <div class="life-pill" id="life-display" title="남은 진료 기회 (3회 오진 시 당직 종료)">❤️❤️❤️</div>
+      <div class="attempt-pill" id="attempt-display">♾️ 무제한 재진료</div>
       <div class="combo-pill" id="combo-display">🔥 2연속 명처방</div>
       <div class="reputation-pill" id="reputation-display">신뢰도 50점 (수습의)</div>
       <button class="icon-btn" onclick="openGuideModal()">❓ 규칙</button>
@@ -1392,7 +1599,7 @@
       <div>
         <div class="vital-monitor">
           <div class="vital-top">
-            <span class="vital-status" id="vital-status">● LIVE · 실시간 교실 평가 점검</span>
+            <span class="vital-status" id="vital-status">● 진행 중 · 실시간 교실 평가 점검</span>
             <span class="bpm-display" id="bpm-display">138 BPM</span>
           </div>
           <div class="ecg-container">
@@ -1419,14 +1626,14 @@
         <p class="scene-text" id="scene-text"></p>
       </div>
 
-      <!-- 교실 현장 단서 3종 탭 -->
+      <!-- 교실 현장 단서 3종 탭 (즉시 처방 가능 + 직관 보너스) -->
       <div class="clue-system">
         <div class="clue-header">
-          <span>🔍 교실 현장 단서 (3종 모두 확인 시 처방 가능)</span>
-          <span id="clue-progress" style="color: var(--accent-red);">0 / 3 확인</span>
+          <span>🔍 현장 단서 (1 / 3 열람)</span>
+          <span class="intuition-badge" id="intuition-badge">⚡ 직관 보너스 +4점 대기</span>
         </div>
         <div class="clue-tabs">
-          <button class="clue-tab unread active" id="tab-0" onclick="selectClueTab(0)">📓 교사 성찰 일기</button>
+          <button class="clue-tab active" id="tab-0" onclick="selectClueTab(0)">📓 교사 성찰 일기</button>
           <button class="clue-tab unread" id="tab-1" onclick="selectClueTab(1)">💬 학생 증언</button>
           <button class="clue-tab unread" id="tab-2" onclick="selectClueTab(2)">📎 평가 기록물</button>
         </div>
@@ -1443,7 +1650,7 @@
           우측 IB 평가 약품 캐비닛에서 적절한 처방을 선택하세요
         </div>
         <button class="action-btn locked" id="administer-btn" onclick="submitPrescription()">
-          🔒 현장 단서 3종을 먼저 확인하세요
+          💊 약품 캐비닛에서 처방을 선택하세요
         </button>
       </div>
     </section>
@@ -1451,7 +1658,10 @@
     <!-- 우측: IB PYP 2차원 평가 약품 캐비닛 -->
     <section class="cabinet-panel">
       <div class="cabinet-top-bar">
-        <span class="cabinet-title">💊 IB PYP 평가 약품 캐비닛</span>
+        <div class="cabinet-title-wrap">
+          <span class="cabinet-title">💊 IB PYP 평가 약품 캐비닛</span>
+          <span class="dex-pill" id="dex-progress">도감 수집: 0 / 6 처방 완료</span>
+        </div>
         <div class="element-legend">
           <span>📖 지식·이해</span>
           <span>✍️ 과정·기능</span>
@@ -1496,26 +1706,26 @@
   <div class="modal-inner">
     <div class="modal-emoji">🩺</div>
     <h2 class="modal-title">IB PYP 수업 평가 응급실 안내</h2>
-    <p class="modal-desc">지금 진행 중인 6개 탐구 교실의 실시간 단서를 살펴보고 배움의 성장을 돕는 IB 평가 방법을 매칭해 보세요. <strong>신뢰도 50점(수습의)</strong>에서 시작해 <strong>100점(마스터 전문의)</strong>까지 도전할 수 있습니다.</p>
+    <p class="modal-desc">지금 진행 중인 6개 탐구 교실의 실시간 단서를 살펴보고 알맞은 IB 평가 처방을 연결해 보세요. <strong>신뢰도 50점(수습의)</strong>에서 출발해 <strong>100점(마스터 전문의)</strong>과 히든 배지에 도전할 수 있습니다.</p>
 
     <div class="flow-diagram">
-      <div class="flow-chip">1️⃣ 현장 단서 3종 확인</div>
-      <div class="flow-chip">2️⃣ 약품표에서 처방 선택</div>
-      <div class="flow-chip">3️⃣ 실천 방안으로 안정화</div>
+      <div class="flow-chip">1️⃣ 조기 처방 직관 보너스</div>
+      <div class="flow-chip">2️⃣ 15초 긴급 트리아제</div>
+      <div class="flow-chip">3️⃣ 도감 스탬프 & 배지</div>
     </div>
 
     <div class="guide-steps">
       <div class="guide-step-item">
         <div class="step-num-badge">1</div>
-        <div class="step-text-wrap"><strong>일기·학생 증언·평가 기록물 스캔:</strong> 탭 3개를 모두 확인하면 처방 투약 버튼이 열립니다.</div>
+        <div class="step-text-wrap"><strong>조기 처방 리스크-리턴:</strong> 단서 3개를 다 열지 않아도 즉시 투약할 수 있습니다. <strong>단서 1개만 보고 맞히면 +4점</strong>, <strong>2개 보고 맞히면 +2점</strong> 보너스가 주어집니다!</div>
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">2</div>
-        <div class="step-text-wrap"><strong>신뢰도 & 콤보 성장:</strong> 첫 시도에 정확히 처방하면 <strong>+7점</strong>, 연속 명처방 시 <strong>콤보 보너스(+2점)</strong>가 쌓입니다. (오진 3회 시 당직 종료)</div>
+        <div class="step-text-wrap"><strong>15초 긴급 응급실 트리아제:</strong> 3번째 병동 완료 후 15초 동안 교실 상황 카드 3장을 <strong>형성평가 vs 총괄평가</strong>로 빠르게 분류하는 보너스 라운드가 열립니다.</div>
       </div>
       <div class="guide-step-item">
         <div class="step-num-badge">3</div>
-        <div class="step-text-wrap"><strong>협진 찬스 (전체 1회 한정):</strong> 수석교사 자문, 영역(행) 스캔, 오답 2개 소거를 필요한 순간에 활용하세요.</div>
+        <div class="step-text-wrap"><strong>도감 스탬프 & 히든 업적:</strong> 처방에 성공한 약품에는 <strong>✅ 처방 완료</strong> 도장이 찍히며, 플레이 기록에 따라 특수 업적 배지가 수여됩니다.</div>
       </div>
     </div>
 
@@ -1523,7 +1733,7 @@
   </div>
 </div>
 
-<!-- 2. 2단계 후속 조치 & 돌발 콜 모달 -->
+<!-- 2. 2단계 후속 조치 모달 -->
 <div class="modal-overlay" id="choice-modal">
   <div class="modal-inner">
     <span class="badge-pill" id="choice-badge">2단계 실천 처방</span>
@@ -1533,11 +1743,41 @@
   </div>
 </div>
 
-<!-- 3. 최종 결과 인증서 모달 -->
+<!-- 3. 15초 긴급 트리아제 미니게임 모달 -->
+<div class="modal-overlay" id="triage-modal">
+  <div class="modal-inner" style="max-width: 540px;">
+    <span class="badge-pill" style="background: var(--accent-red);">🚨 15초 긴급 응급실 트리아제</span>
+    <h2 class="modal-title">실시간 교실 평가 유형을 빠르게 분류하세요!</h2>
+    <p class="modal-desc" style="margin-bottom: 12px;">제한 시간 15초 안에 상황 카드 3장을 정확히 분류하면 <strong>개당 신뢰도 +3점</strong>을 획득합니다.</p>
+
+    <div class="triage-header-bar">
+      <span id="triage-counter">진행 카드: 1 / 3</span>
+      <span class="triage-timer-text" id="triage-timer-text">⏱️ 15.0초</span>
+    </div>
+    <div class="triage-progress-track">
+      <div class="triage-progress-fill" id="triage-progress-fill"></div>
+    </div>
+
+    <div class="triage-card" id="triage-card"></div>
+
+    <div class="triage-btn-grid">
+      <button class="triage-btn formative" onclick="answerTriage('formative')">
+        🌱 형성평가
+        <small>학습을 위한 / 학습으로서의 평가</small>
+      </button>
+      <button class="triage-btn summative" onclick="answerTriage('summative')">
+        📋 총괄평가
+        <small>학습의 평가 (결과 기록·통지)</small>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. 최종 결과 인증서 모달 -->
 <div class="modal-overlay" id="result-modal">
   <div class="modal-inner">
-    <div class="modal-emoji" id="result-emoji">🏆</div>
-    <h2 class="modal-title" id="result-title">응급 진료 완료!</h2>
+    <div class="modal-emoji">🏆</div>
+    <h2 class="modal-title">전 병동 평가 설계 완료!</h2>
 
     <div class="id-card">
       <div class="id-card-header">
@@ -1561,6 +1801,12 @@
           <div class="stat-val" id="stat-rep">100점</div>
         </div>
       </div>
+    </div>
+
+    <!-- 히든 업적 배지 진열장 -->
+    <div class="achievement-showcase">
+      <div class="achievement-header">🏅 획득한 응급의학 업적 배지</div>
+      <div class="badge-grid" id="badge-grid"></div>
     </div>
 
     <div class="persona-box" id="persona-box"></div>
@@ -1588,7 +1834,7 @@
   </div>
 </div>
 
-<!-- 4. 커스텀 알림 모달 -->
+<!-- 5. 커스텀 알림 모달 -->
 <div class="modal-overlay" id="notice-modal">
   <div class="modal-inner" style="max-width: 460px;">
     <div class="modal-emoji" id="notice-emoji">💡</div>
@@ -1625,7 +1871,7 @@
               purpose: "학습을 위한 평가",
               areaLabel: "UOI · 학습을 위한 평가",
               title: "ATL 성장 스펙트럼 (✍️)",
-              desc: "기능 수준을 ATL POI를 활용하여 판단하고 수행지시어(Command Term)를 활용하여 피드백 제공"
+              desc: "기능 수준을 ATL POI를 활용하여 판단하고 수행지시어를 활용하여 피드백 제공"
             }
           ]
         },
@@ -1687,7 +1933,7 @@
               purpose: "학습을 위한 평가",
               areaLabel: "LOI · 학습을 위한 평가",
               title: "학습 결과물 (📖)",
-              desc: "LOI 수준에서 학생의 개념이해 수준 파악 및 피드백 제공 (Ongoing assessment)"
+              desc: "LOI 수준에서 학생의 개념이해 수준 파악 및 피드백 제공 (과정 중 수시 평가)"
             },
             {
               id: "loi-for-obs",
@@ -1792,7 +2038,7 @@
     });
   });
 
-  // 6개 병동 시나리오 (현재 진행형 + 실시간 현장 묘사 중심)
+  // 6개 병동 시나리오 (현재 진행형 + 실시간 현장 묘사)
   const CASES = [
     {
       subject: "UOI 단원 마무리 진행 중 · 우리가 속한 시간과 공간 (개념 전이 확인)",
@@ -1837,7 +2083,7 @@
         {
           type: "diary",
           meta: "📓 교사 성찰 일기 · 오늘 작성 중",
-          text: "이번 UOI에서 조사 기능(Research Skills)을 기르는 탐구가 한창 진행 중이다. 활동지에 ‘자료를 더 보완해 보세요’라고 적어주고 있는데, <span class='clue-highlight'>기능 수준을 어떤 단계 기준으로 판단해야 할지, 학생에게 어떤 수행 행동을 안내해야 할지 기준이 모호해</span> 아이들이 다음 단계로 나아가지 못하고 있다."
+          text: "이번 UOI에서 조사 기능을 기르는 탐구가 한창 진행 중이다. 활동지에 ‘자료를 더 보완해 보세요’라고 적어주고 있는데, <span class='clue-highlight'>기능 수준을 어떤 단계 기준으로 판단해야 할지, 학생에게 어떤 수행 행동을 안내해야 할지 기준이 모호해</span> 아이들이 다음 단계로 나아가지 못하고 있다."
         },
         {
           type: "student",
@@ -1847,7 +2093,7 @@
         {
           type: "artifact",
           meta: "📎 평가 기록물 · UOI 기능 피드백 메모장",
-          text: "[영역 및 목적] UOI 진행 중 · 학습을 위한 평가 (✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>ATL POI 단계 기준 및 수행지시어(Command Term) 미적용 상태</span>"
+          text: "[영역 및 목적] UOI 진행 중 · 학습을 위한 평가 (✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>ATL POI 단계 기준 및 수행지시어 미적용 상태</span>"
         }
       ],
       consultHint: "💡 자문 핵심: [UOI] 진행 중 교사가 피드백하는 [학습을 위한 평가]에서 [✍️ 과정·기능] ATL POI와 수행지시어를 활용하는 처방입니다.",
@@ -1855,7 +2101,7 @@
       step2: {
         question: "‘ATL 성장 스펙트럼(✍️)’을 활용한 가장 효과적인 형성평가 피드백 방식은?",
         choices: [
-          { text: "ATL POI 단계로 현재 기능 수준을 진단하고 ‘자료의 신뢰성을 비교(Compare)하여 정리하시오’처럼 수행지시어로 안내한다.", correct: true },
+          { text: "ATL POI 단계로 현재 기능 수준을 진단하고 ‘자료의 신뢰성을 비교하여 정리하시오’처럼 수행지시어로 안내한다.", correct: true },
           { text: "기능 수준에 대한 구체적 설명 없이 ‘노력이 필요함’이라는 결과 등급만 기록해 둔다.", correct: false, feedback: "학습을 위한 평가는 등급 통보보다 성장을 돕는 구체적 피드백이 핵심입니다." },
           { text: "탐구 과정 중에는 피드백을 보류하고, UOI가 모두 끝난 학기말 통지표에만 결과를 적는다.", correct: false, feedback: "탐구 진행 중에 즉각 활용되어야 할 피드백 시기를 놓치지 않도록 해보세요." }
         ]
@@ -1965,7 +2211,7 @@
       summary: "UOI 성찰: 학생 자기성찰 과정 추가 → 학습자상 및 ATL 성장 스펙트럼(❤️, ✍️) 자기성찰·목표설정"
     },
     {
-      subject: "LOI 탐구 진행 중 · 일반화 문장 개념 이해 중간 점검 (Ongoing Assessment)",
+      subject: "LOI 탐구 진행 중 · 일반화 문장 개념 이해 중간 점검",
       bpm: 130,
       targetArea: "LOI",
       scene: "• 평가 영역: LOI 수준 학습을 위한 평가 (📖 탐구목록별 일반화 문장)\n• 현재 상황: 첫 번째 LOI 개념 정리 결과물 작성 중 학생들이 일반화 문장 연결에 혼란을 겪고 있는 중",
@@ -1973,7 +2219,7 @@
         {
           type: "diary",
           meta: "📓 교사 성찰 일기 · 오늘 작성 중",
-          text: "첫 번째 탐구목록(LOI)의 일반화 문장을 탐색하며 아이들이 개념 정리 결과물을 작성하고 있다. 곧 두 번째 LOI로 넘어갈 예정인데, <span class='clue-highlight'>지금 이 중간 단계에서 학생들의 개념 이해 수준을 파악하고 오개념을 교정해 주는 Ongoing assessment 피드백</span>을 먼저 진행해야 다음 탐구가 단단해질 것 같다."
+          text: "첫 번째 탐구목록(LOI)의 일반화 문장을 탐색하며 아이들이 개념 정리 결과물을 작성하고 있다. 곧 두 번째 LOI로 넘어갈 예정인데, <span class='clue-highlight'>지금 이 중간 단계에서 학생들의 개념 이해 수준을 수시로 파악하고 오개념을 교정해 주는 과정 중 피드백</span>을 먼저 진행해야 다음 탐구가 단단해질 것 같다."
         },
         {
           type: "student",
@@ -1983,39 +2229,59 @@
         {
           type: "artifact",
           meta: "📎 평가 기록물 · LOI 1차 개념 정리 활동지",
-          text: "[영역 및 목적] LOI 진행 중 Ongoing assessment · 학습을 위한 평가 (📖 지식·이해)<br>[진행 현황] <span class='clue-highlight'>LOI 중간 결과물 기반 개념 이해 수준 파악 및 피드백 단계 미편성</span>"
+          text: "[영역 및 목적] LOI 진행 중 수시 점검 · 학습을 위한 평가 (📖 지식·이해)<br>[진행 현황] <span class='clue-highlight'>LOI 중간 결과물 기반 개념 이해 수준 파악 및 피드백 단계 미편성</span>"
         }
       ],
-      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 Ongoing assessment로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
+      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 탐구 과정 중 수시로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
       correctDrugId: "loi-for-prod",
       step2: {
-        question: "LOI 수준에서 ‘학습 결과물(📖)’ Ongoing assessment를 효과적으로 수행하는 조치는?",
+        question: "LOI 수준에서 ‘학습 결과물(📖)’ 과정 중 수시 평가를 효과적으로 수행하는 조치는?",
         choices: [
           { text: "LOI 핵심 일반화 문장에 대한 학생의 개념 이해 수준을 중간 결과물로 즉시 진단하고 오개념 교정 피드백을 제공한다.", correct: true },
-          { text: "모든 LOI와 UOI가 다 끝난 학기말에야 첫 번째 활동지를 한꺼번에 돌려준다.", correct: false, feedback: "Ongoing assessment는 탐구 과정 중 적시에 피드백을 제공하는 것이 핵심입니다." },
+          { text: "모든 LOI와 UOI가 다 끝난 학기말에야 첫 번째 활동지를 한꺼번에 돌려준다.", correct: false, feedback: "과정 중 수시 형성평가는 탐구 흐름 속에서 적시에 피드백을 제공하는 것이 핵심입니다." },
           { text: "개념 이해 내용보다 글씨체와 도표 테두리 정돈 상태 위주로 코멘트를 적어준다.", correct: false, feedback: "LOI 일반화 문장에 대한 학생의 개념적 이해 수준 파악에 초점을 맞추어 보세요." }
         ]
       },
-      summary: "LOI 형성: 중간 개념 이해 점검 보완 → LOI 학습 결과물(📖) Ongoing assessment 피드백"
+      summary: "LOI 형성: 중간 개념 이해 점검 보완 → LOI 학습 결과물(📖) 과정 중 수시 피드백"
     }
   ];
 
-  // 게임 상태 변수 (신뢰도 50점 시작, 시간 제한 없음, 하트 3개)
+  // 15초 긴급 트리아제 문제 풀 (형성평가 vs 총괄평가)
+  const TRIAGE_POOL = [
+    { text: "모둠 토의 중 막힌 학생들에게 수행지시어로 즉시 수정 방향을 안내한다.", answer: "formative" },
+    { text: "단원을 모두 마친 뒤 명시된 개념 연결 능력을 지식 에세이로 기록·통지한다.", answer: "summative" },
+    { text: "탐구나침반을 보며 학생 스스로 현재 탐구 위치를 점검하고 목표를 고친다.", answer: "formative" },
+    { text: "UOI 학습 과정에서 모은 결과물을 포트폴리오로 정리해 학기말 성장 근거로 통지한다.", answer: "summative" },
+    { text: "차시 개념 분류 활동 중 교사가 순회하며 협업·주도성 발휘 모습을 관찰해 피드백한다.", answer: "formative" },
+    { text: "단원 종료 시점의 학습자상과 ATL 함양 수준을 종합 기록해 가정에 통지한다.", answer: "summative" }
+  ];
+
+  // 게임 상태 변수
   let activeCases = [];
   let currentCaseIdx = 0;
   let selectedDrug = null;
   let checkedClues = [false, false, false];
   let activeTabIdx = 0;
-  let lives = 3;
   let reputation = 50;
   let savedCount = 0;
   let streak = 0;
   let maxStreak = 0;
+  let mistakeCount = 0;
+  let totalCluesOpened = 0;
   let caseHadError = false;
   let wrongPurposes = [];
   let soundEnabled = true;
-  let suddenCallTriggered = false;
   let chances = { consult: true, rowScan: true, eliminate: true };
+  let stampedDrugIds = new Set();
+
+  // 트리아제 미니게임 상태
+  let triageTriggered = false;
+  let triageDeck = [];
+  let triageIdx = 0;
+  let triageCorrectCount = 0;
+  let triageTimeLeft = 15.0;
+  let triageTimer = null;
+  let triageLocked = false;
 
   // Web Audio 효과음
   const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -2082,10 +2348,12 @@
           stack.className = 'drug-stack';
 
           cell.items.forEach(item => {
+            const isStamped = stampedDrugIds.has(item.id);
             const itemEl = document.createElement('div');
-            itemEl.className = 'drug-item';
+            itemEl.className = 'drug-item' + (isStamped ? ' stamped-done' : '');
             itemEl.dataset.id = item.id;
             itemEl.innerHTML = `
+              ${isStamped ? '<div class="stamp-tag">✅ 처방 완료</div>' : ''}
               <div class="drug-title">▶ ${item.title}</div>
               <div class="drug-desc">- ${item.desc}</div>
             `;
@@ -2100,6 +2368,8 @@
 
       tbody.appendChild(tr);
     });
+
+    document.getElementById('dex-progress').textContent = `도감 수집: ${stampedDrugIds.size} / ${CASES.length} 처방 완료`;
   }
 
   function renderWardHearts() {
@@ -2130,7 +2400,7 @@
 
     const panel = document.getElementById('patient-panel');
     panel.classList.remove('stable');
-    document.getElementById('vital-status').textContent = '● LIVE · 실시간 교실 평가 점검';
+    document.getElementById('vital-status').textContent = '● 진행 중 · 실시간 교실 평가 점검';
     document.getElementById('vital-status').classList.remove('stable');
     const bpmEl = document.getElementById('bpm-display');
     bpmEl.textContent = `${data.bpm} BPM`;
@@ -2189,9 +2459,19 @@
     `;
 
     const count = checkedClues.filter(Boolean).length;
-    const progressEl = document.getElementById('clue-progress');
-    progressEl.textContent = `${count} / 3 확인`;
-    progressEl.style.color = count === 3 ? 'var(--accent-green)' : 'var(--accent-red)';
+    document.querySelector('.clue-header span:first-child').textContent = `🔍 현장 단서 (${count} / 3 열람)`;
+
+    const badgeEl = document.getElementById('intuition-badge');
+    if (count === 1) {
+      badgeEl.className = 'intuition-badge';
+      badgeEl.textContent = '⚡ 직관 보너스 +4점 대기';
+    } else if (count === 2) {
+      badgeEl.className = 'intuition-badge';
+      badgeEl.textContent = '✨ 조기 추리 보너스 +2점 대기';
+    } else {
+      badgeEl.className = 'intuition-badge neutral';
+      badgeEl.textContent = '🔍 정밀 분석 완료 (기본 점수)';
+    }
 
     updateAdministerButton();
   }
@@ -2213,44 +2493,33 @@
 
   function updateAdministerButton() {
     const btn = document.getElementById('administer-btn');
-    const allCluesRead = checkedClues.every(Boolean);
+    const count = checkedClues.filter(Boolean).length;
 
-    if (!allCluesRead) {
-      btn.classList.add('locked');
-      btn.textContent = `🔒 현장 단서 3종을 모두 확인하세요 (${checkedClues.filter(Boolean).length}/3)`;
-    } else if (!selectedDrug) {
+    if (!selectedDrug) {
       btn.classList.add('locked');
       btn.textContent = '💊 약품 캐비닛에서 처방을 선택하세요';
     } else {
       btn.classList.remove('locked');
-      btn.textContent = '💉 선택한 평가 처방 투약 실행';
+      if (count === 1) {
+        btn.textContent = '⚡ 조기 처방 투약 실행 (직관 보너스 +4점!)';
+      } else if (count === 2) {
+        btn.textContent = '✨ 조기 처방 투약 실행 (보너스 +2점!)';
+      } else {
+        btn.textContent = '💉 선택한 평가 처방 투약 실행';
+      }
     }
   }
 
   function handleMistake(title, message) {
     caseHadError = true;
+    mistakeCount++;
     streak = 0;
-    lives = Math.max(0, lives - 1);
-    reputation = Math.max(0, reputation - 8);
+    reputation = Math.max(20, reputation - 5);
     updateStatusUI();
-
-    if (lives <= 0) {
-      showNotice('🚨', '진료 기회 소진 (당직 종료)', '오진이 3회 누적되어 당직 진료가 종료되었습니다. 최종 진료 기록을 확인하세요.');
-      setTimeout(() => {
-        closeNotice();
-        finishGame(false);
-      }, 1600);
-    } else {
-      showNotice('⚠️', `${title} (기회 -1 · 신뢰도 -8)`, message);
-    }
+    showNotice('💡', `${title} (신뢰도 -5 · 다시 처방 가능)`, message);
   }
 
   function submitPrescription() {
-    const allCluesRead = checkedClues.every(Boolean);
-    if (!allCluesRead) {
-      showNotice('🔍', '단서 확인 부족', '일기·학생 증언·평가 기록물 3종 탭을 모두 확인한 후 투약할 수 있습니다.');
-      return;
-    }
     if (!selectedDrug) {
       showNotice('💊', '처방 미선택', '우측 IB 평가 약품 캐비닛에서 현재 교실에 맞는 처방을 선택해 주세요.');
       return;
@@ -2313,13 +2582,26 @@
   }
 
   function completeCurrentCase() {
+    const currentCase = activeCases[currentCaseIdx];
+    const cluesUsed = checkedClues.filter(Boolean).length;
+    totalCluesOpened += cluesUsed;
     savedCount++;
 
+    // 약품 도감 스탬프 기록
+    stampedDrugIds.add(currentCase.correctDrugId);
+    renderMatrix();
+
+    let statusText = '● 안정화 · 교실 평가 설계 연결 완료';
     if (!caseHadError) {
       streak++;
       maxStreak = Math.max(maxStreak, streak);
-      const bonus = streak >= 2 ? 2 : 0;
-      reputation = Math.min(100, reputation + 7 + bonus);
+      const streakBonus = streak >= 2 ? 2 : 0;
+      const intuitionBonus = cluesUsed === 1 ? 4 : (cluesUsed === 2 ? 2 : 0);
+      reputation = Math.min(100, reputation + 7 + streakBonus + intuitionBonus);
+
+      if (intuitionBonus > 0) {
+        statusText = `● 안정화 · 조기 처방 직관 보너스 +${intuitionBonus}점!`;
+      }
     } else {
       reputation = Math.min(100, reputation + 4);
     }
@@ -2327,7 +2609,7 @@
 
     const panel = document.getElementById('patient-panel');
     panel.classList.add('stable');
-    document.getElementById('vital-status').textContent = '● STABLE · 교실 평가 설계 연결 완료';
+    document.getElementById('vital-status').textContent = statusText;
     document.getElementById('vital-status').classList.add('stable');
     const bpmEl = document.getElementById('bpm-display');
     bpmEl.textContent = '76 BPM';
@@ -2337,68 +2619,96 @@
 
     setTimeout(() => {
       if (savedCount === activeCases.length) {
-        finishGame(true);
-      } else if (savedCount === 3 && !suddenCallTriggered) {
-        suddenCallTriggered = true;
-        triggerSuddenCall();
+        finishGame();
+      } else if (savedCount === 3 && !triageTriggered) {
+        triageTriggered = true;
+        startTriageMiniGame();
       } else {
         currentCaseIdx++;
         loadCase(currentCaseIdx);
       }
-    }, 850);
+    }, 900);
   }
 
-  // 중간 돌발 교무실 콜 이벤트
-  function triggerSuddenCall() {
-    const modal = document.getElementById('choice-modal');
-    document.getElementById('choice-badge').textContent = '📞 돌발 교무실 핫라인';
-    document.getElementById('choice-title').textContent = '학부모 상담 전화가 걸려왔습니다!';
-    document.getElementById('choice-desc').textContent =
-      '“선생님, IB 수업에서는 지필시험 점수 대신 형성평가나 학생 자기성찰을 중요하게 다룬다고 들었습니다. 우리 아이가 탐구 과정에서 어떻게 성장하고 있는지 어떤 방식으로 확인할 수 있을까요?”';
+  // 15초 긴급 응급실 트리아제 미니게임
+  function startTriageMiniGame() {
+    triageDeck = [...TRIAGE_POOL].sort(() => Math.random() - 0.5).slice(0, 3);
+    triageIdx = 0;
+    triageCorrectCount = 0;
+    triageTimeLeft = 15.0;
+    triageLocked = false;
 
-    const optionsWrap = document.getElementById('choice-options');
-    optionsWrap.innerHTML = '';
-
-    const callChoices = [
-      {
-        text: "“수업 중 ATL 성장 스펙트럼과 개념 이해 과정에 대한 구체적 피드백, 학생 스스로 성찰한 기록과 총괄 포트폴리오를 종합해 성장 모습을 안내해 드립니다.”",
-        correct: true
-      },
-      {
-        text: "“과정 중 평가는 생략하고, 학기말에 단원별 총괄 지필평가 점수표만 한꺼번에 가정으로 안내해 드리겠습니다.”",
-        correct: false,
-        feedback: "학습을 위한 평가와 학습으로서의 평가를 통해 성장을 지원하는 IB 평가 방향과 거리가 멉니다."
-      },
-      {
-        text: "“학기말 통지표에 ‘수업에 성실히 참여함’이라는 한 줄 총평 문구만 적어 안내해 드립니다.”",
-        correct: false,
-        feedback: "학생의 개념 이해, ATL 기능, 학습자상 성장 근거를 구체적으로 공유하는 것이 더 바람직합니다."
-      }
-    ];
-
-    callChoices.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'choice-btn';
-      btn.textContent = opt.text;
-      btn.onclick = () => {
-        if (opt.correct) {
-          playTone(920, 'sine', 0.2);
-          reputation = Math.min(100, reputation + 8);
-          updateStatusUI();
-          modal.style.display = 'none';
-          showNotice('🌟', '명쾌한 소통! (신뢰도 +8)', 'IB PYP 평가의 취지를 따뜻하고 명확하게 전달했습니다.');
-          currentCaseIdx++;
-          loadCase(currentCaseIdx);
-        } else {
-          playTone(220, 'sawtooth', 0.2);
-          btn.classList.add('wrong');
-          showNotice('📞', '응대 재고 필요', opt.feedback);
-        }
-      };
-      optionsWrap.appendChild(btn);
-    });
-
+    const modal = document.getElementById('triage-modal');
     modal.style.display = 'flex';
+    renderTriageCard();
+
+    if (triageTimer) clearInterval(triageTimer);
+    triageTimer = setInterval(() => {
+      triageTimeLeft = Math.max(0, +(triageTimeLeft - 0.1).toFixed(1));
+      document.getElementById('triage-timer-text').textContent = `⏱️ ${triageTimeLeft.toFixed(1)}초`;
+      document.getElementById('triage-progress-fill').style.width = `${(triageTimeLeft / 15.0) * 100}%`;
+
+      if (triageTimeLeft <= 0) {
+        endTriageMiniGame(true);
+      }
+    }, 100);
+  }
+
+  function renderTriageCard() {
+    document.getElementById('triage-counter').textContent = `진행 카드: ${triageIdx + 1} / 3`;
+    const cardEl = document.getElementById('triage-card');
+    cardEl.className = 'triage-card';
+    cardEl.textContent = `“${triageDeck[triageIdx].text}”`;
+  }
+
+  function answerTriage(choice) {
+    if (triageLocked) return;
+    triageLocked = true;
+
+    const cardEl = document.getElementById('triage-card');
+    const isCorrect = triageDeck[triageIdx].answer === choice;
+
+    if (isCorrect) {
+      triageCorrectCount++;
+      playTone(860, 'sine', 0.14);
+      cardEl.classList.add('flash-ok');
+    } else {
+      playTone(220, 'sawtooth', 0.18);
+      cardEl.classList.add('flash-no');
+    }
+
+    setTimeout(() => {
+      triageIdx++;
+      if (triageIdx >= triageDeck.length) {
+        endTriageMiniGame(false);
+      } else {
+        triageLocked = false;
+        renderTriageCard();
+      }
+    }, 260);
+  }
+
+  function endTriageMiniGame(isTimeout) {
+    if (triageTimer) {
+      clearInterval(triageTimer);
+      triageTimer = null;
+    }
+    document.getElementById('triage-modal').style.display = 'none';
+
+    const gained = triageCorrectCount * 3;
+    reputation = Math.min(100, reputation + gained);
+    updateStatusUI();
+
+    const titleText = isTimeout
+      ? `⏱️ 시간 종료! 트리아제 ${triageCorrectCount}/3개 분류`
+      : `🚨 긴급 트리아제 완료! (${triageCorrectCount}/3개 정확 분류)`;
+    const descText = gained > 0
+      ? `빠른 평가 유형 분류로 신뢰도 +${gained}점을 추가로 확보했습니다!`
+      : `아쉽게 보너스 점수는 놓쳤지만, 이어서 남은 병동 진료를 계속 진행합니다.`;
+
+    showNotice('⚡', titleText, descText);
+    currentCaseIdx++;
+    loadCase(currentCaseIdx);
   }
 
   // 협진 찬스 3종 (모든 턴 통틀어 각 1회만 사용 가능)
@@ -2474,8 +2784,10 @@
   }
 
   function updateStatusUI() {
-    const lifeEl = document.getElementById('life-display');
-    lifeEl.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+    const attemptEl = document.getElementById('attempt-display');
+    attemptEl.textContent = mistakeCount === 0
+      ? '♾️ 무제한 재진료'
+      : `♾️ 무제한 재진료 (재검토 ${mistakeCount}회)`;
 
     const repEl = document.getElementById('reputation-display');
     repEl.textContent = `신뢰도 ${reputation}점 (${getTitleByReputation(reputation)})`;
@@ -2491,39 +2803,61 @@
     }
   }
 
+  function buildAchievements() {
+    const badges = [];
+    if (mistakeCount === 0) {
+      badges.push({ title: '⚡ 원샷 원킬', desc: '6개 병동 모두 오진 0회 완주' });
+    }
+    if (totalCluesOpened <= 11) {
+      badges.push({ title: '🕵️ 단서 절약가', desc: `단서 ${totalCluesOpened}/18개만 열람하고 추리 성공` });
+    }
+    if (chances.consult && chances.rowScan && chances.eliminate) {
+      badges.push({ title: '🧠 독고다이 명의', desc: '협진 찬스 미사용 독자 처방 달성' });
+    }
+    if (triageCorrectCount === 3) {
+      badges.push({ title: '⏱️ 트리아제 에이스', desc: '15초 긴급 평가 분류 3/3 퍼펙트' });
+    }
+    if (badges.length === 0) {
+      badges.push({ title: '🌱 성실한 탐구 설계자', desc: '6개 탐구 교실 평가 처방 도감 완성' });
+    }
+    return badges;
+  }
+
   function buildPersonaDiagnosis() {
-    if (wrongPurposes.length === 0 && savedCount === activeCases.length) {
+    if (wrongPurposes.length === 0) {
       return `🧭 <strong>평가 설계 성향 진단 · 완벽한 균형 설계자:</strong> UOI·LOI·차시의 위계와 형성·총괄의 목적, 그리고 지식·기능·태도 요소를 한 치의 오차도 없이 꿰뚫어 보셨습니다.`;
     }
     if (wrongPurposes.includes('학습으로서의 평가')) {
       return `🧭 <strong>평가 설계 성향 진단 · 교사 피드백 주도형:</strong> 교사의 관찰과 피드백 처방은 날카롭지만, 학생이 주체가 되는 <strong>‘학습으로서의 평가(자기·동료 성찰)’</strong> 포인트를 조금 더 눈여겨보면 완벽합니다.`;
     }
     if (wrongPurposes.includes('학습을 위한 평가')) {
-      return `🧭 <strong>평가 설계 성향 진단 · 총괄 산출물 중심형:</strong> 단원 마무리 평가 기준은 명확히 잡으시지만, 탐구 진행 도중 오개념을 교정하는 <strong>‘학습을 위한 평가(Ongoing Assessment)’</strong> 시점을 놓치지 않도록 주의해 보세요.`;
+      return `🧭 <strong>평가 설계 성향 진단 · 총괄 산출물 중심형:</strong> 단원 마무리 평가 기준은 명확히 잡으시지만, 탐구 진행 도중 오개념을 교정하는 <strong>‘학습을 위한 평가(과정 중 수시 피드백)’</strong> 시점을 놓치지 않도록 주의해 보세요.`;
     }
     return `🧭 <strong>평가 설계 성향 진단 · 탐구 평가 성장형:</strong> 현장 일기와 학생 증언 속에서 평가 설계의 포인트를 차분히 찾아내며 IB 평가 프레임워크 감각을 안정적으로 익히고 계십니다.`;
   }
 
-  function finishGame(isCleared) {
+  function finishGame() {
     const modal = document.getElementById('result-modal');
 
-    document.getElementById('result-emoji').textContent = isCleared ? '🏆' : '🩺';
-    document.getElementById('result-title').textContent = isCleared ? '전 병동 평가 설계 완료!' : '당직 진료가 종료되었습니다';
-    document.getElementById('result-subtitle').textContent = isCleared
-      ? `신뢰도 50점에서 출발해 ${reputation}점까지 교실 신뢰를 끌어올렸습니다!`
-      : `총 ${activeCases.length}개 병동 중 ${savedCount}개 병동을 안정화했습니다.`;
+    document.getElementById('result-subtitle').textContent =
+      `신뢰도 50점에서 출발해 ${reputation}점까지 교실 신뢰를 끌어올렸습니다!`;
 
     document.getElementById('rank-badge').textContent = `IB 평가 ${getTitleByReputation(reputation)}`;
     document.getElementById('stat-saved').textContent = `${savedCount} / ${activeCases.length}`;
     document.getElementById('stat-combo').textContent = `${maxStreak}연속`;
     document.getElementById('stat-rep').textContent = `${reputation}점`;
 
+    const badgeGrid = document.getElementById('badge-grid');
+    badgeGrid.innerHTML = buildAchievements().map(b =>
+      `<div class="ach-badge"><span>${b.title}</span><small>${b.desc}</small></div>`
+    ).join('');
+
     document.getElementById('persona-box').innerHTML = buildPersonaDiagnosis();
 
     const summaryList = document.getElementById('summary-list');
-    summaryList.innerHTML = activeCases.slice(0, savedCount).map((c, i) =>
+    summaryList.innerHTML = activeCases.map((c, i) =>
       `<div class="summary-item">✅ <strong>${i + 1}병동 · ${c.summary}</strong></div>`
-    ).join('') || '<div class="summary-item">아직 완료된 처방 기록이 없습니다. 다시 도전해 보세요!</div>';
+    ).join('');
 
     updatePledge();
     modal.style.display = 'flex';
@@ -2540,19 +2874,27 @@
   }
 
   function resetGame() {
+    if (triageTimer) {
+      clearInterval(triageTimer);
+      triageTimer = null;
+    }
     document.getElementById('result-modal').style.display = 'none';
     document.getElementById('choice-modal').style.display = 'none';
+    document.getElementById('triage-modal').style.display = 'none';
     document.getElementById('notice-modal').style.display = 'none';
 
     activeCases = [...CASES].sort(() => Math.random() - 0.5);
     currentCaseIdx = 0;
     savedCount = 0;
-    lives = 3;
     reputation = 50;
     streak = 0;
     maxStreak = 0;
+    mistakeCount = 0;
+    totalCluesOpened = 0;
     wrongPurposes = [];
-    suddenCallTriggered = false;
+    triageTriggered = false;
+    triageCorrectCount = 0;
+    stampedDrugIds = new Set();
     chances = { consult: true, rowScan: true, eliminate: true };
 
     const consultBtn = document.getElementById('chance-consult');
