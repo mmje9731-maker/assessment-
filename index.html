@@ -1457,7 +1457,18 @@
 #extra-options:has(.classroom-recovery){display:block;width:100%}
 @media(max-width:767px){.classroom-recovery{padding:8px}.cr-avatar{width:30px;height:30px;flex-basis:30px}.classroom-recovery .cr-body p{font-size:14px;line-height:1.5}.cr-heading{font-size:14px}}
 </style>
-</head>
+<style>
+#recovery-result-modal{z-index:1450;overflow-y:auto;padding:12px;box-sizing:border-box;align-items:center;justify-content:center}
+#recovery-result-modal .modal-inner{width:min(100%,480px);max-height:calc(100dvh - 24px);overflow-y:auto;box-sizing:border-box;padding:20px;text-align:center;background:#fff;color:#173b35}
+#recovery-result-modal .cr-body p{font-size:16px;line-height:1.65;padding:10px 12px}
+#recovery-result-modal .cr-heading{font-size:16px;line-height:1.5;margin-bottom:10px}
+#recovery-result-modal .cr-row{margin:10px 0;align-items:flex-start}
+#recovery-result-modal .cr-body small{font-size:13px}
+#recovery-result-modal .cr-avatar{width:38px;height:38px;flex-basis:38px}
+#recovery-result-modal .modal-btn{margin-top:12px;width:100%;min-height:48px}
+#recovery-result-modal .read-note{font-size:13px;color:#52655c;line-height:1.5;margin:8px 0 0}
+@media(max-width:767px){#recovery-result-modal .modal-inner{padding:15px}}
+</style></head>
 <body>
 
 <div class="container">
@@ -1662,6 +1673,16 @@
 <div class="modal-overlay" id="signal-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="signal-title"><div class="modal-inner signal-card"><div class="signal-label" id="signal-label"></div><div id="signal-art" aria-hidden="true"></div><h2 id="signal-title" aria-live="polite"></h2><p id="signal-desc"></p><p id="signal-status"></p><div id="signal-award" class="ward-award" hidden></div><div id="signal-award-recovery" class="classroom-recovery" hidden></div><button id="signal-action" type="button"></button></div></div>
 <div class="modal-overlay" id="entry-modal" role="dialog" aria-modal="true" aria-labelledby="entry-title"><div class="modal-inner entry-card"><div style="font-size:2.5rem">🏥</div><h2 id="entry-title">진료 담당자 등록 완료</h2><p id="entry-name"></p><svg viewBox="0 0 300 45" width="100%"><path d="M0 23H65L75 17L83 32L96 3L108 42L119 23H205L215 17L223 32L236 3L248 42L258 23H300" stroke="#5eead4" stroke-width="2" fill="none"/></svg><div class="entry-check">✓ 병동 상태 확인 완료<br>✓ 평가 약품 준비 완료<br>✓ IB 코디네이터 상담 준비 완료</div><p style="font-size:.85rem;color:#cbd5e1;margin:12px 0 0">4초 후 자동 입장합니다.</p><div class="entry-track"><i></i></div><button class="modal-btn" onclick="endEntry()">바로 진료하기</button></div></div>
 <!-- 2. 병동 전환 안내 모달 (5초 유지) -->
+<div class="modal-overlay" id="recovery-result-modal" style="display:none" role="dialog" aria-modal="true" aria-labelledby="recovery-result-title">
+ <div class="modal-inner">
+  <div class="modal-emoji" aria-hidden="true">💚</div>
+  <h2 class="modal-title" id="recovery-result-title">처방 성공!</h2>
+  <div id="recovery-result-award" class="ward-award" hidden></div>
+  <div id="recovery-result-award-recovery" class="classroom-recovery" hidden></div>
+  <p class="read-note">교실의 변화를 충분히 확인한 뒤 다음으로 진행하세요.</p>
+  <button type="button" class="modal-btn" id="recovery-result-next">다음 →</button>
+ </div>
+</div>
 <div class="modal-overlay" id="transition-modal">
   <div class="modal-inner transition-card">
     <div class="modal-emoji">🏥</div>
@@ -2277,7 +2298,7 @@
     const c=configs[kind];signalCallback=next;m.dataset.kind=kind;m.dataset.phase='0';document.getElementById('signal-label').textContent=c[0];document.getElementById('signal-art').innerHTML=c[6];document.getElementById('signal-title').textContent=c[1];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='신호 수신 중… 바로 확인할 수 있습니다.';b.textContent=c[5];b.disabled=false;m.style.display='flex';playTone(kind==='loot'?520:kind==='vip'?392:440,'sine',.13);
     const phase1=()=>{m.dataset.phase='1';document.getElementById('signal-title').textContent=c[2];document.getElementById('signal-status').textContent='신호 분석 완료 · 바로 확인할 수 있습니다.';playTone(kind==='loot'?660:kind==='vip'?523:660,'sine',.14);};
     const phase2=()=>{m.dataset.phase='2';document.getElementById('signal-title').textContent=c[3];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='준비되면 아래 버튼을 눌러 주세요.';b.textContent=c[5];b.disabled=false;try{b.focus({preventScroll:true});}catch(e){}playTone(kind==='vip'?784:kind==='loot'?740:880,'sine',.14);};
-    renderWardAward("signal-award",kind!=="critical");
+    renderWardAward("signal-award",false);
     b.onclick=()=>{if(b.disabled||!signalCallback)return;const cb=signalCallback;clearSignal();cb();};
     if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){phase2();}else{signalTimers=[setTimeout(phase1,1500),setTimeout(phase2,3500)];}
   }
@@ -2311,6 +2332,19 @@
     const a=lastWardAward;
     const score=document.createElement("strong");score.className="award-simple-main";score.textContent=`+${a.rep}점 획득`;el.append(score);
     if(a.extra>0){const extra=document.createElement("span");extra.className="award-simple-extra";extra.textContent=`추가 진료점 +${a.extra}점`;el.append(extra);}
+  }
+  function closeRecoveryResult(){
+    const modal=document.getElementById('recovery-result-modal');
+    modal.style.display='none';document.getElementById('recovery-result-next').onclick=null;
+  }
+  function showRecoveryResult(next,isVip=false){
+    const modal=document.getElementById('recovery-result-modal'),btn=document.getElementById('recovery-result-next');
+    document.getElementById('recovery-result-title').textContent=isVip?'👑 VIP 특별 진료 성공!':'처방 성공!';
+    renderWardAward('recovery-result-award');
+    if(isVip){const score=document.getElementById('recovery-result-award');score.replaceChildren();const n=document.createElement('strong');n.className='award-simple-main';n.textContent=`추가 진료점 +${lastWardAward.extra}점`;score.append(n);}
+    btn.textContent=isVip?'최종 인증서 확인 →':'다음 →';
+    btn.onclick=()=>{if(modal.style.display==='none')return;closeRecoveryResult();next();};
+    modal.style.display='flex';modal.querySelector('.modal-inner').scrollTop=0;
   }
   let lootTimer=null, triageAnswerTimer=null, triageEnded=true, transitionPaintTimer=null;
   let consultCount=2, consultedWard=false, usedAnyHelp=false;
@@ -2661,7 +2695,7 @@
     document.getElementById('next-ward-preview').innerHTML =
       `<div style="font-size:0.78rem; color:#2563eb; margin-bottom:4px;">다음 진료 교실 (${nextWardNum} / ${activeCases.length}병동 · ${transitionSeconds}초 후 자동 입장)</div>${nextCase.subject}`;
 
-    renderWardAward("transition-award");
+    renderWardAward("transition-award",false);
     const recovery=document.getElementById('reaction-recovery');recovery.textContent='';recovery.hidden=true;
     const fillEl = document.getElementById('transition-bar-fill');
     fillEl.style.transition = 'none';
@@ -3117,8 +3151,8 @@
       document.getElementById('bpm-display').textContent='72 BPM';
       document.getElementById('bpm-display').classList.add('stable');document.getElementById('ecg-line').classList.add('stable');
       playSuccessFanfare(true);
-      setupExtra('👑','VIP 특별 진료 성공!','학습 포트폴리오와 학습자상·ATL 성장 스펙트럼 복합 처방 완료. 추가 진료 +'+pts+'점!','최종 인증서 확인',()=>{extraModal().style.display='none';vipActive=false;document.querySelector('.container').classList.remove('vip-ward');mobileDock.classList.remove('vip-dock');finishGame();});
-      extraModal().classList.add('vip-mode','vip-cleared');const recovery=document.createElement('div');recovery.className='classroom-recovery';renderClassroomRecovery(recovery);document.getElementById('extra-options').append(recovery);return;
+      lastWardAward={ward:'VIP',rep:0,extra:pts};
+      showRecoveryResult(()=>{vipActive=false;document.querySelector('.container').classList.remove('vip-ward');mobileDock.classList.remove('vip-dock');finishGame();},true);return;
     }
     const currentCase = currentCaseData();
     const cluesUsed = checkedClues.filter(Boolean).length;
@@ -3158,7 +3192,6 @@
     if(doubledNext){doubledNext=false;const pts=Math.max(20,gainedPoints*2);addExtra(pts);breakdown.push(`보급 +${pts} 진료점`);}
     playSuccessFanfare(isFeverHit);
     lastWardAward={ward:savedCount,rep:reputation-repBefore,extra:extraPoints-extraBefore,nominal:gainedPoints,breakdown:[...breakdown],total:reputation,extraTotal:extraPoints};
-    spawnFloatingScore(lastWardAward.rep, lastWardAward.extra);
     updateStatusUI();
 
     const panel = document.getElementById('patient-panel');
@@ -3174,8 +3207,7 @@
 
     const isLastWard = currentCaseIdx >= activeCases.length - 1;
 
-    completionTimer = setTimeout(() => {
-      completionTimer=null;
+    showRecoveryResult(() => {
       const proceed=()=>{
       if (isLastWard) {
         openBoss();
@@ -3190,7 +3222,7 @@
       }
       };
       if(savedCount===2||savedCount===4) openLoot(proceed); else proceed();
-    }, 1600);
+    });
   }
 
   function startTriageMiniGame() {showSignal('triage',beginTriageMiniGame);}
@@ -3683,6 +3715,7 @@
   }
 
   function resetGame() {
+    closeRecoveryResult();
     lastWardAward=null;lastClassroomRecovery=null;
     wardCasting=makeWardCasting();
     stopFarewell();hasStarted=false;endEntry();clearSignal();criticalAnnounced=false;protection=0;rareAwards=[];wrongReview=[];opinionPledge='';
