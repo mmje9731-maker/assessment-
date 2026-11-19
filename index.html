@@ -136,6 +136,27 @@
       transform: translateY(-1px);
     }
 
+    .modal-btn.secondary {
+      background: #0f172a;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+    }
+
+    .modal-btn.secondary:hover {
+      background: #1e293b;
+    }
+
+    .result-btn-group {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .result-btn-group .modal-btn {
+      flex: 1 1 220px;
+      max-width: 260px;
+    }
+
     /* 병동 전환 안내 모달 전용 */
     .transition-card {
       max-width: 500px;
@@ -203,7 +224,7 @@
       height: 100%;
       width: 0%;
       background: var(--accent-blue);
-      transition: width 1.4s linear;
+      transition: width 3.2s linear;
     }
 
     /* 직관적 3단계 흐름도 & 가이드 */
@@ -465,6 +486,8 @@
       margin: 0;
       color: var(--text-main);
       letter-spacing: -0.02em;
+      cursor: pointer;
+      user-select: none;
     }
 
     .subtitle {
@@ -1039,7 +1062,15 @@
       font-weight: 500;
     }
 
-    .clue-highlight {
+    /* 초기에는 하이라이트를 숨기고, 오진(재검토) 발생 시 활성화 */
+    .clue-content-box:not(.hint-unlocked) .clue-highlight {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+      font-weight: inherit;
+    }
+
+    .clue-content-box.hint-unlocked .clue-highlight {
       background-color: #fef08a;
       color: #0f172a;
       padding: 1px 4px;
@@ -1047,7 +1078,7 @@
       font-weight: 800;
     }
 
-    .type-diary .clue-highlight {
+    .type-diary.hint-unlocked .clue-highlight {
       background-color: #fde047;
     }
 
@@ -1565,6 +1596,42 @@
       color: #1e40af;
     }
 
+    /* 강사용 디브리핑 카드 */
+    .debrief-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+      max-height: 55dvh;
+      overflow-y: auto;
+      margin-bottom: 16px;
+    }
+
+    .debrief-item {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid var(--accent-blue);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .debrief-item strong {
+      color: var(--text-main);
+    }
+
+    .debrief-rx {
+      display: inline-block;
+      margin-top: 4px;
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.78rem;
+      padding: 2px 8px;
+      border-radius: 5px;
+    }
+
     /* 태블릿 이하 (1024px 이하: 1단 스택 전환) */
     @media (max-width: 1024px) {
       body {
@@ -1755,7 +1822,7 @@
 <div class="container">
   <header>
     <div class="header-left">
-      <h1>🏥 IB PYP 수업 평가 응급실</h1>
+      <h1 ondblclick="openDebriefModal()" title="더블클릭 시 강사용 전체 해설 요약 열기">🏥 IB PYP 수업 평가 응급실</h1>
       <div class="subtitle">지금 진행 중인 교실 현장 단서(일기·증언·기록물)를 분석해 알맞은 평가 처방을 연결하세요</div>
     </div>
     <div class="header-controls">
@@ -1763,7 +1830,7 @@
       <div class="combo-pill" id="combo-display">🔥 2연속 피버!</div>
       <div class="reputation-pill" id="reputation-display">신뢰도 50점 (수습의)</div>
       <button class="icon-btn" onclick="openGuideModal()">❓ 규칙</button>
-      <button class="icon-btn" id="sound-btn" onclick="toggleSound()">🔊</button>
+      <button class="icon-btn" id="sound-btn" onclick="toggleSound()">🔇</button>
       <button class="icon-btn" onclick="resetGame()">🔄</button>
     </div>
   </header>
@@ -2034,7 +2101,10 @@
       <div class="pledge-preview" id="pledge-preview"></div>
     </div>
 
-    <button class="modal-btn" onclick="resetGame()">🔄 새로운 당직 시작하기</button>
+    <div class="result-btn-group">
+      <button class="modal-btn secondary" onclick="copyResultToClipboard()">📋 인증서 및 다짐 복사</button>
+      <button class="modal-btn" onclick="resetGame()">🔄 새로운 당직 시작하기</button>
+    </div>
   </div>
 </div>
 
@@ -2045,6 +2115,17 @@
     <h3 class="modal-title" id="notice-title">알림</h3>
     <p class="modal-desc" id="notice-desc"></p>
     <button class="modal-btn" onclick="closeNotice()">확인</button>
+  </div>
+</div>
+
+<!-- 7. 강사용 전체 해설 요약 모달 (헤더 더블클릭 시 표시) -->
+<div class="modal-overlay" id="debrief-modal">
+  <div class="modal-inner" style="max-width: 680px;">
+    <div class="modal-emoji">📋</div>
+    <h2 class="modal-title">연수 진행자용 · 6개 교실 평가 처방 요약</h2>
+    <p class="modal-desc" style="margin-bottom: 12px;">실습 마무리 디브리핑 시 선생님들과 함께 확인하는 전체 시나리오 정답 요약입니다.</p>
+    <div class="debrief-list" id="debrief-list"></div>
+    <button class="modal-btn" onclick="document.getElementById('debrief-modal').style.display='none'">닫기</button>
   </div>
 </div>
 
@@ -2474,7 +2555,7 @@
   let totalCluesOpened = 0;
   let caseHadError = false;
   let wrongPurposes = [];
-  let soundEnabled = true;
+  let soundEnabled = false; // 연수실 기본 음소거
   let chances = { consult: true, rowScan: true, eliminate: true };
   let stampedDrugIds = new Set();
 
@@ -2544,6 +2625,21 @@
     document.getElementById('guide-modal').style.display = 'flex';
   }
 
+  function openDebriefModal() {
+    const list = document.getElementById('debrief-list');
+    list.innerHTML = CASES.map((c, idx) => {
+      const drug = DRUG_LOOKUP[c.correctDrugId];
+      return `
+        <div class="debrief-item">
+          <div><strong>사례 ${idx + 1}. ${c.subject}</strong></div>
+          <div class="debrief-rx">정답 처방: [${drug.areaLabel}] ${drug.title}</div>
+          <div style="margin-top:4px; color:#475569;">${c.summary}</div>
+        </div>
+      `;
+    }).join('');
+    document.getElementById('debrief-modal').style.display = 'flex';
+  }
+
   // 플로팅 점수 타격감 연출
   function spawnFloatingScore(points, breakdownText) {
     const panel = document.getElementById('patient-panel');
@@ -2564,7 +2660,7 @@
     }, 1500);
   }
 
-  // 명확한 병동 전환 안내 모달
+  // 명확한 병동 전환 안내 모달 (3.2초 유지)
   function showWardTransition(completedWardNum, nextWardIdx, callback) {
     const nextCase = activeCases[nextWardIdx];
     const nextWardNum = nextWardIdx + 1;
@@ -2587,7 +2683,7 @@
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        fillEl.style.transition = 'width 1.4s linear';
+        fillEl.style.transition = 'width 3.2s linear';
         fillEl.style.width = '100%';
       });
     });
@@ -2596,7 +2692,7 @@
     if (transitionTimeout) clearTimeout(transitionTimeout);
     transitionTimeout = setTimeout(() => {
       skipWardTransition();
-    }, 1450);
+    }, 3250);
   }
 
   function skipWardTransition() {
@@ -2747,7 +2843,7 @@
     }
 
     const box = document.getElementById('clue-content-box');
-    box.className = `clue-content-box type-${clue.type}`;
+    box.className = `clue-content-box type-${clue.type}` + (caseHadError ? ' hint-unlocked' : '');
     box.innerHTML = `
       <div class="evidence-meta">${clue.meta}</div>
       <p class="evidence-body">${clue.text}</p>
@@ -2811,6 +2907,7 @@
     streak = 0;
     reputation = Math.max(20, reputation - 5);
     document.getElementById('patient-panel').classList.remove('fever-mode');
+    document.getElementById('clue-content-box').classList.add('hint-unlocked');
     updateStatusUI();
     showNotice('💡', `${title} (신뢰도 -5 · 다시 처방 가능)`, message);
   }
@@ -3189,6 +3286,23 @@
     document.getElementById('pledge-preview').textContent = `“나는 ${when}, ${what}”`;
   }
 
+  function copyResultToClipboard() {
+    const rank = document.getElementById('rank-badge').textContent;
+    const pledge = document.getElementById('pledge-preview').textContent;
+    const badges = buildAchievements().map(b => b.title).join(', ');
+    const shareText = `[🏥 IB PYP 수업 평가 응급실 수료 결과]\n• 등급: ${rank} (신뢰도 ${reputation}점 / 최대 ${maxStreak}연속 명처방)\n• 획득 배지: ${badges}\n• 나의 평가 다짐: ${pledge}`;
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(shareText).then(() => {
+        showNotice('📋', '복사 완료!', '인증서 결과와 나의 평가 다짐이 클립보드에 복사되었습니다. 패들렛이나 채팅창에 바로 붙여넣기 하세요!');
+      }).catch(() => {
+        showNotice('📋', '복사 안내', shareText);
+      });
+    } else {
+      showNotice('📋', '복사 안내', shareText);
+    }
+  }
+
   function startGame() {
     document.getElementById('guide-modal').style.display = 'none';
   }
@@ -3207,6 +3321,7 @@
     document.getElementById('triage-modal').style.display = 'none';
     document.getElementById('transition-modal').style.display = 'none';
     document.getElementById('notice-modal').style.display = 'none';
+    document.getElementById('debrief-modal').style.display = 'none';
 
     activeCases = [...CASES].sort(() => Math.random() - 0.5);
     currentCaseIdx = 0;
