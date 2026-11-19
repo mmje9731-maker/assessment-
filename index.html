@@ -1302,7 +1302,23 @@
 
     @media(max-width:767px){.modal-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;}}
     .loot-crate.chosen .crate-lid,.loot-crate.chosen .crate-light{animation-duration:.38s;}
-  </style>
+  
+#entry-modal{z-index:1600;background:#071521;backdrop-filter:none}.entry-card{background:#102535!important;color:#e2e8f0;border:1px solid #397d83;text-align:center;max-width:420px}.entry-card h2{color:#99f6e4;margin:10px 0}.entry-card p{color:#cbd5e1}.entry-check{font-size:.92rem;color:#99f6e4;line-height:1.7}.entry-track{height:5px;background:#263d50;border-radius:5px;overflow:hidden;margin:16px 0}.entry-track i{display:block;height:100%;background:#5eead4;animation:entryFill .9s linear forwards}@keyframes entryFill{from{width:0}to{width:100%}}.loot-crate.rare-won{border-color:#c084fc!important;box-shadow:0 0 16px #a855f766}.loot-crate.legend-won{border-color:#fde68a!important;box-shadow:0 0 20px #fbbf2477}.review-panel{order:6;text-align:left;border:1px solid #cbd5e1;border-radius:12px;padding:12px;margin:10px 0;background:#f8fafc;color:#243449}.review-panel h3{margin:0 0 8px;font-size:1rem}.review-panel details{border-top:1px solid #dbe3ed;padding:10px 0}.review-panel summary{cursor:pointer;font-weight:700;line-height:1.5}.review-panel p{margin:6px 0;font-size:.88rem;line-height:1.55;overflow-wrap:anywhere}.review-wrong{color:#b91c1c}.review-right{color:#166534}.review-panel .review-meta{color:#475569}@media(prefers-reduced-motion:reduce){.entry-track i{animation:none;width:100%}}
+
+#guide-modal .guide-info{color:#172b45;text-align:left;margin:14px 0 18px;font-size:14px;line-height:1.65;word-break:keep-all;overflow-wrap:anywhere}
+#guide-modal .guide-info h3{font-size:17px;font-weight:800;margin:16px 0 8px;color:#172b45}
+#guide-modal .guide-score-goal{background:#eaf2ff;border:1px solid #94b5e6;border-radius:9px;padding:10px 12px;margin:0 0 8px;color:#173d78;font-size:15px}
+#guide-modal .guide-score-list{display:grid;grid-template-columns:minmax(0,1fr) auto;margin:0;border:1px solid #cbd5e1;border-radius:9px;overflow:hidden;background:#fff}
+#guide-modal .guide-score-list dt,#guide-modal .guide-score-list dd{margin:0;padding:8px 10px;border-bottom:1px solid #e2e8f0}
+#guide-modal .guide-score-list dt{font-weight:600} #guide-modal .guide-score-list dd{font-weight:800;color:#155d36;text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+#guide-modal .guide-score-list dd.guide-minus{color:#b91c1c} #guide-modal .guide-score-list :nth-last-child(-n+2){border-bottom:0}
+#guide-modal .guide-note{font-size:13px;color:#40536c;margin:7px 0 0;line-height:1.6}
+#guide-modal .guide-missions{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+#guide-modal .guide-missions li{display:flex;align-items:flex-start;gap:8px;padding:10px;border:1px solid #cbd5e1;border-radius:9px;background:#f8fafc;min-width:0}
+#guide-modal .guide-missions li>span{font-size:20px;flex:none;line-height:1.4} #guide-modal .guide-missions li section{min-width:0} #guide-modal .guide-missions b{font-size:15px;color:#172b45} #guide-modal .guide-missions p{margin:3px 0 0}
+@media(max-width:767px){#guide-modal .guide-missions{grid-template-columns:1fr} #guide-modal .guide-info{font-size:14px} #guide-modal .guide-score-list dt,#guide-modal .guide-score-list dd{padding:8px} }
+
+</style>
 
 <style>
 #teacher-chat-modal{z-index:1250;}
@@ -1334,7 +1350,14 @@
 
     @media(max-width:767px){.modal-overlay{backdrop-filter:none;-webkit-backdrop-filter:none;}}
     .loot-crate.chosen .crate-lid,.loot-crate.chosen .crate-light{animation-duration:.38s;}
-  </style></head>
+  </style><style>
+#result-modal .final-stage[hidden],#result-modal .final-medal[hidden]{display:none!important}
+#result-modal .final-stage{width:100%;min-width:0;display:flex;flex-direction:column;gap:12px;animation:finalReveal .24s ease-out}
+#result-modal .final-progress{position:sticky;top:0;z-index:3;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;background:#fff;padding:8px 0 12px;flex-shrink:0;}
+.final-progress span{border-top:4px solid #dbe2ea;padding-top:7px;font-size:.78rem;color:#64748b;font-weight:700}.final-progress span.active{border-color:#b47b18;color:#85560d}.final-progress span.done{border-color:#0f766e;color:#0f766e}
+.final-kicker{color:#64748b;font-weight:800;font-size:.8rem;letter-spacing:.04em}.final-teaser{background:linear-gradient(140deg,#102338,#253d55);color:#fff;border:1px solid #aa925e;border-radius:14px;padding:16px;text-align:center}.final-teaser strong{color:#ffe1a0;font-size:1.05rem}.final-teaser p{font-size:.9rem;line-height:1.6;color:#e2e8f0;margin:8px 0 14px}.final-gold{background:linear-gradient(115deg,#f4d48e,#d8a84f)!important;color:#33220b!important;font-weight:900!important;border:1px solid #d3a244!important;min-height:44px;width:100%;white-space:normal}.final-back{border:0;background:none;color:#475569;font:inherit;font-size:.85rem;cursor:pointer;padding:12px;min-height:44px}.final-teaser .final-back{color:#dbeafe}.final-opinion{background:#effaf7;border:1px solid #b2ddd1;border-radius:12px;text-align:left;padding:14px;color:#14534a}.final-opinion p{font-size:.94rem;line-height:1.65;margin:7px 0 0}.final-mission h2{margin:5px 0;color:#172e43}.final-mission p{font-size:.95rem;line-height:1.65;color:#475569}.final-big-icon{font-size:2.5rem}.final-label{display:block;text-align:left;font-size:.85rem;font-weight:700;margin:12px 0 6px}#personal-pledge{box-sizing:border-box;width:100%;font:inherit;font-size:16px;border:1px solid #aab8c7;border-radius:8px;padding:10px;resize:vertical;color:#172e43;background:white;margin-bottom:10px}.final-medal{background:#fff5d8;border:1px solid #e4bf66;border-radius:10px;padding:12px;margin-top:10px;color:#79520a}.final-stage .modal-btn:disabled{opacity:.5;cursor:not-allowed}.final-stage>*{order:initial!important}.final-stage .result-btn-group{margin-top:0} @keyframes finalReveal{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){#result-modal .final-stage{animation:none}}@media(max-width:600px){#result-modal .final-stage{gap:9px}.final-teaser{padding:12px}.final-progress span{font-size:.72rem}}
+</style>
+</head>
 <body>
 
 <div class="container">
@@ -1497,7 +1520,26 @@
       <div class="guide-step-item"><div class="step-num-badge">3</div><div class="step-text-wrap"><strong>실제 교실에서 적용할 방법을 고르세요.</strong><br>세 가지 방법 중 알맞은 것을 선택하면 병동이 안정됩니다. 틀려도 다시 도전할 수 있습니다.</div></div>
     </div>
     <div class="guide-help"><strong>💡 막힐 때 사용하는 도움 기회 (코디네이터 2회, 나머지 각 1회)</strong><div>👩‍🏫 <b>IB 코디네이터에게 물어보기:</b> 대화창에서 조언을 확인합니다.</div><div>🎯 <b>정답 행 찾기:</b> 정답이 있는 UOI·LOI·차시 행을 표시합니다.</div><div>✂️ <b>오답 2개 지우기:</b> 틀린 약품 2개를 제외합니다.</div></div>
-    <details class="guide-more"><summary>점수와 특별 미션 안내</summary><div>첫 시도 성공 +7점, 단서 1개만 확인하면 추가 +4점, 2개면 +2점, 연속 성공 시 추가 +2점. 오진 후 성공하면 +4점입니다.<br>위급 환자, 응급 미션, 2·4병동 뒤 보급 상자, 마지막 VIP 특별 진료도 등장합니다. VIP는 약품 2개를 선택합니다. 보급 상자는 도움 기회 전체 복구 및 추가 점수, 다음 병동 진료점 3배, 추가 진료점 40점 중 하나를 제공합니다. 추가 진료점은 장비 누적 점수에 반영됩니다.</div></details>
+    <section class="guide-info" aria-label="점수와 특별 미션 안내">
+      <h3>📊 점수 안내</h3>
+      <p class="guide-score-goal">신뢰도 <b>50점</b>에서 시작 → <b>100점</b>에 도전!</p>
+      <dl class="guide-score-list">
+        <dt>첫 시도 진료 성공</dt><dd>+7점</dd>
+        <dt>단서 1개 / 2개 확인 후 첫 성공</dt><dd>+4 / +2점</dd>
+        <dt>2개 병동 이상 연속 첫 성공</dt><dd>+2점</dd>
+        <dt>오진</dt><dd class="guide-minus">−5점</dd>
+        <dt>오진 후 진료 성공</dt><dd>+4점</dd>
+      </dl>
+      <p class="guide-note">추가 진료점은 신뢰도와 별도로 장비 누적 점수에 반영됩니다.</p>
+      <h3>🚨 특별 미션 안내</h3>
+      <ul class="guide-missions">
+        <li><span aria-hidden="true">🚑</span><section><b>위급 환자</b><p>특별 환자를 첫 시도에 치료하면 추가 진료 +8점!</p></section></li>
+        <li><span aria-hidden="true">⏱️</span><section><b>응급 미션</b><p>제한 시간 안에 평가를 분류하세요. 정답당 신뢰도 +3점.</p></section></li>
+        <li><span aria-hidden="true">📦</span><section><b>응급 보급 상자</b><p>2·4번 병동 완료 후 상자 3개 중 하나를 선택하세요.</p><p class="guide-note">도움 기회 복구, 다음 병동 진료점 3배, 추가 진료 +40점 등. 낮은 확률로 희귀·특급·전설 보상도 등장합니다.</p></section></li>
+        <li><span aria-hidden="true">🔒</span><section><b>비밀의 VIP 병동</b><p>마지막 특별 진료에서는 약품 2개를 선택합니다.</p></section></li>
+      </ul>
+      <p class="guide-note">모든 진료가 끝나면 인증서와 오답 기록을 확인할 수 있습니다.</p>
+    </section>
     <button class="modal-btn" id="guide-start" onclick="advanceGuide()">닉네임 입력하기 ➔</button>
   </div>
 </div>
@@ -1516,6 +1558,7 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="entry-modal" role="dialog" aria-modal="true" aria-labelledby="entry-title"><div class="modal-inner entry-card"><div style="font-size:2.5rem">🏥</div><h2 id="entry-title">진료 담당자 등록 완료</h2><p id="entry-name"></p><svg viewBox="0 0 300 45" width="100%"><path d="M0 23H65L75 17L83 32L96 3L108 42L119 23H205L215 17L223 32L236 3L248 42L258 23H300" stroke="#5eead4" stroke-width="2" fill="none"/></svg><div class="entry-check">✓ 병동 상태 확인 완료<br>✓ 평가 약품 준비 완료<br>✓ IB 코디네이터 상담 준비 완료</div><div class="entry-track"><i></i></div><button class="modal-btn" onclick="endEntry()">바로 진료하기</button></div></div>
 <!-- 2. 병동 전환 안내 모달 (7초 유지) -->
 <div class="modal-overlay" id="transition-modal">
   <div class="modal-inner transition-card">
@@ -1577,6 +1620,9 @@
 <!-- 5. 최종 결과 인증서 모달 -->
 <div class="modal-overlay" id="result-modal">
   <div class="modal-inner">
+    <nav class="final-progress" aria-label="결과 확인 단계"><span>① 인증서</span><span>② 특별 보고서</span><span>③ 실천 다짐</span></nav>
+    <section class="final-stage" id="final-stage-0">
+    <div class="final-kicker">진료 완료 · 인증서 발급</div>
     <div class="id-card" id="result-id-card">
       <div class="id-card-top">
         <div class="id-card-title-group">
@@ -1613,6 +1659,11 @@
       </div>
     </div>
 
+    <div class="final-teaser"><strong>🔒 선생님만의 특별 진료 보고서가 도착했습니다!</strong><p>IB 코디네이터의 최종 소견과 아직 공개되지 않은 진료 결과를 확인해 보세요.</p><button class="modal-btn final-gold" onclick="showFinalStage(1)">🔓 나의 특별 진료 보고서 열기 →</button></div>
+    </section>
+    <section class="final-stage" id="final-stage-1" hidden>
+    <div class="final-kicker">개인 진료 보고서 · 공개 완료</div>
+    <div class="final-opinion"><strong>👩‍🏫 IB 코디네이터의 최종 소견</strong><p id="final-opinion-text"></p></div>
     <div id="extra-summary" class="extra-summary"></div>
     <div class="reward-duo-row">
       <div class="lp-reward-card" id="lp-reward-card"></div>
@@ -1632,6 +1683,11 @@
       <div class="stamp-board-grid" id="summary-list"></div>
     </div>
 
+    <section class="review-panel" id="wrong-review" aria-label="오답 진료 기록"></section>
+    <div class="final-teaser"><strong>💌 마지막 임무가 남아 있습니다.</strong><p>오늘의 진료 경험을 내 교실의 변화로 연결하면 특별 수료 표식을 받을 수 있습니다.</p><button class="modal-btn final-gold" onclick="showFinalStage(2)">나의 마지막 임무 확인하기 →</button><button class="final-back" onclick="showFinalStage(0)">← 인증서 다시 보기</button></div>
+    </section>
+    <section class="final-stage" id="final-stage-2" hidden>
+    <div class="final-kicker">마지막 임무</div><div class="final-mission"><div class="final-big-icon">💌</div><h2>이제, 우리의 교실로</h2><p>응급실의 진료는 끝났지만, 선생님의 교실에서는 새로운 탐구가 시작됩니다.</p></div>
     <div class="pledge-box">
       <div class="pledge-label">✍️ 나의 탐구 교실 평가 다짐 만들기</div>
       <div class="pledge-row">
@@ -1647,12 +1703,17 @@
         </select>
       </div>
       <div class="pledge-preview" id="pledge-preview"></div>
+      <label for="personal-pledge" class="final-label">나만의 다짐 직접 쓰기 (선택)</label><textarea id="personal-pledge" rows="3" maxlength="500" placeholder="나는 앞으로 우리 교실에서…" oninput="updatePledge()"></textarea>
+      <button class="modal-btn final-gold" id="pledge-confirm" onclick="confirmFinalPledge()">나의 실천 다짐 확정하기</button>
+      <div class="final-medal" id="final-medal" hidden>🏅 <strong>교실 실천가</strong><br>마지막 임무 완료!</div>
     </div>
 
     <div class="result-btn-group">
-      <button class="modal-btn secondary" onclick="copyResultToClipboard()">📋 인증서 및 다짐 복사</button>
+      <button class="modal-btn secondary" id="final-copy" disabled onclick="copyResultToClipboard()">📋 인증서 및 다짐 복사</button>
       <button class="modal-btn" id="next-run-btn" onclick="resetGame()">🚑 2회차 당직 출근하기</button>
     </div>
+    <button class="final-back" onclick="showFinalStage(1)">← 진료 보고서 다시 보기</button>
+    </section>
   </div>
 </div>
 
@@ -2064,6 +2125,12 @@
   ];
 
   let doctorName='', hasStarted=false;
+  let entryTimer=null, protection=0, rareAwards=[], wrongReview=[];
+  function endEntry(){if(entryTimer!==null)clearTimeout(entryTimer);entryTimer=null;document.getElementById('entry-modal').style.display='none';}
+  function drugReview(d){return `${d.area} · ${d.purpose} · ${d.title}`;}
+  function recordWrong(stage,wrong,right,feedback){const ward=stage==='응급 미션'?'응급 미션':vipActive?'VIP 병동':`${currentCaseIdx+1}번 병동`;wrongReview.push({ward,subject:stage==='응급 미션'?triageDeck[triageIdx].text:currentCaseData().subject,stage,wrong,right,feedback});}
+  function renderWrongReview(){const root=document.getElementById('wrong-review');root.replaceChildren();const add=(parent,tag,txt,cls)=>{const e=document.createElement(tag);e.textContent=txt;if(cls)e.className=cls;parent.append(e);return e;};add(root,'h3','📋 나의 오답 진료 기록');const wards=new Set(wrongReview.filter(x=>x.stage!=='응급 미션').map(x=>x.ward));add(root,'p',`오답 ${wrongReview.length}회 · 재검토한 병동 ${wards.size}곳`,'review-meta');if(!wrongReview.length)add(root,'p','모든 응답을 한 번에 맞혔습니다!','review-right');for(const x of wrongReview){const d=document.createElement('details');root.append(d);add(d,'summary',`${x.ward} · ${x.stage}`);add(d,'p',x.subject);add(d,'p','내 선택: '+x.wrong,'review-wrong');add(d,'p','올바른 선택: '+x.right,'review-right');add(d,'p','성찰: '+x.feedback);}if(rareAwards.length)add(root,'p','획득한 희귀 보급품: '+rareAwards.join(' · '),'review-meta');}
+
   let extraPoints = 0, criticalWard = 0, criticalSaved = false;
   let doubledNext = false, lootCount = 0, bossCleared = false, bossMisses = 0;
   let caseComplete = false, completionTimer = null, runFinished = false;
@@ -2109,8 +2176,11 @@
     const wrap=document.getElementById('extra-options');
     const b=document.getElementById('extra-action'); b.disabled=true;
     const rewards=[0,1,2];
+    // One hidden rare replacement at most: 15% per supply event, 5% per blind pick.
+    const roll=Math.random();const rare=roll<.06?3:roll<.11?4:roll<.14?5:roll<.15?6:null;
+    if(rare!==null)rewards[Math.floor(Math.random()*3)]=rare;
     for(let i=rewards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[rewards[i],rewards[j]]=[rewards[j],rewards[i]];}
-    const labels=['🩺 도움 전부 복구 +15점','⚡ 다음 병동 진료점 3배 (추가 최소 20점)','🏅 추가 진료점 +40점'];
+    const labels=['🩺 도움 전부 복구 +15점','⚡ 다음 병동 진료점 3배 (추가 최소 20점)','🏅 추가 진료점 +40점','🛡️ 응급 보호권 +15점','📞 특별 상담권 2회 추가','💉 신뢰도 10점 회복 +15점','👑 황금 청진기 +50점'];
     let opened=false;
     const grid=document.createElement('div');grid.className='loot-grid';wrap.append(grid);
     const crateArt=`<svg viewBox="0 0 120 100" aria-hidden="true"><g class="crate-light" style="transform-origin:60px 45px"><path d="M60 6v19M33 12l12 19M87 12L75 31M17 29l21 10M103 29L82 39" fill="none" stroke="#fde68a" stroke-width="3" stroke-linecap="round"/><ellipse cx="60" cy="47" rx="31" ry="15" fill="#fde68a" opacity=".55"/></g><g class="crate-body"><rect x="12" y="43" width="96" height="47" rx="6" fill="#3e6676" stroke="#91b6c2" stroke-width="2"/><path d="M20 55h80M23 80h74M30 46v42M90 46v42" stroke="#284655" stroke-width="3"/><rect x="48" y="52" width="24" height="25" rx="4" fill="#e6b85c"/><path d="M60 57v14m-7-7h14" stroke="#253749" stroke-width="4"/></g><g class="crate-lid"><rect x="10" y="29" width="100" height="21" rx="5" fill="#6994a2" stroke="#b4d3d8" stroke-width="2"/><path d="M25 31v17M95 31v17" stroke="#385969" stroke-width="5"/><rect x="47" y="40" width="26" height="12" rx="3" fill="#d6ab59"/></g></svg>`;
@@ -2126,7 +2196,13 @@
           lootTimer=null;let msg;
           if(r===0){const used=missingHelp();used.forEach(k=>restoreChance(k));const pts=used.length?15:30;addExtra(pts);msg=used.length?`🩺 도움 기회 ${used.length}개 모두 복구! 추가 진료점 +15점!`:'🩺 모든 도움 기회가 남아 있어 대신 추가 진료점 +30점!';}
           else if(r===1){doubledNext=true;msg='⚡ 다음 병동 진료점 3배! 기본 진료점의 2배를 추가 지급 (최소 20점 보장).';}
-          else {addExtra(40);msg='🏅 특별 보급 성공! 추가 진료점 +40점!';}
+          else if(r===2){addExtra(40);msg='🏅 특별 보급 성공! 추가 진료점 +40점!';}
+          else {rareAwards.push(labels[r]);box.classList.add(r===6?'legend-won':'rare-won');
+            if(r===3){protection++;addExtra(15);msg='🛡️ 희귀 보급품! 다음 일반 병동 오답 1회의 신뢰도 차감 방지 +15점!';}
+            if(r===4){consultCount+=2;syncConsultButton();msg='📞 희귀 보급품! IB 코디네이터 상담 2회 추가!';}
+            if(r===5){const recovered=Math.min(10,100-reputation);reputation+=recovered;addExtra(15);updateStatusUI();msg=`💉 특급 보급품! 신뢰도 +${recovered}점 회복 (최대 100점) 및 추가 진료 +15점!`;}
+            if(r===6){addExtra(50);msg='👑 전설 보급품! 황금 청진기 획득 및 추가 진료점 +50점! 최종 결과에 기록됩니다.';}
+          }
           [...grid.children].forEach((el,k)=>{el.classList.toggle('missed',k!==i);el.querySelector('.crate-label').textContent=k===i?'획득한 보상':'놓친 보상';el.querySelector('.crate-result').textContent=labels[rewards[k]];});
           document.getElementById('extra-feedback').textContent=msg;
           b.disabled=false;b.onclick=()=>{if(b.disabled)return;b.disabled=true;b.onclick=null;extraModal().style.display='none';next();};playTone(740,'sine',.15);
@@ -2666,13 +2742,13 @@
     if(vipActive){bossMisses++;document.getElementById('clue-content-box').classList.add('hint-unlocked');showNotice('💡',title+' · VIP 재처방 가능',message);return;}
     mistakeCount++;
     streak = 0;
-    reputation = Math.max(20, reputation - 5);
+    const protectedHit=protection>0;if(protectedHit)protection--;else reputation = Math.max(20, reputation - 5);
     document.getElementById('patient-panel').classList.remove('fever-mode');
     document.getElementById('clue-content-box').classList.add('hint-unlocked');
     updateStatusUI();
 
     const seObj = seKey ? unlockSideEffect(seKey) : null;
-    showNotice('💡', `${title} (신뢰도 -5 · 다시 처방 가능)`, message, null, seObj);
+    showNotice('💡', `${title} (${protectedHit?"보호권 사용 · 차감 방지":"신뢰도 -5"} · 다시 처방 가능)`, message, null, seObj);
   }
 
   function submitPrescription() {
@@ -2681,7 +2757,7 @@
       if(vipSelected.length!==2){showNotice('💊','복합 처방 필요','약품 캐비닛에서 서로 다른 두 가지 처방을 선택하세요.');return;}
       const matched=vipSelected.filter(d=>VIP_CASE.correctDrugIds.includes(d.id)).length;
       if(matched===2){playTone(780,'sine',0.16);openStep2Modal(VIP_CASE);}
-      else {playTone(210,'sawtooth',0.25);handleMistake('복합 처방 재검토',`두 처방 중 ${matched}개가 적절합니다. 여러 결과물의 기록·통지와 학생 주도의 성찰·목표 설정이라는 두 가지 목적을 각각 확인하세요.`);}
+      else {recordWrong('복합 처방',vipSelected.map(drugReview).join(' / '),VIP_CASE.correctDrugIds.map(id=>drugReview(DRUG_LOOKUP[id])).join(' / '),'학습 과정과 결과의 기록·통지, 학생 주도 성찰과 목표 설정을 각각 확인하세요.');playTone(210,'sawtooth',0.25);handleMistake('복합 처방 재검토',`두 처방 중 ${matched}개가 적절합니다. 여러 결과물의 기록·통지와 학생 주도의 성찰·목표 설정이라는 두 가지 목적을 각각 확인하세요.`);}
       return;
     }
     if (!selectedDrug) {
@@ -2726,6 +2802,7 @@
         diagnosisMsg = `선택하신 약품은 [${selectedDrug.area} · ${selectedDrug.purpose}]용입니다. 단서에서 드러난 영역(UOI/LOI/차시)과 평가 목적을 모두 다시 확인해 보세요!`;
       }
 
+      recordWrong('평가 약품',drugReview(selectedDrug),drugReview(correctDrug),diagnosisMsg);
       handleMistake('처방 재검토 필요', diagnosisMsg, seKey);
     }
   }
@@ -2750,6 +2827,7 @@
           completeCurrentCase();
         } else {
           playTone(220, 'sawtooth', 0.2);
+          recordWrong('실천 방안',opt.text,caseData.step2.choices.find(c=>c.correct).text,opt.feedback);
           btn.classList.add('wrong');
           if(!vipActive) step2MistakeCount++;
           handleMistake('실천 방안 보완 필요', opt.feedback, 'se-step2-practice');
@@ -2894,6 +2972,7 @@
       cardEl.classList.add('flash-ok');
     } else {
       playTone(220, 'sawtooth', 0.18);
+      const label=x=>x==='formative'?'형성평가':'총괄평가';recordWrong('응급 미션',label(choice),label(triageDeck[triageIdx].answer),'평가가 진행 중 학습을 지원하는지, 학습 결과를 종합하는지 살펴보세요.');
       cardEl.classList.add('flash-no');
     }
 
@@ -3194,23 +3273,46 @@
 
     document.getElementById('next-run-btn').textContent = `🚑 ${metaProgress.runsCompleted + 1}회차 당직 출근하기`;
 
+    renderWrongReview();
+    document.getElementById('personal-pledge').value='';
+    document.getElementById('pledge-when').selectedIndex=1;
+    document.getElementById('pledge-what').selectedIndex=0;
+    document.getElementById('final-opinion-text').textContent=wrongReview.length ? `선생님, 모든 일반 병동의 진료를 마치셨습니다. ${wrongReview.length}건의 오답 기록은 평가 관점을 다시 살펴볼 좋은 기회입니다. ${persona.desc}` : `선생님, 오답 없이 진료를 마치셨군요! ${persona.desc} 이제 실제 교실에서도 평가를 활용해 보세요.`;
     updatePledge();
+    showFinalStage(0);
     document.getElementById('result-modal').style.display = 'flex';
   }
 
+  function showFinalStage(index){
+    if(!Number.isInteger(index)||index<0||index>2)return;
+    document.querySelectorAll('#result-modal .final-stage').forEach((e,i)=>{e.hidden=i!==index;});
+    document.querySelectorAll('#result-modal .final-progress span').forEach((e,i)=>{e.classList.toggle('active',i===index);e.classList.toggle('done',i<index);if(i===index)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});
+    document.querySelector('#result-modal .modal-inner').scrollTop=0;
+    document.getElementById('result-modal').scrollTop=0;
+  }
+  function confirmFinalPledge(){
+    document.getElementById('final-medal').hidden=false;
+    document.getElementById('final-copy').disabled=false;
+    document.getElementById('pledge-confirm').textContent='✓ 실천 다짐 확정 완료';
+  }
   function updatePledge() {
     const when = document.getElementById('pledge-when').value;
     const what = document.getElementById('pledge-what').value;
-    document.getElementById('pledge-preview').textContent = `“나는 ${when}, ${what}”`;
+    const personal=document.getElementById('personal-pledge').value.trim();
+    document.getElementById('pledge-preview').textContent = personal ? `“${personal}”` : `“나는 ${when}, ${what}”`;
+    document.getElementById('final-medal').hidden=true;
+    document.getElementById('final-copy').disabled=true;
+    document.getElementById('pledge-confirm').textContent='나의 실천 다짐 확정하기';
   }
 
   function copyResultToClipboard() {
+    if(document.getElementById('final-copy').disabled)return;
     const skin = getCurrentSkinTier();
     const rank = document.getElementById('rank-badge').textContent;
     const pledge = document.getElementById('pledge-preview').textContent;
     const unlockedBadges = getFixedAchievements().filter(b => b.unlocked).map(b => b.title).join(', ') || '성실한 탐구 설계자';
     const lpTitle = lastEarnedLP ? lastEarnedLP.title : '';
-    const shareText = `[🏥 IB PYP 수업 평가 응급실 수료 결과]\n• 진료 담당자: ${doctorName||"진료 담당 선생님"}\n• 수료일: ${document.getElementById("certificate-date").textContent.split(" · ")[0]}\n• 등급 및 장비: ${rank} / ${skin.icon} ${skin.name}\n• 신뢰도: ${reputation}점 (누적 ${metaProgress.totalScore}점)\n• 추가 진료점: ${extraPoints}점 / VIP 특별 진료: ${bossCleared?"완료":"미완료"}\n• 획득 학습자상 카드: ${lpTitle} (${metaProgress.unlockedLP.length}/10종 수집)\n• 달성 업적: ${unlockedBadges}\n• 나의 평가 다짐: ${pledge}`;
+    const shareText = `[🏥 IB PYP 수업 평가 응급실 수료 결과]\n• 진료 담당자: ${doctorName||"진료 담당 선생님"}\n• 수료일: ${document.getElementById("certificate-date").textContent.split(" · ")[0]}\n• 등급 및 장비: ${rank} / ${skin.icon} ${skin.name}\n• 신뢰도: ${reputation}점 (누적 ${metaProgress.totalScore}점)\n• 추가 진료점: ${extraPoints}점 / VIP 특별 진료: ${bossCleared?"완료":"미완료"}\n• 획득 학습자상 카드: ${lpTitle} (${metaProgress.unlockedLP.length}/10종 수집)\n• 달성 업적: ${unlockedBadges}\n• 특별 수료 표식: 교실 실천가\n• 나의 평가 다짐: ${pledge}`;
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(shareText).then(() => {
@@ -3233,9 +3335,12 @@
     document.getElementById('nickname-modal').style.display='none';
     if(!hasStarted){doctorName=document.getElementById('doctor-name').value.trim().replace(/[\r\n]/g,' ').slice(0,20);hasStarted=true;}
     document.getElementById('guide-modal').style.display = 'none';
+    document.getElementById('entry-name').textContent=(doctorName||'진료 담당 선생님')+' · 응급실에 오신 것을 환영합니다.';
+    if(entryTimer!==null)clearTimeout(entryTimer);const entry=document.getElementById('entry-modal');entry.style.display='flex';entryTimer=setTimeout(endEntry,window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:900);
   }
 
   function resetGame() {
+    endEntry();protection=0;rareAwards=[];wrongReview=[];
     if(lootTimer)clearTimeout(lootTimer);lootTimer=null;
     if(triageAnswerTimer)clearTimeout(triageAnswerTimer);triageAnswerTimer=null;triageEnded=true;
     if(transitionPaintTimer)clearTimeout(transitionPaintTimer);transitionPaintTimer=null;
