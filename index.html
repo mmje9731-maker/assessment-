@@ -1,1815 +1,2222 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>수업 평가 응급실 - 정밀 추리 시뮬레이션</title>
-    <style>
-        :root {
-            --bg-color: #edf2f7;
-            --card-bg: #ffffff;
-            --text-main: #1a202c;
-            --text-sub: #64748b;
-            --accent-red: #e53e3e;
-            --accent-blue: #2b6cb0;
-            --accent-green: #2f855a;
-            --accent-amber: #d97706;
-            --accent-purple: #6b46c1;
-            --border-color: #e2e8f0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>수업 평가 응급실 - 현장 단서 추리 시뮬레이션</title>
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --bg-color: #f1f5f9;
+      --card-bg: #ffffff;
+      --surface-sub: #f8fafc;
+      --text-main: #0f172a;
+      --text-body: #1e293b;
+      --text-sub: #475569;
+      --accent-red: #dc2626;
+      --accent-blue: #2563eb;
+      --accent-green: #16a34a;
+      --accent-amber: #d97706;
+      --accent-purple: #7c3aed;
+      --border-color: #e2e8f0;
+    }
 
-        body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 14px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
-        }
+    * {
+      box-sizing: border-box;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1180px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            box-shadow: 0 12px 35px rgba(0,0,0,0.08);
-            padding: 22px 26px;
-            box-sizing: border-box;
-            position: relative;
-        }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      margin: 0;
+      padding: 18px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
 
-        /* 모달 공통 */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100dvh;
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(6px);
-            z-index: 1000;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 16px;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
+    .container {
+      width: 100%;
+      max-width: 1300px;
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+      border: 1px solid var(--border-color);
+      padding: 24px 28px;
+      position: relative;
+    }
 
-        /* 커스텀 알림 모달 (기존 브라우저 alert 대체용 - 최상위 레이어) */
-        #notice-modal {
-            z-index: 1200;
-        }
+    /* 모달 공통 */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100dvh;
+      background: rgba(15, 23, 42, 0.72);
+      backdrop-filter: blur(5px);
+      z-index: 1000;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 16px;
+      overflow-y: auto;
+    }
 
-        .modal-inner {
-            background: white;
-            border-radius: 22px;
-            padding: 26px 24px;
-            max-width: 560px;
-            width: 100%;
-            box-shadow: 0 20px 45px rgba(0,0,0,0.22);
-            border: 1px solid var(--border-color);
-            box-sizing: border-box;
-            animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-            max-height: 92dvh;
-            overflow-y: auto;
-        }
+    #notice-modal {
+      z-index: 1200;
+    }
 
-        @keyframes modalPop {
-            0% { transform: scale(0.93); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+    .modal-inner {
+      background: #ffffff;
+      border-radius: 22px;
+      padding: 28px 26px;
+      max-width: 620px;
+      width: 100%;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.22);
+      border: 1px solid var(--border-color);
+      animation: modalPop 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      max-height: 92dvh;
+      overflow-y: auto;
+    }
 
-        .modal-emoji { font-size: 2.3rem; margin-bottom: 6px; line-height: 1.1; }
-        .modal-title { font-size: 1.38rem; font-weight: 800; margin-bottom: 10px; word-break: keep-all; }
-        .modal-desc { font-size: 0.92rem; line-height: 1.55; color: var(--text-main); margin: 0 0 18px 0; word-break: keep-all; }
+    @keyframes modalPop {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
 
-        .modal-card {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 15px;
-            width: 100%;
-            margin-bottom: 16px;
-            box-sizing: border-box;
-            text-align: left;
-        }
+    .modal-emoji {
+      font-size: 2.3rem;
+      margin-bottom: 6px;
+      line-height: 1.1;
+    }
 
-        .modal-btn {
-            background: linear-gradient(135deg, #3182ce, #2b6cb0);
-            color: white;
-            border: none;
-            padding: 13px 26px;
-            font-size: 0.98rem;
-            font-weight: 700;
-            border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 4px 14px rgba(49, 130, 206, 0.35);
-            transition: transform 0.15s ease;
-            width: 100%;
-            max-width: 300px;
-        }
-        .modal-btn:hover { transform: translateY(-2px); }
+    .modal-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 8px 0;
+      color: var(--text-main);
+      word-break: keep-all;
+    }
 
-        /* 게임 방법 안내 스텝 카드 */
-        .guide-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-bottom: 14px;
-            text-align: left;
-        }
-        .guide-step-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 11px;
-            background: #f8fafc;
-            border: 1.5px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 11px 13px;
-        }
-        .step-num-badge {
-            background: var(--accent-blue);
-            color: white;
-            font-weight: 900;
-            font-size: 0.8rem;
-            min-width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 2px;
-        }
-        .step-text-wrap {
-            font-size: 0.85rem;
-            line-height: 1.48;
-            color: #1e293b;
-            word-break: keep-all;
-        }
-        .step-text-wrap strong {
-            color: #0f172a;
-            display: block;
-            margin-bottom: 2px;
-            font-size: 0.9rem;
-        }
-        .guide-tip-box {
-            background: #f3e8ff;
-            border: 1px solid #d8b4fe;
-            border-radius: 10px;
-            padding: 10px 12px;
-            font-size: 0.81rem;
-            color: #581c87;
-            text-align: left;
-            line-height: 1.45;
-            margin-bottom: 16px;
-            word-break: keep-all;
-        }
+    .modal-desc {
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: var(--text-body);
+      margin: 0 0 18px 0;
+      word-break: keep-all;
+    }
 
-        /* 선택형 버튼 (2단계 전략 및 돌발 콜) */
-        .choice-options {
-            display: flex;
-            flex-direction: column;
-            gap: 9px;
-            margin-top: 10px;
-        }
+    .modal-card {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 16px;
+      width: 100%;
+      margin-bottom: 16px;
+      text-align: left;
+    }
 
-        .choice-btn {
-            background: white;
-            border: 1.5px solid #cbd5e1;
-            border-radius: 10px;
-            padding: 11px 14px;
-            text-align: left;
-            font-size: 0.86rem;
-            font-weight: 600;
-            color: #1e293b;
-            cursor: pointer;
-            transition: all 0.15s ease;
-            line-height: 1.45;
-            word-break: keep-all;
-        }
-        .choice-btn:hover {
-            border-color: var(--accent-blue);
-            background: #eff6ff;
-        }
-        .choice-btn.wrong {
-            border-color: var(--accent-red);
-            background: #fef2f2;
-            color: #991b1b;
-            animation: shake 0.3s;
-        }
+    .modal-btn {
+      background: var(--accent-blue);
+      color: #ffffff;
+      border: none;
+      padding: 13px 26px;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+      transition: transform 0.15s ease, background-color 0.15s ease;
+      width: 100%;
+      max-width: 300px;
+    }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
+    .modal-btn:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
 
-        .badge-pill {
-            display: inline-block;
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            color: white;
-            font-size: 0.78rem;
-            font-weight: 800;
-            padding: 4px 12px;
-            border-radius: 999px;
-            margin-bottom: 8px;
-        }
+    /* 직관적 3단계 흐름도 & 가이드 */
+    .flow-diagram {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
 
-        /* 헤더 */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--border-color);
-            padding-bottom: 11px;
-            margin-bottom: 12px;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .flow-chip {
+      background: #eff6ff;
+      border: 1.5px solid #bfdbfe;
+      color: #1e40af;
+      border-radius: 10px;
+      padding: 9px 6px;
+      font-size: 0.84rem;
+      font-weight: 800;
+      text-align: center;
+      word-break: keep-all;
+    }
 
-        .header-left h1 { font-size: 1.24rem; margin: 0; color: var(--text-main); }
-        .subtitle { font-size: 0.8rem; color: var(--text-sub); margin-top: 2px; }
-        .header-controls { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .guide-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
 
-        .timer-pill {
-            background: #1e293b;
-            color: #38bdf8;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 800;
-            font-size: 0.88rem;
-            padding: 6px 11px;
-            border-radius: 8px;
-        }
+    .guide-step-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 11px 14px;
+    }
 
-        .reputation-pill {
-            background: #f0fdf4;
-            border: 1.5px solid #bbf7d0;
-            color: #15803d;
-            font-weight: 800;
-            font-size: 0.84rem;
-            padding: 5px 11px;
-            border-radius: 8px;
-            transition: all 0.3s;
-        }
+    .step-num-badge {
+      background: var(--accent-blue);
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 0.85rem;
+      min-width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
 
-        .icon-btn {
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            padding: 6px 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-main);
-            font-size: 0.8rem;
-        }
-        .icon-btn:hover { background: #edf2f7; }
+    .step-text-wrap {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: var(--text-body);
+      word-break: keep-all;
+    }
 
-        /* 상단 상태바 & 협진 찬스 바 */
-        .status-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: #f8fafc;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 8px 14px;
-            margin-bottom: 14px;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+    .step-text-wrap strong {
+      color: var(--text-main);
+      font-weight: 800;
+    }
 
-        .ward-hearts { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }
-        .heart-slot {
-            font-size: 0.78rem;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 6px;
-            background: #e2e8f0;
-            color: #64748b;
-        }
-        .heart-slot.active { background: #fed7d7; color: #c53030; box-shadow: 0 0 0 2px #fc8181; }
-        .heart-slot.saved { background: #c6f6d5; color: #22543d; }
+    .guide-tip-box {
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.86rem;
+      color: #5b21b6;
+      text-align: left;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      word-break: keep-all;
+    }
 
-        /* 동료 교사 협진 찬스 버튼들 */
-        .chance-bar {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .chance-label {
-            font-size: 0.76rem;
-            font-weight: 800;
-            color: var(--accent-purple);
-            margin-right: 2px;
-        }
-        .chance-btn {
-            background: #f3e8ff;
-            border: 1.5px solid #d8b4fe;
-            color: #581c87;
-            font-size: 0.76rem;
-            font-weight: 700;
-            padding: 5px 9px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.15s;
-        }
-        .chance-btn:hover:not(:disabled) {
-            background: #e9d5ff;
-            transform: translateY(-1px);
-        }
-        .chance-btn:disabled {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #94a3b8;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
+    /* 선택형 버튼 (2단계 후속 조치 및 돌발 콜) */
+    .choice-options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 12px;
+    }
 
-        /* 메인 레이아웃 */
-        .game-layout {
-            display: grid;
-            grid-template-columns: 1.06fr 1.26fr;
-            gap: 18px;
-        }
+    .choice-btn {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 13px 15px;
+      text-align: left;
+      font-size: 0.94rem;
+      font-weight: 600;
+      color: var(--text-body);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1.55;
+      word-break: keep-all;
+    }
 
-        /* 환자 패널 */
-        .patient-panel {
-            background: #fffdfd;
-            border: 2px solid #fed7d7;
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: all 0.35s ease;
-        }
-        .patient-panel.stable {
-            background: #f0fff4;
-            border-color: #68d391;
-            box-shadow: 0 0 20px rgba(72, 187, 120, 0.25);
-        }
+    .choice-btn:hover {
+      border-color: var(--accent-blue);
+      background: #eff6ff;
+    }
 
-        /* 활력 징후 모니터 */
-        .vital-monitor {
-            background: #0f172a;
-            border-radius: 10px;
-            padding: 8px 13px;
-            margin-bottom: 10px;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        .vital-top { display: flex; justify-content: space-between; align-items: center; }
-        .vital-status { color: #f87171; font-weight: 800; font-size: 0.76rem; }
-        .vital-status.stable { color: #4ade80; }
-        .bpm-display { font-size: 1rem; font-weight: 900; color: #f87171; animation: pulseBpm 0.65s infinite alternate; }
-        .bpm-display.stable { color: #4ade80; animation: pulseBpmStable 1.4s infinite alternate; }
+    .choice-btn.wrong {
+      border-color: var(--accent-red);
+      background: #fef2f2;
+      color: #991b1b;
+      animation: shake 0.3s;
+    }
 
-        @keyframes pulseBpm {
-            0% { transform: scale(1); opacity: 0.85; }
-            100% { transform: scale(1.06); opacity: 1; }
-        }
-        @keyframes pulseBpmStable {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.03); opacity: 1; }
-        }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
 
-        .ecg-container {
-            width: 100%;
-            height: 20px;
-            overflow: hidden;
-            background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-                              linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
-            background-size: 12px 12px;
-            border-radius: 4px;
-        }
-        .ecg-line {
-            stroke: #ef4444;
-            stroke-width: 2.5;
-            fill: none;
-            stroke-dasharray: 400;
-            stroke-dashoffset: 400;
-            animation: ecgSweep 2s linear infinite;
-        }
-        .ecg-line.stable { stroke: #22c55e; animation: ecgSweep 3.5s linear infinite; }
+    .badge-pill {
+      display: inline-block;
+      background: var(--accent-amber);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      margin-bottom: 8px;
+    }
 
-        @keyframes ecgSweep {
-            0% { stroke-dashoffset: 400; }
-            100% { stroke-dashoffset: 0; }
-        }
+    /* 헤더 */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px solid var(--border-color);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-        .patient-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
-        .patient-badge { background: #fee2e2; color: #b91c1c; font-weight: 800; font-size: 0.75rem; padding: 3px 8px; border-radius: 6px; }
-        .consult-tag {
-            background: #f3e8ff;
-            border: 1px solid #d8b4fe;
-            color: #6b21a8;
-            font-size: 0.73rem;
-            font-weight: 800;
-            padding: 3px 8px;
-            border-radius: 6px;
-        }
-        .consult-tag.secret {
-            background: #f1f5f9;
-            border-color: #cbd5e1;
-            color: #64748b;
-            font-weight: 700;
-        }
-        .patient-subject { font-weight: 800; font-size: 0.94rem; color: var(--text-main); margin-bottom: 8px; }
+    .header-left h1 {
+      font-size: 1.32rem;
+      font-weight: 800;
+      margin: 0;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
 
-        /* 수석교사 자문 배너 (자문 버튼 클릭 시 화면에도 고정 표시) */
-        .consult-banner {
-            display: none;
-            background: #f3e8ff;
-            border: 1.5px solid #c084fc;
-            border-radius: 8px;
-            padding: 8px 11px;
-            margin-bottom: 9px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #581c87;
-            line-height: 1.45;
-            word-break: keep-all;
-        }
+    .subtitle {
+      font-size: 0.86rem;
+      color: var(--text-sub);
+      margin-top: 3px;
+    }
 
-        /* 🎬 수업 장면 박스 */
-        .scene-box {
-            background: #f8fafc;
-            border: 1.5px solid #cbd5e1;
-            border-left: 4px solid #334155;
-            border-radius: 8px;
-            padding: 10px 12px;
-            margin-bottom: 10px;
-        }
-        .scene-label {
-            font-size: 0.73rem;
-            font-weight: 800;
-            color: #334155;
-            margin-bottom: 4px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .scene-note {
-            font-size: 0.68rem;
-            color: #64748b;
-            font-weight: 600;
-        }
-        .scene-text {
-            font-size: 0.85rem;
-            line-height: 1.5;
-            color: #1e293b;
-            margin: 0;
-            font-weight: 600;
-            word-break: keep-all;
-        }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
 
-        /* 🩺 정밀 문진 기록 3종 탭 시스템 */
-        .clue-system {
-            background: #fff5f5;
-            border: 1.5px solid #fecaca;
-            border-radius: 12px;
-            padding: 10px 11px;
-            margin-bottom: 10px;
-        }
-        .clue-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 7px;
-            font-size: 0.74rem;
-            font-weight: 800;
-            color: #991b1b;
-        }
-        .clue-tabs {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 6px;
-            margin-bottom: 8px;
-        }
-        .clue-tab {
-            background: white;
-            border: 1.5px solid #fca5a5;
-            color: #7f1d1d;
-            font-size: 0.73rem;
-            font-weight: 700;
-            padding: 6px 4px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.15s;
-            position: relative;
-        }
-        .clue-tab.unread::after {
-            content: "단서";
-            position: absolute;
-            top: -6px;
-            right: -3px;
-            background: #ef4444;
-            color: white;
-            font-size: 0.56rem;
-            padding: 1px 4px;
-            border-radius: 4px;
-            font-weight: 900;
-        }
-        .clue-tab.active {
-            background: #b91c1c;
-            border-color: #b91c1c;
-            color: white;
-        }
-        .clue-tab.checked:not(.active) {
-            background: #fef2f2;
-            border-color: #f87171;
-        }
-        .clue-content-box {
-            background: white;
-            border-radius: 8px;
-            padding: 10px 12px;
-            font-size: 0.85rem;
-            line-height: 1.52;
-            font-weight: 600;
-            color: #1e293b;
-            border-left: 3.5px solid var(--accent-red);
-            min-height: 64px;
-            word-break: keep-all;
-        }
+    .timer-pill {
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-weight: 800;
+      font-size: 0.92rem;
+      padding: 7px 12px;
+      border-radius: 9px;
+    }
 
-        /* 처방전 박스 */
-        .prescription-paper {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-top: 4px solid var(--accent-blue);
-            border-radius: 10px;
-            padding: 9px 12px;
-            margin-bottom: 9px;
-        }
-        .prescription-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-            border-bottom: 1px dashed #cbd5e1;
-            padding-bottom: 4px;
-        }
-        .rx-symbol { font-size: 0.92rem; font-weight: 900; color: var(--accent-blue); }
-        .selected-prescription {
-            background: white;
-            padding: 8px;
-            border-radius: 8px;
-            border: 1.5px dashed #94a3b8;
-            font-size: 0.83rem;
-            color: var(--text-sub);
-            text-align: center;
-        }
-        .selected-prescription.stamped {
-            border-style: solid;
-            border-color: var(--accent-blue);
-            background: #eff6ff;
-            color: #1e3a8a;
-        }
+    .timer-pill.urgent {
+      color: #f87171;
+    }
 
-        .action-btn {
-            background: linear-gradient(135deg, #e53e3e, #c53030);
-            color: white;
-            border: none;
-            padding: 12px;
-            font-size: 0.95rem;
-            font-weight: 800;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 12px rgba(229,62,62,0.3);
-            transition: opacity 0.2s;
-        }
-        .action-btn.locked {
-            background: #94a3b8;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
+    .reputation-pill {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      color: #15803d;
+      font-weight: 800;
+      font-size: 0.88rem;
+      padding: 6px 12px;
+      border-radius: 9px;
+    }
 
-        /* 약품 캐비닛 */
-        .cabinet-panel {
-            background: #f8fafc;
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .cabinet-top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-        .element-legend { display: flex; gap: 8px; font-size: 0.74rem; font-weight: 700; background: white; padding: 5px 9px; border-radius: 8px; border: 1px solid var(--border-color); }
+    .icon-btn {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      padding: 7px 11px;
+      border-radius: 9px;
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--text-body);
+      font-size: 0.84rem;
+      transition: background-color 0.15s;
+    }
 
-        .matrix-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1.5px solid #cbd5e1;
-            table-layout: fixed;
-        }
-        .matrix-table th, .matrix-table td { border: 1px solid #cbd5e1; padding: 10px 6px; text-align: center; font-size: 0.79rem; word-break: keep-all; }
-        .group-header-process { background-color: #fef3c7 !important; color: #92400e !important; font-weight: 800 !important; }
-        .group-header-result { background-color: #dcfce7 !important; color: #166534 !important; font-weight: 800 !important; }
-        .sub-header { background-color: #f1f5f9 !important; color: #1e293b !important; font-weight: 800 !important; }
-        .time-col { background-color: #f8fafc; font-weight: 900; color: #0f172a; font-size: 0.85rem !important; }
+    .icon-btn:hover {
+      background: #e2e8f0;
+    }
 
-        .drug-cell { cursor: pointer; transition: all 0.15s ease; background: white; vertical-align: middle; }
-        .drug-cell:hover:not(.disabled):not(.eliminated) { background-color: #eff6ff; }
-        .drug-cell.selected { background-color: #dbeafe !important; box-shadow: inset 0 0 0 2.5px var(--accent-blue); }
-        .drug-title { font-weight: 700; color: #1e293b; line-height: 1.35; margin-bottom: 5px; }
-        .drug-icons { display: inline-block; font-size: 0.72rem; background: #f1f5f9; padding: 2px 6px; border-radius: 6px; }
-        .drug-cell.disabled { background-color: #f1f5f9 !important; color: #94a3b8 !important; cursor: not-allowed; font-weight: 600; }
-        .drug-cell.eliminated {
-            background-color: #e2e8f0 !important;
-            opacity: 0.42;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
+    /* 상단 상태바 & 협진 찬스 */
+    .status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
 
-        /* 최종 인증서 카드 */
-        .id-card {
-            background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
-            border: 2px solid #22c55e;
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .id-card-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px dashed #86efac; padding-bottom: 7px; margin-bottom: 8px; font-size: 0.76rem; font-weight: 800; color: #166534; }
-        .rank-badge { background: #15803d; color: white; padding: 3px 10px; border-radius: 999px; font-size: 0.78rem; }
-        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 8px; }
-        .stat-box { background: white; border-radius: 10px; padding: 7px 4px; border: 1px solid #bbf7d0; }
-        .stat-label { font-size: 0.7rem; color: #64748b; font-weight: 700; }
-        .stat-val { font-size: 0.92rem; font-weight: 900; color: #14532d; margin-top: 2px; }
+    .ward-hearts {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
 
-        .summary-list {
-            background: #f8fafc;
-            border: 1px solid #cbd5e1;
-            border-radius: 12px;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            text-align: left;
-            max-height: 150px;
-            overflow-y: auto;
-        }
-        .summary-item { font-size: 0.77rem; padding: 5px 0; border-bottom: 1px solid #e2e8f0; line-height: 1.4; }
-        .summary-item:last-child { border-bottom: none; }
+    .heart-slot {
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 7px;
+      background: #e2e8f0;
+      color: #64748b;
+    }
 
-        .pledge-box { margin-bottom: 14px; text-align: left; }
-        .pledge-row { display: flex; gap: 6px; margin-top: 5px; }
-        .pledge-select {
-            flex: 1;
-            padding: 8px 10px;
-            border-radius: 8px;
-            border: 1.5px solid #93c5fd;
-            font-size: 0.82rem;
-            font-weight: 600;
-            color: #1e3a8a;
-            background: #eff6ff;
-        }
-        .copy-btn {
-            background: #1e40af;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 0 12px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            cursor: pointer;
-            white-space: nowrap;
-        }
+    .heart-slot.active {
+      background: #fee2e2;
+      color: #b91c1c;
+      box-shadow: 0 0 0 1.5px #f87171;
+    }
 
-        @media(max-width: 920px) { .game-layout { grid-template-columns: 1fr; gap: 16px; } }
-        @media(max-width: 600px) {
-            body { padding: 8px; align-items: flex-start; }
-            .container { padding: 14px; border-radius: 16px; }
-            .header-left h1 { font-size: 1.05rem; }
-            .modal-inner { padding: 20px 16px; }
-            .modal-title { font-size: 1.22rem; }
-            .matrix-table th, .matrix-table td { padding: 7px 3px; font-size: 0.71rem; }
-            .clue-tab { font-size: 0.68rem; padding: 6px 2px; }
-        }
-    </style>
+    .heart-slot.saved {
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .chance-bar {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .chance-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--accent-purple);
+      margin-right: 2px;
+    }
+
+    .chance-btn {
+      background: #f5f3ff;
+      border: 1.5px solid #ddd6fe;
+      color: #5b21b6;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .chance-btn:hover:not(:disabled) {
+      background: #ede9fe;
+    }
+
+    .chance-btn:disabled {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+      color: #94a3b8;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* 메인 2단 레이아웃 */
+    .game-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 1.25fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* 좌측: 현장 차트 패널 */
+    .patient-panel {
+      background: #ffffff;
+      border: 1.5px solid #fecaca;
+      border-top: 5px solid var(--accent-red);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.3s ease;
+    }
+
+    .patient-panel.stable {
+      border-color: #86efac;
+      border-top-color: var(--accent-green);
+      background: #f0fdf4;
+    }
+
+    /* 활력 징후 모니터 (시각 방해 최소화) */
+    .vital-monitor {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 8px 13px;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .vital-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vital-status {
+      color: #f87171;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .vital-status.stable {
+      color: #4ade80;
+    }
+
+    .bpm-display {
+      font-size: 0.96rem;
+      font-weight: 800;
+      color: #f87171;
+      animation: pulseBpm 1.4s infinite alternate;
+    }
+
+    .bpm-display.stable {
+      color: #4ade80;
+      animation: none;
+    }
+
+    @keyframes pulseBpm {
+      0% { opacity: 0.85; }
+      100% { opacity: 1; }
+    }
+
+    .ecg-container {
+      width: 100%;
+      height: 18px;
+      overflow: hidden;
+      background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 12px 12px;
+      border-radius: 4px;
+    }
+
+    .ecg-line {
+      stroke: #ef4444;
+      stroke-width: 2;
+      fill: none;
+      stroke-dasharray: 400;
+      stroke-dashoffset: 400;
+      animation: ecgSweep 3.5s linear infinite;
+    }
+
+    .ecg-line.stable {
+      stroke: #22c55e;
+      animation: ecgSweep 5s linear infinite;
+    }
+
+    @keyframes ecgSweep {
+      0% { stroke-dashoffset: 400; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    .patient-meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .patient-badge {
+      background: #fee2e2;
+      color: #b91c1c;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 9px;
+      border-radius: 6px;
+    }
+
+    .consult-tag {
+      background: #f5f3ff;
+      border: 1px solid #ddd6fe;
+      color: #6d28d9;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 4px 9px;
+      border-radius: 6px;
+    }
+
+    .consult-tag.secret {
+      background: var(--surface-sub);
+      border-color: #cbd5e1;
+      color: var(--text-sub);
+      font-weight: 700;
+    }
+
+    .patient-subject {
+      font-weight: 800;
+      font-size: 1.06rem;
+      color: var(--text-main);
+      line-height: 1.35;
+    }
+
+    .consult-banner {
+      display: none;
+      background: #f5f3ff;
+      border: 1.5px solid #c4b5fd;
+      border-radius: 10px;
+      padding: 10px 13px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #4c1d95;
+      line-height: 1.5;
+      word-break: keep-all;
+    }
+
+    /* 간결한 현장 상황 요약 박스 */
+    .scene-box {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-left: 4px solid #334155;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+
+    .scene-label {
+      font-size: 0.8rem;
+      font-weight: 800;
+      color: #334155;
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .scene-note {
+      font-size: 0.76rem;
+      color: var(--text-sub);
+      font-weight: 600;
+    }
+
+    .scene-text {
+      font-size: 0.94rem;
+      line-height: 1.6;
+      color: var(--text-body);
+      margin: 0;
+      word-break: keep-all;
+    }
+
+    /* 교실 현장 증거 3종 탭 시스템 (일기 · 학생 증언 · 현장 채증물) */
+    .clue-system {
+      background: var(--surface-sub);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 13px;
+    }
+
+    .clue-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 9px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .clue-tabs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+
+    .clue-tab {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      color: var(--text-body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 9px 6px;
+      border-radius: 9px;
+      cursor: pointer;
+      transition: all 0.15s;
+      position: relative;
+      line-height: 1.3;
+    }
+
+    .clue-tab.unread::after {
+      content: "미확인";
+      position: absolute;
+      top: -7px;
+      right: 4px;
+      background: var(--accent-red);
+      color: #ffffff;
+      font-size: 0.64rem;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    .clue-tab.active {
+      background: #0f172a;
+      border-color: #0f172a;
+      color: #ffffff;
+    }
+
+    .clue-tab.checked:not(.active) {
+      background: #f8fafc;
+      border-color: #94a3b8;
+      color: #334155;
+    }
+
+    /* 증거 유형별 실제감 연출 */
+    .clue-content-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 14px 15px;
+      font-size: 0.96rem;
+      line-height: 1.68;
+      color: var(--text-body);
+      border: 1px solid var(--border-color);
+      min-height: 112px;
+      word-break: keep-all;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .clue-content-box.type-diary {
+      background: #fefce8;
+      border: 1px solid #fde047;
+      border-left: 4px solid #eab308;
+    }
+
+    .clue-content-box.type-student {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-left: 4px solid #0284c7;
+    }
+
+    .clue-content-box.type-artifact {
+      background: #ffffff;
+      border: 1.5px dashed #94a3b8;
+    }
+
+    .evidence-meta {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 5px;
+      margin-bottom: 7px;
+    }
+
+    .type-diary .evidence-meta {
+      background: #fef08a;
+      color: #854d0e;
+    }
+
+    .type-student .evidence-meta {
+      background: #e0f2fe;
+      color: #075985;
+    }
+
+    .type-artifact .evidence-meta {
+      background: #f1f5f9;
+      color: #334155;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    .evidence-body {
+      margin: 0;
+      font-weight: 500;
+    }
+
+    .clue-highlight {
+      background-color: #fef08a;
+      color: #0f172a;
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-weight: 800;
+    }
+
+    .type-diary .clue-highlight {
+      background-color: #fde047;
+    }
+
+    /* 처방전 및 실행 영역 */
+    .prescription-paper {
+      background: var(--surface-sub);
+      border: 1px solid var(--border-color);
+      border-top: 4px solid var(--accent-blue);
+      border-radius: 12px;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .prescription-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #cbd5e1;
+      padding-bottom: 6px;
+    }
+
+    .rx-symbol {
+      font-size: 0.94rem;
+      font-weight: 900;
+      color: var(--accent-blue);
+    }
+
+    .selected-prescription {
+      background: #ffffff;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1.5px dashed #94a3b8;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text-sub);
+      text-align: center;
+      word-break: keep-all;
+    }
+
+    .selected-prescription.stamped {
+      border-style: solid;
+      border-color: var(--accent-blue);
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: 800;
+    }
+
+    .action-btn {
+      background: var(--accent-red);
+      color: #ffffff;
+      border: none;
+      padding: 13px 16px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);
+      transition: background-color 0.15s, opacity 0.2s;
+    }
+
+    .action-btn:hover:not(.locked) {
+      background: #b91c1c;
+    }
+
+    .action-btn.locked {
+      background: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    /* 우측: 약품 캐비닛 패널 */
+    .cabinet-panel {
+      background: var(--surface-sub);
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .cabinet-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .cabinet-title {
+      font-weight: 800;
+      font-size: 1.02rem;
+      color: var(--text-main);
+    }
+
+    .element-legend {
+      display: flex;
+      gap: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: #ffffff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      color: var(--text-sub);
+    }
+
+    .mobile-scroll-hint {
+      display: none;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      text-align: right;
+    }
+
+    .table-scroll-wrap {
+      width: 100%;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #ffffff;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1.5px solid #cbd5e1;
+      table-layout: fixed;
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+      border: 1px solid #cbd5e1;
+      padding: 12px 9px;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.45;
+      word-break: keep-all;
+    }
+
+    .group-header-process {
+      background-color: #fef3c7 !important;
+      color: #92400e !important;
+      font-weight: 800 !important;
+      font-size: 0.88rem !important;
+    }
+
+    .group-header-result {
+      background-color: #dcfce7 !important;
+      color: #166534 !important;
+      font-weight: 800 !important;
+      font-size: 0.88rem !important;
+    }
+
+    .sub-header {
+      background-color: #f8fafc !important;
+      color: #1e293b !important;
+      font-weight: 800 !important;
+    }
+
+    .time-col {
+      background-color: #f8fafc;
+      font-weight: 800;
+      color: #0f172a;
+      font-size: 0.86rem !important;
+      width: 84px;
+    }
+
+    .drug-cell {
+      cursor: pointer;
+      transition: all 0.15s ease;
+      background: #ffffff;
+      vertical-align: middle;
+    }
+
+    .drug-cell:hover:not(.disabled):not(.eliminated) {
+      background-color: #eff6ff;
+    }
+
+    .drug-cell.selected {
+      background-color: #dbeafe !important;
+      box-shadow: inset 0 0 0 2.5px var(--accent-blue);
+    }
+
+    .drug-title {
+      font-weight: 700;
+      color: #0f172a;
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+
+    .drug-icons {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #475569;
+      background: #f1f5f9;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .drug-cell.disabled {
+      background-color: #f8fafc !important;
+      color: #94a3b8 !important;
+      cursor: not-allowed;
+      font-weight: 600;
+    }
+
+    .drug-cell.eliminated {
+      background-color: #e2e8f0 !important;
+      opacity: 0.4;
+      cursor: not-allowed;
+      text-decoration: line-through;
+    }
+
+    /* 최종 인증서 카드 */
+    .id-card {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border: 2px solid #22c55e;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+
+    .id-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1.5px dashed #86efac;
+      padding-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #166534;
+    }
+
+    .rank-badge {
+      background: #15803d;
+      color: #ffffff;
+      padding: 4px 11px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .stat-box {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 8px 6px;
+      border: 1px solid #bbf7d0;
+    }
+
+    .stat-label {
+      font-size: 0.76rem;
+      color: var(--text-sub);
+      font-weight: 700;
+    }
+
+    .stat-val {
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: #14532d;
+      margin-top: 2px;
+    }
+
+    .summary-list {
+      background: var(--surface-sub);
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px 13px;
+      margin-bottom: 14px;
+      text-align: left;
+      max-height: 165px;
+      overflow-y: auto;
+    }
+
+    .summary-item {
+      font-size: 0.84rem;
+      padding: 6px 0;
+      border-bottom: 1px solid #e2e8f0;
+      line-height: 1.45;
+      color: var(--text-body);
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .pledge-box {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    .pledge-label {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .pledge-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .pledge-select {
+      flex: 1;
+      padding: 9px 10px;
+      border-radius: 8px;
+      border: 1.5px solid #cbd5e1;
+      font-size: 0.86rem;
+      font-family: inherit;
+      background: #ffffff;
+      color: var(--text-main);
+    }
+
+    .pledge-preview {
+      margin-top: 8px;
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    /* 태블릿 이하 (960px 이하: 1단 스택 전환) */
+    @media (max-width: 960px) {
+      body {
+        padding: 10px;
+      }
+
+      .container {
+        padding: 18px 16px;
+      }
+
+      .game-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+
+    /* 스마트폰 모바일 최적화 (600px 이하) */
+    @media (max-width: 600px) {
+      body {
+        padding: 0;
+        background-color: var(--card-bg);
+      }
+
+      .container {
+        border-radius: 0;
+        border: none;
+        box-shadow: none;
+        padding: 14px 12px 24px;
+      }
+
+      header {
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        gap: 8px;
+      }
+
+      .header-left h1 {
+        font-size: 1.14rem;
+      }
+
+      .subtitle {
+        font-size: 0.78rem;
+      }
+
+      .header-controls {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .timer-pill,
+      .reputation-pill,
+      .icon-btn {
+        font-size: 0.8rem;
+        padding: 6px 9px;
+      }
+
+      .status-bar {
+        padding: 8px 10px;
+        margin-bottom: 12px;
+        gap: 8px;
+      }
+
+      .heart-slot {
+        font-size: 0.76rem;
+        padding: 3px 8px;
+      }
+
+      .chance-bar {
+        width: 100%;
+      }
+
+      .chance-btn {
+        flex: 1 1 auto;
+        min-height: 38px;
+        font-size: 0.78rem;
+        padding: 6px 8px;
+        text-align: center;
+      }
+
+      .patient-panel,
+      .cabinet-panel {
+        padding: 14px 12px;
+        border-radius: 14px;
+      }
+
+      .vital-monitor {
+        padding: 6px 10px;
+      }
+
+      .ecg-container {
+        height: 15px;
+      }
+
+      .clue-tabs {
+        gap: 5px;
+      }
+
+      .clue-tab {
+        min-height: 42px;
+        font-size: 0.78rem;
+        padding: 7px 3px;
+      }
+
+      .clue-content-box {
+        padding: 12px;
+        font-size: 0.93rem;
+        line-height: 1.64;
+        min-height: 105px;
+      }
+
+      /* 모바일 하단 고정 처방 바 (스크롤 왕복 최소화) */
+      .prescription-paper {
+        position: sticky;
+        bottom: 8px;
+        z-index: 40;
+        box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.14);
+        padding: 10px 12px;
+        gap: 7px;
+      }
+
+      .action-btn {
+        min-height: 46px;
+        font-size: 0.95rem;
+        padding: 11px;
+      }
+
+      /* 모바일 매트릭스 가로 스와이프 */
+      .mobile-scroll-hint {
+        display: block;
+      }
+
+      .table-scroll-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 12px;
+      }
+
+      .matrix-table {
+        min-width: 550px;
+      }
+
+      .matrix-table th,
+      .matrix-table td {
+        padding: 10px 7px;
+        font-size: 0.82rem;
+      }
+
+      /* 모바일 모달 */
+      .modal-overlay {
+        padding: 10px;
+      }
+
+      .modal-inner {
+        padding: 20px 15px;
+        border-radius: 18px;
+      }
+
+      .modal-title {
+        font-size: 1.2rem;
+      }
+
+      .flow-diagram {
+        gap: 5px;
+      }
+
+      .flow-chip {
+        font-size: 0.76rem;
+        padding: 7px 4px;
+      }
+
+      .choice-btn {
+        min-height: 46px;
+        padding: 11px 12px;
+        font-size: 0.88rem;
+      }
+
+      .pledge-row {
+        flex-direction: column;
+      }
+
+      .pledge-select {
+        font-size: 16px !important; /* iOS Safari 강제 줌 방지 */
+        min-height: 44px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <header>
-            <div class="header-left">
-                <h1>🚨 수업 평가 응급실</h1>
-                <div class="subtitle">교실 장면 관찰 · 3중 문진 기록 교차 추리 · 정밀 평가 처방</div>
-            </div>
-            <div class="header-controls">
-                <div class="reputation-pill" id="reputation-display">🏥 교실 평판: 100점</div>
-                <div class="timer-pill">⏱️ <span id="timer-display">00:00</span></div>
-                <button type="button" class="icon-btn" id="btn-help">❓ 게임 방법</button>
-                <button type="button" class="icon-btn" id="btn-sound">🔊 소리 켬</button>
-                <button type="button" class="icon-btn" id="btn-reset">🔄 처음부터</button>
-            </div>
-        </header>
+<div class="container">
+  <header>
+    <div class="header-left">
+      <h1>🏥 수업 평가 응급실</h1>
+      <div class="subtitle">교실 현장 증거(일기·증언·채증물)로 평가 처방을 내리는 추리 시뮬레이션</div>
+    </div>
+    <div class="header-controls">
+      <div class="timer-pill" id="timer-display">⏱ 04:00</div>
+      <div class="reputation-pill" id="reputation-display">신뢰도 100</div>
+      <button class="icon-btn" onclick="openGuideModal()">❓ 규칙</button>
+      <button class="icon-btn" id="sound-btn" onclick="toggleSound()">🔊</button>
+      <button class="icon-btn" onclick="resetGame()">🔄</button>
+    </div>
+  </header>
 
-        <div class="status-bar">
-            <div class="ward-hearts">
-                <span class="heart-slot active" id="slot-0">❤️‍🔥 #1</span>
-                <span class="heart-slot" id="slot-1">🤍 #2</span>
-                <span class="heart-slot" id="slot-2">🤍 #3</span>
-                <span class="heart-slot" id="slot-3">🤍 #4</span>
-                <span class="heart-slot" id="slot-4">🤍 #5</span>
-                <span class="heart-slot" id="slot-5">🤍 #6</span>
-            </div>
+  <div class="status-bar">
+    <div class="ward-hearts" id="ward-hearts"></div>
+    <div class="chance-bar">
+      <span class="chance-label">협진 찬스:</span>
+      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">🩺 수석교사 자문</button>
+      <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 소거</button>
+      <button class="chance-btn" id="chance-time" onclick="useTimeChance()">⏱ +30초 연장</button>
+    </div>
+  </div>
 
-            <!-- 동료 교사 협진 찬스 3종 -->
-            <div class="chance-bar">
-                <span class="chance-label">🤝 협진 찬스:</span>
-                <button type="button" class="chance-btn" id="chance-xray" title="오답 칸 3개를 지워줍니다">🔎 오답 소거 (1회)</button>
-                <button type="button" class="chance-btn" id="chance-consult" title="수석교사가 핵심 평가 도구를 짚어줍니다">📞 수석교사 자문 (1회)</button>
-                <button type="button" class="chance-btn" id="chance-heal" title="교실 평판 15점을 회복합니다">💖 평판 회복 (1회)</button>
-            </div>
+  <main class="game-layout">
+    <!-- 좌측: 현장 차트 & 증거 3종 -->
+    <section class="patient-panel" id="patient-panel">
+      <div>
+        <div class="vital-monitor">
+          <div class="vital-top">
+            <span class="vital-status" id="vital-status">● CRITICAL · 평가 부작용 경보</span>
+            <span class="bpm-display" id="bpm-display">138 BPM</span>
+          </div>
+          <div class="ecg-container">
+            <svg viewBox="0 0 400 20" width="100%" height="100%" preserveAspectRatio="none">
+              <polyline id="ecg-line" class="ecg-line" points="0,10 60,10 70,4 80,16 90,2 100,18 110,10 180,10 190,4 200,16 210,2 220,18 230,10 310,10 320,4 330,16 340,2 350,18 360,10 400,10" />
+            </svg>
+          </div>
         </div>
 
-        <div class="game-layout">
-            <!-- 왼쪽: 수업 장면 & 정밀 문진 기록 -->
-            <div class="patient-panel" id="patient-panel">
-                <div>
-                    <div class="vital-monitor">
-                        <div class="vital-top">
-                            <span class="vital-status" id="vital-status-text">위급 · 평가 불균형 위기</span>
-                            <span class="bpm-display" id="bpm-display">심박수 148회</span>
-                        </div>
-                        <div class="ecg-container">
-                            <svg width="100%" height="100%" viewBox="0 0 400 36" preserveAspectRatio="none">
-                                <polyline id="ecg-line" class="ecg-line" points="0,18 40,18 50,6 60,30 70,10 80,24 90,18 140,18 150,4 160,32 170,8 180,25 190,18 240,18 250,6 260,30 270,10 280,24 290,18 340,18 350,4 360,32 370,8 380,25 390,18 400,18" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="patient-meta">
-                        <span class="patient-badge" id="patient-step-badge">응급 환자 #1 / 6</span>
-                        <span class="consult-tag secret" id="patient-consult-tag">🔒 수석교사 자문 대기중</span>
-                    </div>
-                    <div class="patient-subject" id="patient-subject"></div>
-
-                    <!-- 수석교사 자문 고정 배너 -->
-                    <div class="consult-banner" id="consult-banner"></div>
-                    
-                    <!-- 🎬 수업 장면 제시 -->
-                    <div class="scene-box">
-                        <div class="scene-label">
-                            <span>🎬 교실 관찰 장면</span>
-                            <span class="scene-note">※ 단서는 아래 정밀 문진 기록에 숨어 있습니다</span>
-                        </div>
-                        <p class="scene-text" id="patient-scene"></p>
-                    </div>
-
-                    <!-- 🩺 정밀 문진 기록 3종 탭 -->
-                    <div class="clue-system">
-                        <div class="clue-header">
-                            <span>🩺 정밀 문진 기록 (3개 단서를 교차 추리하세요)</span>
-                            <span id="clue-progress">확인 1/3</span>
-                        </div>
-                        <div class="clue-tabs">
-                            <button type="button" class="clue-tab active checked" data-tab="0" id="tab-0">📄 학생 산출물</button>
-                            <button type="button" class="clue-tab unread" data-tab="1" id="tab-1">📓 교사 수업일지</button>
-                            <button type="button" class="clue-tab unread" data-tab="2" id="tab-2">💬 현장 피드백</button>
-                        </div>
-                        <div class="clue-content-box" id="clue-content-box"></div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="prescription-paper">
-                        <div class="prescription-header">
-                            <span class="rx-symbol">📋 처방전</span>
-                            <span style="font-size: 0.73rem; color: var(--text-sub); font-weight: 700;">1단계: 약품 선택 → 2단계: 실행 전략</span>
-                        </div>
-                        <div class="selected-prescription" id="selected-display">
-                            오른쪽 캐비닛에서 처방 약품을 클릭하세요
-                        </div>
-                    </div>
-                    <button type="button" class="action-btn locked" id="btn-prescribe">🔒 문진 기록 3개를 모두 확인해야 처방 가능</button>
-                </div>
-            </div>
-
-            <!-- 오른쪽: 약품 캐비닛 -->
-            <div class="cabinet-panel">
-                <div class="cabinet-top-bar">
-                    <div>
-                        <strong style="font-size: 0.96rem;">💊 평가 처방 약품 캐비닛</strong>
-                        <div style="font-size: 0.76rem; color: var(--text-sub);">3가지 문진 기록에서 '시기'와 '평가 목적' 단서를 종합해 선택하세요.</div>
-                    </div>
-                    <div class="element-legend">
-                        <span>📖 지식·이해</span>
-                        <span>🛠️ 과정·기능</span>
-                        <span>❤️ 가치·태도</span>
-                    </div>
-                </div>
-
-                <table class="matrix-table">
-                    <thead>
-                        <tr>
-                            <th rowspan="2" style="width: 13%;" class="sub-header">영역<br>/<br>시기</th>
-                            <th colspan="2" class="group-header-process">학습 과정 (형성평가)</th>
-                            <th class="group-header-result">학습 결과 (총괄평가)</th>
-                        </tr>
-                        <tr>
-                            <th style="width: 29%;" class="sub-header">학습을 위한 평가</th>
-                            <th style="width: 29%;" class="sub-header">학습으로서의 평가</th>
-                            <th style="width: 29%;" class="sub-header">학습의 평가</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="time-col">UOI</td>
-                            <td class="drug-cell" data-drug="중심아이디어 작성 · ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습을 위한 평가" data-icons="📖 🛠️">
-                                <div class="drug-title">중심아이디어 작성<br>ATL 성장 스펙트럼</div>
-                                <span class="drug-icons">📖 🛠️</span>
-                            </td>
-                            <td class="drug-cell" data-drug="학습자상 및 ATL 성장 스펙트럼" data-time="UOI" data-purpose="학습으로서의 평가" data-icons="❤️ 🛠️">
-                                <div class="drug-title">학습자상 및 ATL<br>성장 스펙트럼</div>
-                                <span class="drug-icons">❤️ 🛠️</span>
-                            </td>
-                            <td class="drug-cell" data-drug="지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼" data-time="UOI" data-purpose="학습의 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="time-col">LOI</td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="LOI" data-purpose="학습을 위한 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">학습 결과물<br>학습 활동 관찰</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 탐구 과정 성찰" data-time="LOI" data-purpose="학습으로서의 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">학습 결과물<br>탐구 과정 성찰</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                            <td class="drug-cell" data-drug="LOI 관련 과정중심평가 결과" data-time="LOI" data-purpose="학습의 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">LOI 관련<br>과정중심평가 결과</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="time-col">차시</td>
-                            <td class="drug-cell" data-drug="학습 결과물 · 학습 활동 관찰" data-time="차시" data-purpose="학습을 위한 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">학습 결과물<br>학습 활동 관찰</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                            <td class="drug-cell" data-drug="학습 결과물 및 활동 내용" data-time="차시" data-purpose="학습으로서의 평가" data-icons="📖 🛠️ ❤️">
-                                <div class="drug-title">학습 결과물<br>및 활동 내용</div>
-                                <span class="drug-icons">📖 🛠️ ❤️</span>
-                            </td>
-                            <td class="drug-cell disabled">차시 단위 총괄평가 지양</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="patient-meta" style="margin-top: 10px;">
+          <span class="patient-badge" id="patient-ward">1번 병동</span>
+          <span class="consult-tag secret" id="consult-tag">자문 대기 중</span>
         </div>
+        <div class="patient-subject" id="patient-subject" style="margin-top: 4px;"></div>
+      </div>
+
+      <div class="consult-banner" id="consult-banner"></div>
+
+      <div class="scene-box">
+        <div class="scene-label">
+          <span>📋 교실 관찰 요약</span>
+          <span class="scene-note">핵심 상황</span>
+        </div>
+        <p class="scene-text" id="scene-text"></p>
+      </div>
+
+      <!-- 교실 현장 증거 3종 탭 -->
+      <div class="clue-system">
+        <div class="clue-header">
+          <span>🔍 교실 현장 증거 (3종 모두 확인 시 처방 가능)</span>
+          <span id="clue-progress" style="color: var(--accent-red);">0 / 3 확인</span>
+        </div>
+        <div class="clue-tabs">
+          <button class="clue-tab unread active" id="tab-0" onclick="selectClueTab(0)">📓 교사 성찰 일기</button>
+          <button class="clue-tab unread" id="tab-1" onclick="selectClueTab(1)">💬 학생 증언</button>
+          <button class="clue-tab unread" id="tab-2" onclick="selectClueTab(2)">📎 현장 채증물</button>
+        </div>
+        <div class="clue-content-box type-diary" id="clue-content-box"></div>
+      </div>
+
+      <!-- 처방전 -->
+      <div class="prescription-paper">
+        <div class="prescription-header">
+          <span class="rx-symbol">℞ 평가 처방전</span>
+          <span style="font-size: 0.78rem; color: var(--text-sub); font-weight: 700;" id="rx-hint">약품표에서 1개 선택</span>
+        </div>
+        <div class="selected-prescription" id="selected-prescription">
+          우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요
+        </div>
+        <button class="action-btn locked" id="administer-btn" onclick="submitPrescription()">
+          🔒 현장 증거 3종을 먼저 확인하세요
+        </button>
+      </div>
+    </section>
+
+    <!-- 우측: 2차원 평가 약품 캐비닛 -->
+    <section class="cabinet-panel">
+      <div class="cabinet-top-bar">
+        <span class="cabinet-title">💊 수업 평가 약품 캐비닛</span>
+        <div class="element-legend">
+          <span>🟡 과정 중심</span>
+          <span>🟢 결과 중심</span>
+        </div>
+      </div>
+      <div class="mobile-scroll-hint">← 좌우로 밀어서 전체 약품표 보기 →</div>
+
+      <div class="table-scroll-wrap">
+        <table class="matrix-table" id="matrix-table">
+          <thead>
+            <tr>
+              <th rowspan="2" class="time-col">평가 시기</th>
+              <th colspan="2" class="group-header-process">🟡 과정 중심 (배움의 흐름)</th>
+              <th colspan="2" class="group-header-result">🟢 결과 중심 (도달도 확인)</th>
+            </tr>
+            <tr>
+              <th class="sub-header">교사 관찰·피드백</th>
+              <th class="sub-header">학생 자기·동료</th>
+              <th class="sub-header">수행·산출물</th>
+              <th class="sub-header">지필·단답</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-body"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- 1. 게임 규칙 안내 모달 (직관적 3단계) -->
+<div class="modal-overlay" id="guide-modal">
+  <div class="modal-inner">
+    <div class="modal-emoji">🩺</div>
+    <h2 class="modal-title">수업 평가 응급실 근무 지침</h2>
+    <p class="modal-desc">위기에 빠진 6개 교실의 실제 증거를 분석해 정확한 평가 처방을 내리세요.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-chip">1️⃣ 현장 증거 3종 확인</div>
+      <div class="flow-chip">2️⃣ 약품표에서 처방 선택</div>
+      <div class="flow-chip">3️⃣ 후속 조치로 안정화</div>
     </div>
 
-    <!-- 커스텀 알림 모달 (브라우저 기본 alert 대신 사용 - 도메인/아이디 미노출) -->
-    <div id="notice-modal" class="modal-overlay">
-        <div class="modal-inner" style="max-width: 440px;">
-            <div class="modal-emoji" id="notice-emoji">📢</div>
-            <div class="modal-title" id="notice-title" style="font-size: 1.24rem; color: var(--accent-blue);">안내</div>
-            <div class="modal-card" id="notice-card" style="background: #f8fafc; border-color: #cbd5e1;">
-                <p id="notice-msg" style="margin: 0; font-size: 0.92rem; line-height: 1.55; color: #1e293b; font-weight: 600; word-break: keep-all;"></p>
-            </div>
-            <button type="button" class="modal-btn" id="btn-notice-ok">확인</button>
-        </div>
+    <div class="guide-steps">
+      <div class="guide-step-item">
+        <div class="step-num-badge">1</div>
+        <div class="step-text-wrap"><strong>일기·증언·채증물 3종 스캔:</strong> 탭 3개를 모두 눌러야 투약 버튼이 열립니다.</div>
+      </div>
+      <div class="guide-step-item">
+        <div class="step-num-badge">2</div>
+        <div class="step-text-wrap"><strong>시기 × 초점 매칭:</strong> [수업 전/중/후]와 [과정/결과] 교차점에서 약품을 고르세요.</div>
+      </div>
+      <div class="guide-step-item">
+        <div class="step-num-badge">3</div>
+        <div class="step-text-wrap"><strong>실천 후속 조치 선택:</strong> 약품 투약 후 교실에 적용할 구체적 실행안을 고르면 완치됩니다.</div>
+      </div>
     </div>
 
-    <!-- 1. 인트로 모달 -->
-    <div id="intro-modal" class="modal-overlay" style="display: flex;">
-        <div class="modal-inner">
-            <div class="modal-emoji">🩺🚨</div>
-            <div class="modal-title" style="color: var(--accent-red);">수업 평가 응급실</div>
-            <p class="modal-desc">
-                위기에 빠진 6개 교실의 생생한 수업 사례를 진단하고,<br>
-                우리 학교 평가 프레임워크에 기반한 최적의 처방전을 내려주세요!
-            </p>
-            <button type="button" class="modal-btn" id="btn-to-guide">당직 안내 받기 ➔</button>
-        </div>
+    <div class="guide-tip-box">
+      💡 <strong>협진 찬스 3종:</strong> 헷갈릴 때는 상단의 [수석교사 자문]이나 [오답 2개 소거]를 활용하세요.
     </div>
 
-    <!-- 1-2. 친절한 게임 방법 안내(오리엔테이션) 모달 -->
-    <div id="guide-modal" class="modal-overlay">
-        <div class="modal-inner" style="max-width: 580px;">
-            <div class="badge-pill" style="background: var(--accent-blue);">📋 응급실 당직 오리엔테이션</div>
-            <div class="modal-title" style="color: #0f172a; font-size: 1.3rem;">수업 평가 응급실 진료 4단계 안내</div>
-            
-            <div class="guide-steps">
-                <div class="guide-step-item">
-                    <div class="step-num-badge">1</div>
-                    <div class="step-text-wrap">
-                        <strong>🎬 교실 장면 & 🩺 3종 정밀 문진 기록 열람</strong>
-                        겉으로 보이는 교실 장면만으로는 진단할 수 없습니다. <b>[학생 산출물] · [교사 수업일지] · [현장 피드백]</b> 세 개의 탭을 모두 클릭해 숨어 있는 <b>적용 시기(차시/LOI/UOI)</b>와 <b>평가 목적</b> 단서를 찾아내세요.
-                    </div>
-                </div>
-                <div class="guide-step-item">
-                    <div class="step-num-badge">2</div>
-                    <div class="step-text-wrap">
-                        <strong>💊 1단계: 평가 처방 약품 선택 및 투여</strong>
-                        오른쪽 <b>평가 처방 약품 캐비닛</b>에서 시기와 목적이 일치하는 칸을 선택한 뒤 <b>[1단계 처방 투여하기]</b>를 누르세요. (오답 시 교실 평판이 -15점 감소합니다.)
-                    </div>
-                </div>
-                <div class="guide-step-item">
-                    <div class="step-num-badge">3</div>
-                    <div class="step-text-wrap">
-                        <strong>🔍 2단계: 구체적 교실 실행 전략 처방</strong>
-                        1단계 처방이 적중하면 실제 교실에서 어떤 도구와 방법으로 실행할지 고르는 <b>2단계 심화 문항</b>이 열립니다. 끝까지 맞춰야 환자가 완전히 회복됩니다!
-                    </div>
-                </div>
-                <div class="guide-step-item">
-                    <div class="step-num-badge">4</div>
-                    <div class="step-text-wrap">
-                        <strong>🚨 돌발 긴급 콜 대응 & 최종 전문의 인증</strong>
-                        진료 도중 걸려오는 <b>교장실 긴급 자문 콜</b>까지 해결하고 6명의 환자를 모두 살려내면, 소요 시간과 평판에 따른 <b>공식 인증서와 6대 진료 차트</b>가 발급됩니다.
-                    </div>
-                </div>
-            </div>
+    <button class="modal-btn" onclick="startGame()">🚑 응급실 진료 시작하기</button>
+  </div>
+</div>
 
-            <div class="guide-tip-box">
-                <strong>💡 위기 탈출 꿀팁 — 동료 교사 협진 찬스 (각 1회 사용 가능)</strong><br>
-                • <b>🔎 오답 소거:</b> 캐비닛에서 정답이 아닌 칸 3개를 즉시 지워줍니다.<br>
-                • <b>📞 수석교사 자문:</b> 해당 환자에게 꼭 필요한 핵심 평가 도구 키워드를 알려줍니다.<br>
-                • <b>💖 평판 회복:</b> 깎인 교실 평판을 +15점 회복시켜 줍니다.
-            </div>
+<!-- 2. 2단계 후속 조치 & 돌발 콜 모달 -->
+<div class="modal-overlay" id="choice-modal">
+  <div class="modal-inner">
+    <span class="badge-pill" id="choice-badge">2단계 실천 처방</span>
+    <h2 class="modal-title" id="choice-title">교실 적용 후속 조치</h2>
+    <p class="modal-desc" id="choice-desc"></p>
+    <div class="choice-options" id="choice-options"></div>
+  </div>
+</div>
 
-            <button type="button" class="modal-btn" id="btn-start-game">네, 이해했습니다! 진료 시작하기 🩺</button>
+<!-- 3. 최종 결과 인증서 모달 -->
+<div class="modal-overlay" id="result-modal">
+  <div class="modal-inner">
+    <div class="modal-emoji" id="result-emoji">🏆</div>
+    <h2 class="modal-title" id="result-title">응급 진료 완료!</h2>
+
+    <div class="id-card">
+      <div class="id-card-header">
+        <span>수업 평가 응급의학 인증서</span>
+        <span class="rank-badge" id="rank-badge">수석 평가 전문의</span>
+      </div>
+      <div style="font-size: 0.92rem; font-weight: 800; color: #14532d;" id="result-subtitle">
+        모든 교실의 평가 부작용을 성공적으로 치료했습니다.
+      </div>
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">치료 병동</div>
+          <div class="stat-val" id="stat-saved">6 / 6</div>
         </div>
+        <div class="stat-box">
+          <div class="stat-label">남은 시간</div>
+          <div class="stat-val" id="stat-time">00:00</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">최종 신뢰도</div>
+          <div class="stat-val" id="stat-rep">100점</div>
+        </div>
+      </div>
     </div>
 
-    <!-- 2. 2단계 구체적 실행 전략 확인 모달 -->
-    <div id="step2-modal" class="modal-overlay">
-        <div class="modal-inner">
-            <div class="badge-pill" style="background:#2563eb;">🔍 2단계: 세부 실행 전략 처방</div>
-            <div class="modal-title" style="color: var(--accent-blue); font-size: 1.26rem;" id="step2-title">1단계 적중! 교실에서 어떻게 실행할까요?</div>
-            <div class="modal-card" style="background: #eff6ff; border-color: #bfdbfe;">
-                <p id="step2-question" style="margin: 0; font-size: 0.92rem; font-weight: 700; color: #1e3a8a; line-height: 1.5; word-break: keep-all;"></p>
-                <div class="choice-options" id="step2-options"></div>
-            </div>
-            <div id="step2-feedback" style="font-size: 0.82rem; color: var(--accent-red); font-weight: 700; min-height: 18px;"></div>
-        </div>
+    <div class="summary-list" id="summary-list"></div>
+
+    <div class="pledge-box">
+      <div class="pledge-label">✍️ 나의 교실 평가 다짐 만들기</div>
+      <div class="pledge-row">
+        <select class="pledge-select" id="pledge-when" onchange="updatePledge()">
+          <option value="수업 시작 전">수업 시작 전</option>
+          <option value="배움이 일어나는 수업 중" selected>배움이 일어나는 수업 중</option>
+          <option value="수행을 마친 직후">수행을 마친 직후</option>
+        </select>
+        <select class="pledge-select" id="pledge-what" onchange="updatePledge()">
+          <option value="명확한 루브릭으로 구체적 피드백을 주겠습니다." selected>명확한 루브릭으로 구체적 피드백을 주겠습니다.</option>
+          <option value="학생 스스로 성찰하고 동료와 배움을 나누게 하겠습니다.">학생 스스로 성찰하고 동료와 배움을 나누게 하겠습니다.</option>
+          <option value="점수 통보보다 성장을 돕는 관찰 기록을 남기겠습니다.">점수 통보보다 성장을 돕는 관찰 기록을 남기겠습니다.</option>
+        </select>
+      </div>
+      <div class="pledge-preview" id="pledge-preview"></div>
     </div>
 
-    <!-- 3. 돌발 긴급 콜 이벤트 모달 (3번 환자 완료 후 발생) -->
-    <div id="emergency-call-modal" class="modal-overlay">
-        <div class="modal-inner" style="border: 3px solid #ef4444;">
-            <div class="badge-pill" style="background:#dc2626;">🚨 돌발 긴급 콜 · 교장실 호출!</div>
-            <div class="modal-emoji">📞🏫</div>
-            <div class="modal-title" style="color: #b91c1c; font-size: 1.28rem;">공개수업 평가 계획서 긴급 자문 요청!</div>
-            <div class="modal-card" style="background: #fef2f2; border-color: #fca5a5;">
-                <p style="margin: 0 0 10px 0; font-size: 0.9rem; font-weight: 700; color: #7f1d1d; line-height: 1.5; word-break: keep-all;">
-                    “선생님, 신규 선생님이 작성한 평가 계획서 초안에 프레임워크 원칙과 어긋나는 항목이 하나 섞여 있답니다. 급히 찾아서 바로잡아 주세요! (정답 시 교실 평판 +10점 보너스)”
-                </p>
-                <div class="choice-options" id="emergency-options"></div>
-            </div>
-            <div id="emergency-feedback" style="font-size: 0.82rem; color: #b91c1c; font-weight: 700; min-height: 18px;"></div>
-        </div>
-    </div>
-
-    <!-- 4. 정답 성공 모달 -->
-    <div id="success-modal" class="modal-overlay">
-        <div class="modal-inner">
-            <div id="oneshot-badge" class="badge-pill" style="display: none;">✨ 첫 시도 명의 처방 (+5점 보너스)</div>
-            <div class="modal-emoji">🩺💚</div>
-            <div class="modal-title" style="color: var(--accent-green);">심폐소생 성공! 완벽한 처방입니다!</div>
-            <div class="modal-card" style="background: #f0fdf4; border-color: #86efac;">
-                <p id="success-explanation" style="margin: 0; line-height: 1.55; font-size: 0.9rem; color: var(--text-main); word-break: keep-all;"></p>
-            </div>
-            <button type="button" class="modal-btn" id="btn-next">다음 환자 보기 ➔</button>
-        </div>
-    </div>
-
-    <!-- 5. 부작용 오답 모달 -->
-    <div id="fail-modal" class="modal-overlay">
-        <div class="modal-inner">
-            <div class="modal-emoji">⚠️</div>
-            <div class="modal-title" style="color: var(--accent-amber);">처방 부작용 발생! (교실 평판 -15점)</div>
-            <div class="modal-card" style="background: #fffbeb; border-color: #fcd34d;">
-                <p id="side-effect-msg" style="margin: 0 0 10px 0; font-size: 0.88rem; color: #92400e; line-height: 1.5; font-weight: 700; word-break: keep-all;"></p>
-                <div id="fail-hint-text" style="font-weight: 600; font-size: 0.82rem; color: #78350f; background: #fef3c7; padding: 9px; border-radius: 8px; word-break: keep-all;"></div>
-            </div>
-            <button type="button" class="modal-btn" id="btn-retry">다시 처방 고르기</button>
-        </div>
-    </div>
-
-    <!-- 6. 최종 인증서 & 6대 처방 요약 모달 -->
-    <div id="final-modal" class="modal-overlay">
-        <div class="modal-inner" style="max-width: 580px;">
-            <div class="modal-emoji">🏆🩺🎉</div>
-            <div class="modal-title" style="color: var(--accent-green);">전원 소생 완료! 평가 전문의 인증</div>
-            
-            <div class="id-card">
-                <div class="id-card-header">
-                    <span>수업 평가 응급실 · 공식 인증서</span>
-                    <span class="rank-badge" id="final-rank-badge">👑 평가 병원장</span>
-                </div>
-                <div style="font-size: 0.98rem; font-weight: 800; color: #14532d;">
-                    6명의 위기 수업 환자 심폐소생 및 긴급 자문 완료!
-                </div>
-                <div class="stats-grid">
-                    <div class="stat-box">
-                        <div class="stat-label">걸린 시간</div>
-                        <div class="stat-val" id="final-time">00:00</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">최종 교실 평판</div>
-                        <div class="stat-val" id="final-reputation">100점</div>
-                    </div>
-                    <div class="stat-box">
-                        <div class="stat-label">첫 시도 정확도</div>
-                        <div class="stat-val" id="final-accuracy">100%</div>
-                    </div>
-                </div>
-            </div>
-
-            <div style="font-size: 0.82rem; font-weight: 800; color: #334155; text-align: left; margin-bottom: 5px;">📋 오늘 처방한 6대 평가 프레임워크 진료 차트</div>
-            <div class="summary-list" id="summary-list"></div>
-
-            <div class="pledge-box">
-                <label for="pledge-select" style="font-size: 0.8rem; font-weight: 800; color: #1e40af;">✨ 내일 우리 반 수업에 바로 적용해 볼 1순위 처방은?</label>
-                <div class="pledge-row">
-                    <select id="pledge-select" class="pledge-select">
-                        <option value="[차시 × 학습을 위한 평가] 수업 중 관찰 및 즉각 피드백 강화">[차시 × 학습을 위한 평가] 수업 중 관찰 및 즉각 피드백</option>
-                        <option value="[LOI × 학습으로서의 평가] 탐구나침반 활용 자기·동료평가 도입">[LOI × 학습으로서의 평가] 탐구나침반 활용 자기·동료평가</option>
-                        <option value="[UOI × 학습을 위한 평가] 수행지시어 기반 피드백">[UOI × 학습을 위한 평가] 수행지시어 기반 피드백</option>
-                        <option value="[LOI × 학습의 평가] LOI별 과정중심평가 결과의 체계적 기록">[LOI × 학습의 평가] LOI별 과정중심평가 결과 기록</option>
-                        <option value="[UOI × 학습으로서의 평가] 학습자상 및 ATL 성장 스펙트럼 성찰">[UOI × 학습으로서의 평가] 학습자상 및 ATL 성장 스펙트럼 성찰</option>
-                        <option value="[UOI × 학습의 평가] 지식 에세이 및 학습 포트폴리오 완성">[UOI × 학습의 평가] 지식 에세이 및 학습 포트폴리오</option>
-                    </select>
-                    <button type="button" class="copy-btn" id="btn-copy-result">📋 결과 복사</button>
-                </div>
-            </div>
-
-            <button type="button" class="modal-btn" id="btn-restart-final">🔄 처음부터 다시 체험하기</button>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const patients = [
-                {
-                    badge: "응급 환자 #1 / 6",
-                    subject: "5학년 과학 '생태계' 교실",
-                    scene: "4명씩 6개 모둠이 책상을 맞대고 먹이사슬 관계도를 그리는 중입니다. 교실 뒤편 3모둠에서는 한 학생이 색연필로 화살표를 긋고 있고, 옆자리 세 학생은 말없이 활동지만 바라보고 있습니다.",
-                    consultHint: "수석교사 자문: \"이건 다음 시간까지 기다리면 안 돼요! 지금 이 [차시] 안에서 '학습 활동 관찰'로 탐구 수준을 즉시 파악해 맞춤형 코칭을 넣어주세요.\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> 모둠 활동지 칸 절반이 비어 있고, 아이들 대화 녹음에는 “어차피 민수가 다 적는데 우리는 뭐 적지?”라는 말만 남아 있습니다.",
-                        "<strong>[교사 수업일지]</strong> 2교시(40분) 한 시간 안에 생산자·소비자 관계를 파악해야 하는데, 종이 친 뒤 걷어서 채점하면 이미 오늘 학습 결손을 메울 수 없습니다.",
-                        "<strong>[현장 피드백]</strong> 성적을 매기려는 게 아니라, 교사가 순회하며 활동 과정과 개념 이해 수준을 실시간으로 파악해 즉각 피드백을 주어야 하는 상황입니다."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> 1시간 수업 단위(차시) 안에서 교사가 활동 과정을 관찰해 실시간 피드백을 주려면?",
-                    targetTime: "차시",
-                    targetPurpose: "학습을 위한 평가",
-                    answer: "학습 결과물 · 학습 활동 관찰",
-                    step2Question: "이 처방을 교실에서 제대로 실행하기 위한 핵심 방법은 무엇일까요?",
-                    step2Options: [
-                        { text: "차시 수준에서 학생의 탐구 수준과 개념 이해를 실시간으로 파악해 맞춤형 피드백을 제공한다.", correct: true },
-                        { text: "수업이 끝난 뒤 활동지를 걷어 점수화하고 서열을 매겨 통지표에 반영한다.", correct: false },
-                        { text: "단원이 모두 끝날 때까지 개입하지 않고 학생 스스로 깨닫기를 기다린다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#1 [차시 × 학습을 위한 평가]</strong> 학습 결과물 · 학습 활동 관찰 → 실시간 탐구 수준 파악 및 맞춤형 피드백",
-                    successMsg: "<strong>정확합니다!</strong> 차시 수준에서 학생의 개념 이해와 탐구 활동을 실시간으로 관찰해 맞춤형 피드백을 제공하는 <strong>[차시 × 학습을 위한 평가]</strong> 처방으로 무임승차를 바로잡을 수 있습니다!"
-                },
-                {
-                    badge: "응급 환자 #2 / 6",
-                    subject: "4학년 사회 '우리 지역의 문제' 교실",
-                    scene: "모둠별로 조사한 포스터를 칠판에 붙이고 발표를 마쳤습니다. 학생들은 포스터 앞에 모여 자기 모둠 자료를 가리키며 이야기하고 있고, 교사는 교탁 옆에서 아이들의 대화를 지켜보고 있습니다.",
-                    consultHint: "수석교사 자문: \"교사가 정답을 불러주기보다, [LOI] 단계에서 '탐구나침반'을 꺼내 아이들 스스로 탐구 과정을 성찰하고 동료평가를 하게 해보세요!\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> 포스터에는 쓰레기통 사진만 잔뜩 붙어 있고, 아이들은 “우리 모둠 조사 방향이 맞는지 잘 모르겠어요”라며 고개를 갸웃거립니다.",
-                        "<strong>[교사 수업일지]</strong> 첫 번째 탐구 질문(중단원) 조사가 끝난 시점입니다. 다음 탐구 질문으로 넘어가기 전, 아이들 스스로 자신의 탐구 과정을 점검할 시간이 필요합니다.",
-                        "<strong>[현장 피드백]</strong> 교사가 일방적으로 지적하기보다, 성찰 도구를 활용해 준거에 따라 자신의 학습 활동을 스스로 돌아보고 친구끼리 동료평가를 하게 하세요."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> 중단원 탐구(LOI) 단계에서 학생 스스로 탐구 과정을 성찰하고 동료평가를 실시하려면?",
-                    targetTime: "LOI",
-                    targetPurpose: "학습으로서의 평가",
-                    answer: "학습 결과물 · 탐구 과정 성찰",
-                    step2Question: "이 단계에서 아이들의 자기평가 및 동료평가를 돕는 핵심 도구는 무엇일까요?",
-                    step2Options: [
-                        { text: "탐구나침반을 활용하고 준거에 따라 자신의 학습 활동을 성찰하며 동료평가를 실시한다.", correct: true },
-                        { text: "교사가 정답 해설지를 나눠주고 틀린 문항 개수를 세어 제출하게 한다.", correct: false },
-                        { text: "단원 전체의 개념을 연결해 긴 논술형 지식 에세이를 작성하게 한다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#2 [LOI × 학습으로서의 평가]</strong> 학습 결과물 · 탐구 과정 성찰 → 탐구나침반 활용 자기·동료평가",
-                    successMsg: "<strong>명쾌합니다!</strong> LOI 단계에서 탐구나침반을 활용해 준거에 따라 자신의 학습 활동을 성찰하고 동료평가를 실시하는 <strong>[LOI × 학습으로서의 평가]</strong> 처방으로 탐구 방향을 스스로 조율할 수 있습니다!"
-                },
-                {
-                    badge: "응급 환자 #3 / 6",
-                    subject: "6학년 사회 '인권 존중' 교실",
-                    scene: "교실 앞 화이트보드에 학생들이 각자 적어 붙인 문장 카드가 빼곡히 붙어 있습니다. 학생들은 자기 자리에 앉아 보드를 바라보고 있고, 교사는 문장 카드들을 하나씩 가리키며 메모를 적고 있습니다.",
-                    consultHint: "수석교사 자문: \"[UOI] 수준의 형성평가네요! 학생의 '중심아이디어 작성' 초안을 살피고, 'ATL POI'와 '수행지시어'로 구체적 피드백을 주세요.\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> 화이트보드 카드에는 “사람은 서로 도와야 한다”처럼 단편적인 문장만 적혀 있고, 핵심 개념 간 연결이나 탐구 기능 수준이 드러나지 않습니다.",
-                        "<strong>[교사 수업일지]</strong> 대단원 탐구가 무르익어 단원을 관통하는 일반화 문장 초안을 점검하는 시점입니다. 최종 성적 부여가 아니라 문장을 다듬도록 돕는 코칭이 목적입니다.",
-                        "<strong>[현장 피드백]</strong> 명시된 개념이 중심아이디어에 반영되었는지 파악하고, 기능 수준은 ATL POI를 기준으로 판단해 수행지시어를 활용한 교사 피드백을 제공하세요."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> 대단원(UOI) 수준에서 중심아이디어 작성 내용을 파악하고 기능 수준에 대한 교사 피드백을 주려면?",
-                    targetTime: "UOI",
-                    targetPurpose: "학습을 위한 평가",
-                    answer: "중심아이디어 작성 · ATL 성장 스펙트럼",
-                    step2Question: "이때 교사가 학생의 기능 수준을 판단하고 피드백을 제공하는 구체적인 방법은?",
-                    step2Options: [
-                        { text: "ATL POI를 활용해 기능 수준을 판단하고 수행지시어를 활용해 피드백을 제공한다.", correct: true },
-                        { text: "학생들끼리 인기투표를 통해 가장 잘 쓴 문장 3개를 뽑아 게시한다.", correct: false },
-                        { text: "가치와 태도 영역만 체크하여 생활기록부 행동특성란에 바로 입력한다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#3 [UOI × 학습을 위한 평가]</strong> 중심아이디어 작성 · ATL 성장 스펙트럼 → ATL POI 및 수행지시어 피드백",
-                    successMsg: "<strong>훌륭합니다!</strong> 명시된 개념에 따라 작성한 중심아이디어 내용을 파악하고, ATL POI와 수행지시어로 피드백을 주는 <strong>[UOI × 학습을 위한 평가]</strong> 처방이 정확합니다!"
-                },
-                {
-                    badge: "응급 환자 #4 / 6",
-                    subject: "3학년 과학 '물질의 상태' 교실",
-                    scene: "아이들이 하교한 뒤 조용한 교실, 교사 책상 위에는 모둠별 실험 관찰 보고서 묶음과 학기 말 통지표 초안 파일이 나란히 놓여 있습니다. 교사는 보고서를 한 장씩 넘기며 깊은 한숨을 쉬고 있습니다.",
-                    consultHint: "수석교사 자문: \"단순 코칭을 넘어 성취 수준을 공식적으로 남길 시점이네요! [LOI] 학습 과정에서 필요한 시점에 파악·기록하는 '과정중심평가 결과'가 필요합니다.\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> 실험 관찰 보고서에는 아이들의 자유로운 기록만 있을 뿐, 개념 이해와 수행 수준이 어느 도달점에 있는지 판정된 흔적이 없습니다.",
-                        "<strong>[교사 수업일지]</strong> 두 번째 탐구 질문(LOI 2) 학습을 마친 시점입니다. 수업 중 구두 피드백은 많이 했는데, 정작 통지표·생활기록부에 적을 공식 성취 기록이 비어 있습니다.",
-                        "<strong>[현장 피드백]</strong> 각 LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 및 수행 수준을 공식적으로 파악하고 기록해 두어야 성취 근거가 남습니다."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 또는 수행 수준을 파악하고 기록하려면?",
-                    targetTime: "LOI",
-                    targetPurpose: "학습의 평가",
-                    answer: "LOI 관련 과정중심평가 결과",
-                    step2Question: "이 평가가 단순 형성평가(학습을 위한 평가)와 구별되는 핵심 목적은 무엇인가요?",
-                    step2Options: [
-                        { text: "LOI 학습 과정에서 필요한 시점에 학생의 개념 이해 및 수행 수준을 공식적으로 파악하고 기록한다.", correct: true },
-                        { text: "수업 중 구두로 칭찬만 하고 별도의 기록은 남기지 않는다.", correct: false },
-                        { text: "대단원 전체가 끝난 뒤 마지막 날 한 번만 시험을 치른다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#4 [LOI × 학습의 평가]</strong> LOI 관련 과정중심평가 결과 → 시점별 개념 이해·수행 수준 파악 및 기록",
-                    successMsg: "<strong>정확한 진단입니다!</strong> LOI 학습 과정에서 필요한 시점에 학생의 개념 이해와 학습 수행 수준을 파악하고 기록하는 <strong>[LOI × 학습의 평가]</strong> 처방으로 탄탄한 평가 근거를 남길 수 있습니다!"
-                },
-                {
-                    badge: "응급 환자 #5 / 6",
-                    subject: "5학년 도덕 '공정한 사회' 교실",
-                    scene: "교실 게시판에는 한 달간 진행한 프로젝트 결과물이 가득 붙어 있습니다. 학생들은 자리에 앉아 가방을 정리하며 종례를 기다리고 있고, 칠판에는 '단원 마무리'라는 글씨만 적혀 있습니다.",
-                    consultHint: "수석교사 자문: \"[UOI]를 마무리하는 자기성찰이 빠졌어요! 준거를 보며 스스로 가치·태도와 역량을 돌아보는 '학습자상 및 ATL 성장 스펙트럼'이 딱입니다.\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> “단원 활동은 다 끝났는데, 제가 한 달 동안 어떤 태도와 역량이 자랐는지 잘 모르겠어요. 다음 단원엔 뭘 노력해야 하죠?”",
-                        "<strong>[교사 수업일지]</strong> 5주간의 대단원(UOI)이 종료되는 마지막 시간입니다. 지식 평가 점수는 나왔지만, 학생 스스로 자신의 변화와 태도를 되돌아보는 절차가 빠졌습니다.",
-                        "<strong>[현장 피드백]</strong> 대단원 마무리 시 준거에 따라 자신의 학습 활동과 가치·태도를 학생 스스로 성찰하고 새로운 목표를 설정하도록 안내해 주세요."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> 대단원(UOI) 마무리 단계에서 준거에 따라 자신의 가치·태도와 학습 활동을 성찰하고 새 목표를 세우려면?",
-                    targetTime: "UOI",
-                    targetPurpose: "학습으로서의 평가",
-                    answer: "학습자상 및 ATL 성장 스펙트럼",
-                    step2Question: "이 처방을 통해 학생들이 스스로 수행해야 하는 핵심 활동은 무엇일까요?",
-                    step2Options: [
-                        { text: "준거에 따라 자신의 학습 활동과 가치·태도를 성찰하고 새로운 목표를 설정한다.", correct: true },
-                        { text: "교사가 일방적으로 부여한 등급표를 받아들고 부모님 확인 도장을 받아온다.", correct: false },
-                        { text: "1차시 배운 개념 용어의 뜻을 빈칸 채우기 시험지로 다시 확인한다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#5 [UOI × 학습으로서의 평가]</strong> 학습자상 및 ATL 성장 스펙트럼 → 준거 기반 성찰 및 새 목표 설정",
-                    successMsg: "<strong>탁월합니다!</strong> 준거에 따라 자신의 학습 활동과 가치·태도를 성찰하고 새로운 목표를 설정하는 <strong>[UOI × 학습으로서의 평가]</strong> 처방으로 자기주도 학습자를 길러낼 수 있습니다!"
-                },
-                {
-                    badge: "응급 환자 #6 / 6",
-                    subject: "4학년 국어 '주장하는 글쓰기' 교실",
-                    scene: "학부모 상담 주간을 앞두고 교사가 학생 개인별 사물함에서 낱장 활동지 뭉치를 꺼내 책상 위에 펼쳐 놓았습니다. 활동지마다 칭찬 도장은 찍혀 있지만, 단원 전체를 아우르는 종합 결과물이 보이지 않습니다.",
-                    consultHint: "수석교사 자문: \"[UOI]의 대미를 장식할 총괄평가네요! 개념 적용을 보는 '지식 에세이', 과정을 모으는 '학습 포트폴리오', 태도를 보는 '성장 스펙트럼' 세트를 처방하세요.\"",
-                    clues: [
-                        "<strong>[학생 산출물/발언]</strong> 차시별 학습지는 여러 장 쌓여 있지만, 단원에서 익힌 개념들을 연결해 새로운 문제 상황에 적용해 본 최종 산출물이 없습니다.",
-                        "<strong>[교사 수업일지]</strong> 대단원(UOI)의 모든 탐구를 완전히 매듭짓고, 학습의 과정과 결과, 가치·태도를 종합적으로 파악·기록해 가정에 통지해야 하는 시점입니다.",
-                        "<strong>[현장 피드백]</strong> 개념 연결·적용을 확인하는 지식 에세이, 과정과 결과를 담은 학습 포트폴리오, 가치·태도를 파악하는 성장 스펙트럼을 종합 처방하세요."
-                    ],
-                    hint: "🔍 <strong>힌트:</strong> 대단원(UOI)을 통해 학습한 개념을 연결·적용하고 학습의 과정·결과·가치태도를 종합 파악·기록·통지하려면?",
-                    targetTime: "UOI",
-                    targetPurpose: "학습의 평가",
-                    answer: "지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼",
-                    step2Question: "이 최종 평가 세트(지식 에세이·포트폴리오·성장 스펙트럼)가 완성하는 3가지 요소의 조화는?",
-                    step2Options: [
-                        { text: "개념 연결·적용(지식 에세이), 과정·결과 기록(포트폴리오), 가치·태도 파악(자기평가·관찰)을 모두 종합 통지한다.", correct: true },
-                        { text: "오직 지필평가 점수 100점 만점 기준으로 석차만 산출해 통지한다.", correct: false },
-                        { text: "학생의 성찰 없이 교사의 주관적 인상만으로 한 줄 평을 작성한다.", correct: false }
-                    ],
-                    shortSummary: "<strong>#6 [UOI × 학습의 평가]</strong> 지식 에세이 · 학습 포트폴리오 · 성장 스펙트럼 → 개념 적용 및 종합 통지",
-                    successMsg: "<strong>완벽한 마무리입니다!</strong> UOI에서 배운 개념을 연결해 새로운 문제 상황에 활용하고, 포트폴리오와 성장 스펙트럼을 통해 과정·결과·태도를 종합 파악·기록·통지하는 <strong>[UOI × 학습의 평가]</strong> 처방으로 6명의 환자를 모두 살려냈습니다!"
-                }
-            ];
-
-            // 상태 변수
-            let currentIdx = 0;
-            let viewedClues = [true, false, false];
-            let selectedDrug = null;
-            let selectedTime = null;
-            let selectedPurpose = null;
-            let selectedIcons = null;
-
-            let attemptCount = 0;
-            let firstTrySuccessCount = 0;
-            let reputation = 100;
-            let emergencyCallDone = false;
-            let gameStarted = false;
-
-            let secondsElapsed = 0;
-            let timerInterval = null;
-            let soundEnabled = true;
-            let noticeCallback = null;
-
-            // DOM 요소
-            const noticeModal = document.getElementById('notice-modal');
-            const introModal = document.getElementById('intro-modal');
-            const guideModal = document.getElementById('guide-modal');
-            const step2Modal = document.getElementById('step2-modal');
-            const emergencyModal = document.getElementById('emergency-call-modal');
-            const successModal = document.getElementById('success-modal');
-            const failModal = document.getElementById('fail-modal');
-            const finalModal = document.getElementById('final-modal');
-
-            const selectedDisplay = document.getElementById('selected-display');
-            const btnPrescribe = document.getElementById('btn-prescribe');
-            const timerDisplay = document.getElementById('timer-display');
-            const reputationDisplay = document.getElementById('reputation-display');
-            const consultTagEl = document.getElementById('patient-consult-tag');
-            const consultBannerEl = document.getElementById('consult-banner');
-
-            const patientPanel = document.getElementById('patient-panel');
-            const vitalStatus = document.getElementById('vital-status-text');
-            const bpmDisplay = document.getElementById('bpm-display');
-            const ecgLine = document.getElementById('ecg-line');
-
-            // 커스텀 알림창 (브라우저 alert 대체 - URL/아이디 노출 원천 차단)
-            function showNotice(emoji, title, message, theme = 'blue', onConfirm = null) {
-                document.getElementById('notice-emoji').innerText = emoji;
-                const titleEl = document.getElementById('notice-title');
-                const cardEl = document.getElementById('notice-card');
-                titleEl.innerText = title;
-                document.getElementById('notice-msg').innerText = message;
-
-                if (theme === 'purple') {
-                    titleEl.style.color = '#6b21a8';
-                    cardEl.style.background = '#f3e8ff';
-                    cardEl.style.borderColor = '#d8b4fe';
-                } else if (theme === 'green') {
-                    titleEl.style.color = '#15803d';
-                    cardEl.style.background = '#f0fdf4';
-                    cardEl.style.borderColor = '#86efac';
-                } else if (theme === 'amber') {
-                    titleEl.style.color = '#b45309';
-                    cardEl.style.background = '#fffbeb';
-                    cardEl.style.borderColor = '#fcd34d';
-                } else {
-                    titleEl.style.color = '#1d4ed8';
-                    cardEl.style.background = '#eff6ff';
-                    cardEl.style.borderColor = '#bfdbfe';
-                }
-
-                noticeCallback = onConfirm;
-                noticeModal.style.display = 'flex';
-            }
-
-            document.getElementById('btn-notice-ok').addEventListener('click', () => {
-                playTone('click');
-                noticeModal.style.display = 'none';
-                if (typeof noticeCallback === 'function') {
-                    const cb = noticeCallback;
-                    noticeCallback = null;
-                    cb();
-                }
-            });
-
-            // 사운드 효과
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            let audioCtx = null;
-
-            function playTone(type) {
-                if (!soundEnabled) return;
-                try {
-                    if (!audioCtx) audioCtx = new AudioCtx();
-                    if (audioCtx.state === 'suspended') audioCtx.resume();
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    const now = audioCtx.currentTime;
-
-                    if (type === 'click') {
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(520, now);
-                        gain.gain.setValueAtTime(0.08, now);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
-                        osc.start(now); osc.stop(now + 0.08);
-                    } else if (type === 'step1') {
-                        osc.type = 'sine';
-                        osc.frequency.setValueAtTime(587.33, now);
-                        osc.frequency.setValueAtTime(783.99, now + 0.1);
-                        gain.gain.setValueAtTime(0.09, now);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
-                        osc.start(now); osc.stop(now + 0.25);
-                    } else if (type === 'success') {
-                        osc.type = 'triangle';
-                        osc.frequency.setValueAtTime(523.25, now);
-                        osc.frequency.setValueAtTime(659.25, now + 0.1);
-                        osc.frequency.setValueAtTime(783.99, now + 0.2);
-                        osc.frequency.setValueAtTime(1046.5, now + 0.3);
-                        gain.gain.setValueAtTime(0.12, now);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
-                        osc.start(now); osc.stop(now + 0.55);
-                    } else if (type === 'fail' || type === 'alarm') {
-                        osc.type = 'sawtooth';
-                        osc.frequency.setValueAtTime(type === 'alarm' ? 440 : 190, now);
-                        osc.frequency.setValueAtTime(type === 'alarm' ? 330 : 145, now + 0.15);
-                        gain.gain.setValueAtTime(0.1, now);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-                        osc.start(now); osc.stop(now + 0.35);
-                    }
-                } catch (e) {}
-            }
-
-            document.getElementById('btn-sound').addEventListener('click', (e) => {
-                soundEnabled = !soundEnabled;
-                e.target.innerText = soundEnabled ? '🔊 소리 켬' : '🔇 소리 끔';
-            });
-
-            function updateReputation(delta) {
-                reputation = Math.max(0, Math.min(120, reputation + delta));
-                reputationDisplay.innerText = `🏥 교실 평판: ${reputation}점`;
-                if (reputation >= 90) {
-                    reputationDisplay.style.background = '#f0fdf4';
-                    reputationDisplay.style.borderColor = '#bbf7d0';
-                    reputationDisplay.style.color = '#15803d';
-                } else if (reputation >= 60) {
-                    reputationDisplay.style.background = '#fffbeb';
-                    reputationDisplay.style.borderColor = '#fde68a';
-                    reputationDisplay.style.color = '#b45309';
-                } else {
-                    reputationDisplay.style.background = '#fef2f2';
-                    reputationDisplay.style.borderColor = '#fecaca';
-                    reputationDisplay.style.color = '#b91c1c';
-                }
-            }
-
-            function formatTime(sec) {
-                const m = String(Math.floor(sec / 60)).padStart(2, '0');
-                const s = String(sec % 60).padStart(2, '0');
-                return `${m}:${s}`;
-            }
-
-            function startTimer() {
-                clearInterval(timerInterval);
-                secondsElapsed = 0;
-                timerDisplay.innerText = "00:00";
-                timerInterval = setInterval(() => {
-                    secondsElapsed++;
-                    timerDisplay.innerText = formatTime(secondsElapsed);
-                }, 1000);
-            }
-
-            function updateWardHearts() {
-                for (let i = 0; i < patients.length; i++) {
-                    const slot = document.getElementById(`slot-${i}`);
-                    slot.classList.remove('active', 'saved');
-                    if (i < currentIdx) {
-                        slot.classList.add('saved');
-                        slot.innerText = `💚 #${i + 1}`;
-                    } else if (i === currentIdx) {
-                        slot.classList.add('active');
-                        slot.innerText = `❤️‍🔥 #${i + 1}`;
-                    } else {
-                        slot.innerText = `🤍 #${i + 1}`;
-                    }
-                }
-            }
-
-            function setVitalStable(isStable) {
-                if (isStable) {
-                    patientPanel.classList.add('stable');
-                    vitalStatus.classList.add('stable');
-                    vitalStatus.innerText = "안정 · 심박수 정상 회복";
-                    bpmDisplay.classList.add('stable');
-                    bpmDisplay.innerText = "심박수 72회";
-                    ecgLine.classList.add('stable');
-                } else {
-                    patientPanel.classList.remove('stable');
-                    vitalStatus.classList.remove('stable');
-                    vitalStatus.innerText = "위급 · 평가 불균형 위기";
-                    bpmDisplay.classList.remove('stable');
-                    bpmDisplay.innerText = "심박수 148회";
-                    ecgLine.classList.remove('stable');
-                }
-            }
-
-            // 정밀 문진 탭 전환 및 잠금 해제
-            const clueTabs = document.querySelectorAll('.clue-tab');
-            const clueContentBox = document.getElementById('clue-content-box');
-            const clueProgressEl = document.getElementById('clue-progress');
-
-            function renderClueTab(tabIdx) {
-                const p = patients[currentIdx];
-                viewedClues[tabIdx] = true;
-
-                clueTabs.forEach((btn, i) => {
-                    btn.classList.remove('active');
-                    if (viewedClues[i]) {
-                        btn.classList.remove('unread');
-                        btn.classList.add('checked');
-                    } else {
-                        btn.classList.add('unread');
-                        btn.classList.remove('checked');
-                    }
-                });
-
-                clueTabs[tabIdx].classList.add('active');
-                clueContentBox.innerHTML = p.clues[tabIdx];
-
-                const checkedCount = viewedClues.filter(Boolean).length;
-                clueProgressEl.innerText = `확인 ${checkedCount}/3`;
-
-                if (checkedCount === 3) {
-                    btnPrescribe.classList.remove('locked');
-                    btnPrescribe.innerText = "⚡ 1단계 처방 투여하기";
-                } else {
-                    btnPrescribe.classList.add('locked');
-                    btnPrescribe.innerText = `🔒 문진 기록 ${3 - checkedCount}개를 더 확인하세요`;
-                }
-            }
-
-            clueTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    playTone('click');
-                    const idx = Number(tab.getAttribute('data-tab'));
-                    renderClueTab(idx);
-                });
-            });
-
-            // 동료 교사 협진 찬스 3종 (커스텀 모달 사용)
-            const btnXray = document.getElementById('chance-xray');
-            const btnConsult = document.getElementById('chance-consult');
-            const btnHeal = document.getElementById('chance-heal');
-            const drugCells = document.querySelectorAll('.drug-cell:not(.disabled)');
-
-            btnXray.addEventListener('click', () => {
-                playTone('step1');
-                btnXray.disabled = true;
-                const currentPatient = patients[currentIdx];
-                const wrongCells = Array.from(drugCells).filter(cell => {
-                    return !(
-                        cell.getAttribute('data-time') === currentPatient.targetTime &&
-                        cell.getAttribute('data-purpose') === currentPatient.targetPurpose &&
-                        cell.getAttribute('data-drug') === currentPatient.answer
-                    );
-                });
-                const toEliminate = wrongCells.sort(() => Math.random() - 0.5).slice(0, 3);
-                toEliminate.forEach(cell => {
-                    cell.classList.remove('selected');
-                    cell.classList.add('eliminated');
-                    if (selectedDrug === cell.getAttribute('data-drug') && selectedTime === cell.getAttribute('data-time')) {
-                        selectedDrug = null;
-                        selectedDisplay.classList.remove('stamped');
-                        selectedDisplay.innerHTML = "오른쪽 캐비닛에서 처방 약품을 클릭하세요";
-                    }
-                });
-                showNotice('🔎', '오답 소거 찬스 발동!', '약품 캐비닛에서 정답이 아닌 선택지 3칸을 제외했습니다.', 'purple');
-            });
-
-            btnConsult.addEventListener('click', () => {
-                playTone('step1');
-                btnConsult.disabled = true;
-                const currentPatient = patients[currentIdx];
-                consultTagEl.classList.remove('secret');
-                consultTagEl.innerText = `📞 수석교사 자문 완료`;
-                consultBannerEl.innerText = `📞 ${currentPatient.consultHint}`;
-                consultBannerEl.style.display = 'block';
-                showNotice('📞', '수석교사 자문 도착', currentPatient.consultHint, 'purple');
-            });
-
-            btnHeal.addEventListener('click', () => {
-                playTone('success');
-                btnHeal.disabled = true;
-                updateReputation(15);
-                showNotice('💖', '교실 평판 회복!', '동료 교사의 응원으로 교실 평판이 +15점 회복되었습니다.', 'green');
-            });
-
-            // 1. 인트로 -> 게임 방법 안내 모달 이동
-            document.getElementById('btn-to-guide').addEventListener('click', () => {
-                playTone('click');
-                introModal.style.display = 'none';
-                document.getElementById('btn-start-game').innerText = "네, 이해했습니다! 진료 시작하기 🩺";
-                guideModal.style.display = 'flex';
-            });
-
-            // 1-2. 게임 방법 안내 -> 실제 게임 시작
-            document.getElementById('btn-start-game').addEventListener('click', () => {
-                playTone('click');
-                guideModal.style.display = 'none';
-                if (!gameStarted) {
-                    gameStarted = true;
-                    loadPatient(0);
-                    startTimer();
-                }
-            });
-
-            // 헤더의 [❓ 게임 방법] 버튼 클릭 시 언제든 안내 다시 보기
-            document.getElementById('btn-help').addEventListener('click', () => {
-                playTone('click');
-                document.getElementById('btn-start-game').innerText = "닫고 진료 계속하기 🩺";
-                guideModal.style.display = 'flex';
-            });
-
-            // 약품 셀 클릭
-            drugCells.forEach(cell => {
-                cell.addEventListener('click', () => {
-                    if (cell.classList.contains('eliminated')) return;
-                    playTone('click');
-                    drugCells.forEach(c => c.classList.remove('selected'));
-                    cell.classList.add('selected');
-
-                    selectedDrug = cell.getAttribute('data-drug');
-                    selectedTime = cell.getAttribute('data-time');
-                    selectedPurpose = cell.getAttribute('data-purpose');
-                    selectedIcons = cell.getAttribute('data-icons');
-
-                    selectedDisplay.classList.add('stamped');
-                    selectedDisplay.innerHTML = `
-                        <div style="font-size:0.74rem; color:#2563eb; font-weight:800; margin-bottom:2px;">
-                            [${selectedTime} × ${selectedPurpose}] · ${selectedIcons}
-                        </div>
-                        <div style="font-weight:800; color:#1e3a8a;">💊 ${selectedDrug}</div>
-                    `;
-                });
-            });
-
-            function generateSideEffectMessage(patient, chosenDrug, chosenTime, chosenPurpose) {
-                const timeMatch = (chosenTime === patient.targetTime);
-                const purposeMatch = (chosenPurpose === patient.targetPurpose);
-
-                if (!timeMatch && !purposeMatch) {
-                    return `선택하신 [${chosenTime} · ${chosenDrug}]은(는) '${chosenPurpose}' 약품입니다. 3가지 문진 기록에서 수업 시기와 평가 목적 단서를 다시 교차 추리해 보세요!`;
-                } else if (!timeMatch) {
-                    return `평가 목적(${chosenPurpose})은 정확히 짚으셨지만, 적용 시기가 맞지 않습니다! 문진 기록 속 수업 시기는 '${chosenTime}' 단계가 아닙니다.`;
-                } else {
-                    return `적용 시기(${chosenTime})는 정확합니다! 하지만 지금은 '${chosenPurpose}'보다 다른 목적의 평가 처방이 더 시급합니다.`;
-                }
-            }
-
-            // 1단계 처방 투여 버튼
-            btnPrescribe.addEventListener('click', () => {
-                if (btnPrescribe.classList.contains('locked')) {
-                    showNotice('🩺', '문진 기록 확인 필요', '정밀 문진 기록 3개 탭(학생 산출물 · 교사 수업일지 · 현장 피드백)을 모두 확인한 뒤 처방해 주세요!', 'amber');
-                    return;
-                }
-                if (!selectedDrug) {
-                    showNotice('💊', '처방 약품 미선택', '오른쪽 약품 캐비닛에서 처방할 약품 1칸을 먼저 클릭해 주세요!', 'amber');
-                    return;
-                }
-
-                const currentPatient = patients[currentIdx];
-                const isCorrect = (
-                    selectedTime === currentPatient.targetTime &&
-                    selectedPurpose === currentPatient.targetPurpose &&
-                    selectedDrug === currentPatient.answer
-                );
-
-                if (isCorrect) {
-                    playTone('step1');
-                    openStep2Modal(currentPatient);
-                } else {
-                    playTone('fail');
-                    attemptCount++;
-                    updateReputation(-15);
-
-                    const sideEffectText = generateSideEffectMessage(currentPatient, selectedDrug, selectedTime, selectedPurpose);
-                    document.getElementById('side-effect-msg').innerText = sideEffectText;
-                    document.getElementById('fail-hint-text').innerHTML = currentPatient.hint;
-                    failModal.style.display = 'flex';
-                }
-            });
-
-            // 2단계 세부 실행 전략 모달 열기
-            function openStep2Modal(patient) {
-                document.getElementById('step2-title').innerText = `[${patient.targetTime} × ${patient.targetPurpose}] 적중!`;
-                document.getElementById('step2-question').innerText = patient.step2Question;
-                const feedbackEl = document.getElementById('step2-feedback');
-                feedbackEl.innerText = "";
-
-                const optionsContainer = document.getElementById('step2-options');
-                optionsContainer.innerHTML = "";
-
-                const shuffled = [...patient.step2Options].sort(() => Math.random() - 0.5);
-
-                shuffled.forEach((opt, idx) => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'choice-btn';
-                    btn.innerText = `${idx + 1}. ${opt.text}`;
-                    btn.addEventListener('click', () => {
-                        if (opt.correct) {
-                            step2Modal.style.display = 'none';
-                            completePatientSuccess(patient);
-                        } else {
-                            playTone('fail');
-                            attemptCount++;
-                            updateReputation(-10);
-                            btn.classList.add('wrong');
-                            feedbackEl.innerText = "⚠️ 아쉽습니다! (교실 평판 -10점) 평가 프레임워크의 실행 방법을 다시 골라보세요.";
-                        }
-                    });
-                    optionsContainer.appendChild(btn);
-                });
-
-                step2Modal.style.display = 'flex';
-            }
-
-            // 환자 최종 소생 완료 처리
-            function completePatientSuccess(patient) {
-                playTone('success');
-                setVitalStable(true);
-
-                const oneshotBadge = document.getElementById('oneshot-badge');
-                if (attemptCount === 0) {
-                    firstTrySuccessCount++;
-                    updateReputation(5);
-                    oneshotBadge.style.display = 'inline-block';
-                    oneshotBadge.innerText = `✨ 첫 시도 명의 처방 (교실 평판 +5점)`;
-                } else {
-                    oneshotBadge.style.display = 'none';
-                }
-
-                document.getElementById('success-explanation').innerHTML = patient.successMsg;
-                const btnNext = document.getElementById('btn-next');
-                btnNext.innerText = (currentIdx === patients.length - 1) ? "최종 인증서 & 진료 차트 받기 🏆" : "다음 환자 보기 ➔";
-
-                setTimeout(() => {
-                    successModal.style.display = 'flex';
-                }, 300);
-            }
-
-            // 돌발 긴급 콜 이벤트 (3번 환자 완료 후 1회 발동)
-            function triggerEmergencyCall() {
-                playTone('alarm');
-                const emergencyOptions = [
-                    { text: "1. [차시 × 학습의 평가] 매 차시 수업이 끝날 때마다 단원 총괄 지필평가를 실시해 석차를 산출한다.", correct: true },
-                    { text: "2. [LOI × 학습으로서의 평가] 탐구나침반을 활용해 학생 스스로 탐구 과정을 성찰하고 동료평가를 한다.", correct: false },
-                    { text: "3. [UOI × 학습의 평가] 지식 에세이와 학습 포트폴리오를 통해 개념 연결 및 학습 과정을 종합 통지한다.", correct: false }
-                ];
-
-                const container = document.getElementById('emergency-options');
-                const feedback = document.getElementById('emergency-feedback');
-                container.innerHTML = "";
-                feedback.innerText = "";
-
-                emergencyOptions.sort(() => Math.random() - 0.5).forEach(opt => {
-                    const btn = document.createElement('button');
-                    btn.type = 'button';
-                    btn.className = 'choice-btn';
-                    btn.innerText = opt.text;
-                    btn.addEventListener('click', () => {
-                        if (opt.correct) {
-                            playTone('success');
-                            updateReputation(10);
-                            emergencyCallDone = true;
-                            emergencyModal.style.display = 'none';
-                            showNotice(
-                                '🚨',
-                                '긴급 자문 성공! (+10점 보너스)',
-                                "'차시 단위 총괄평가 지양' 원칙을 정확히 짚어내셨습니다! 다음 환자 진료를 이어갑니다.",
-                                'green',
-                                () => loadPatient(currentIdx)
-                            );
-                        } else {
-                            playTone('fail');
-                            btn.classList.add('wrong');
-                            feedback.innerText = "⚠️ 이 항목은 프레임워크에 부합하는 올바른 계획입니다! 잘못된 항목을 찾아주세요.";
-                        }
-                    });
-                    container.appendChild(btn);
-                });
-
-                emergencyModal.style.display = 'flex';
-            }
-
-            document.getElementById('btn-next').addEventListener('click', () => {
-                playTone('click');
-                successModal.style.display = 'none';
-                currentIdx++;
-
-                if (currentIdx === 3 && !emergencyCallDone) {
-                    triggerEmergencyCall();
-                    return;
-                }
-
-                if (currentIdx < patients.length) {
-                    loadPatient(currentIdx);
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                } else {
-                    showFinalCertificate();
-                }
-            });
-
-            document.getElementById('btn-retry').addEventListener('click', () => {
-                playTone('click');
-                failModal.style.display = 'none';
-            });
-
-            function showFinalCertificate() {
-                clearInterval(timerInterval);
-                for (let i = 0; i < patients.length; i++) {
-                    const slot = document.getElementById(`slot-${i}`);
-                    slot.classList.remove('active');
-                    slot.classList.add('saved');
-                    slot.innerText = `💚 #${i + 1}`;
-                }
-
-                const accuracy = Math.round((firstTrySuccessCount / patients.length) * 100);
-                document.getElementById('final-time').innerText = formatTime(secondsElapsed);
-                document.getElementById('final-reputation').innerText = `${reputation}점`;
-                document.getElementById('final-accuracy').innerText = `${accuracy}%`;
-
-                const rankBadge = document.getElementById('final-rank-badge');
-                if (reputation >= 100 && accuracy >= 80) {
-                    rankBadge.innerText = "👑 평가 병원장 (최고 등급)";
-                } else if (reputation >= 80) {
-                    rankBadge.innerText = "🏅 수석 평가 전문의";
-                } else if (reputation >= 60) {
-                    rankBadge.innerText = "🩺 평가 레지던트";
-                } else {
-                    rankBadge.innerText = "📋 열정 평가 인턴";
-                }
-
-                const summaryList = document.getElementById('summary-list');
-                summaryList.innerHTML = patients.map(p => `<div class="summary-item">${p.shortSummary}</div>`).join('');
-
-                finalModal.style.display = 'flex';
-            }
-
-            document.getElementById('btn-copy-result').addEventListener('click', () => {
-                const pledge = document.getElementById('pledge-select').value;
-                const timeStr = document.getElementById('final-time').innerText;
-                const repStr = document.getElementById('final-reputation').innerText;
-                const rankStr = document.getElementById('final-rank-badge').innerText;
-                const textToCopy = `[수업 평가 응급실 인증] ${rankStr} (걸린 시간: ${timeStr} / 교실 평판: ${repStr})\n✨ 우리 반 적용 1순위 처방: ${pledge}`;
-
-                navigator.clipboard.writeText(textToCopy).then(() => {
-                    showNotice('📋', '인증 결과 복사 완료', '인증 결과와 우리 반 적용 다짐이 클립보드에 복사되었습니다! 연수 소통방에 붙여넣기 해보세요.', 'green');
-                }).catch(() => {
-                    showNotice('📋', '인증 결과 안내', textToCopy, 'blue');
-                });
-            });
-
-            const resetAll = () => {
-                playTone('click');
-                clearInterval(timerInterval);
-                currentIdx = 0;
-                firstTrySuccessCount = 0;
-                reputation = 100;
-                emergencyCallDone = false;
-                gameStarted = false;
-                updateReputation(0);
-
-                btnXray.disabled = false;
-                btnConsult.disabled = false;
-                btnHeal.disabled = false;
-
-                noticeModal.style.display = 'none';
-                guideModal.style.display = 'none';
-                finalModal.style.display = 'none';
-                successModal.style.display = 'none';
-                failModal.style.display = 'none';
-                step2Modal.style.display = 'none';
-                emergencyModal.style.display = 'none';
-                introModal.style.display = 'flex';
-            };
-            document.getElementById('btn-reset').addEventListener('click', resetAll);
-            document.getElementById('btn-restart-final').addEventListener('click', resetAll);
-
-            function loadPatient(idx) {
-                setVitalStable(false);
-                attemptCount = 0;
-                viewedClues = [true, false, false];
-                updateWardHearts();
-
-                const p = patients[idx];
-                document.getElementById('patient-step-badge').innerText = p.badge;
-                consultTagEl.classList.add('secret');
-                consultTagEl.innerText = "🔒 수석교사 자문 대기중";
-                consultBannerEl.style.display = 'none';
-                consultBannerEl.innerText = "";
-
-                document.getElementById('patient-subject').innerText = p.subject;
-                document.getElementById('patient-scene').innerText = p.scene;
-
-                renderClueTab(0);
-
-                selectedDrug = null;
-                selectedTime = null;
-                selectedPurpose = null;
-                selectedIcons = null;
-                drugCells.forEach(c => {
-                    c.classList.remove('selected', 'eliminated');
-                });
-                selectedDisplay.classList.remove('stamped');
-                selectedDisplay.innerHTML = "오른쪽 캐비닛에서 처방 약품을 클릭하세요";
-            }
-        });
-    </script>
+    <button class="modal-btn" onclick="resetGame()">🔄 새로운 당직 시작하기</button>
+  </div>
+</div>
+
+<!-- 4. 커스텀 알림 모달 -->
+<div class="modal-overlay" id="notice-modal">
+  <div class="modal-inner" style="max-width: 440px;">
+    <div class="modal-emoji" id="notice-emoji">💡</div>
+    <h3 class="modal-title" id="notice-title">알림</h3>
+    <p class="modal-desc" id="notice-desc"></p>
+    <button class="modal-btn" onclick="closeNotice()">확인</button>
+  </div>
+</div>
+
+<script>
+  // 2차원 평가 약품 매트릭스 (3행 x 4열)
+  const MATRIX_ROWS = [
+    {
+      time: "수업 전\n(진단)",
+      cells: [
+        { id: "pre-diag", title: "출발점 행동 진단 체크리스트", icons: "🔍진단 · 📋관찰" },
+        { id: "pre-goal", title: "배움 목표 자기점검표", icons: "🎯목표 · 🙋자기" },
+        { id: "disabled-1", disabled: true, title: "해당 없음" },
+        { id: "pre-quiz", title: "기초 학력 진단 퀴즈", icons: "📝지필 · 📊수준" }
+      ]
+    },
+    {
+      time: "수업 중\n(형성)",
+      cells: [
+        { id: "mid-obs", title: "단계별 과정 관찰·피드백", icons: "⏱️과정 · 💬교사" },
+        { id: "mid-peer", title: "동료 피드백·자기 성찰일지", icons: "👥동료 · 🪞성찰" },
+        { id: "mid-perf", title: "실기·수행 과정 포트폴리오", icons: "🎨실기 · 📂누적" },
+        { id: "mid-exit", title: "형성평가 3문항 출구티켓", icons: "🎫즉시 · ✏️단답" }
+      ]
+    },
+    {
+      time: "수업 후\n(총괄)",
+      cells: [
+        { id: "post-coach", title: "개별 성장 상담·보충 코칭", icons: "🩺상담 · 🌱성장" },
+        { id: "post-self", title: "성장 포트폴리오 자기평가회", icons: "📖회고 · 🙋주도" },
+        { id: "post-rubric", title: "분석적 채점 기준표(루브릭)", icons: "📏기준 · 🎯산출" },
+        { id: "post-test", title: "단원 성취도 지필평가", icons: "📄총괄 · 💯점수" }
+      ]
+    }
+  ];
+
+  // 6개 병동 시나리오 (교사 성찰 일기 · 학생 증언 · 현장 채증물)
+  const CASES = [
+    {
+      ward: "1번 병동",
+      subject: "4학년 사회 · 모둠 포스터 프로젝트 (무임승차 증후군)",
+      bpm: 142,
+      scene: "• 수업 형태: 3차시 모둠별 우리 고장 안내 포스터 제작\n• 이상 징후: 최종 완성작만 채점해 무임승차와 역할 편중 발생",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 10월 14일 교사 성찰 일기",
+          text: "3차시 동안 아이들이 꽤 바쁘게 움직인 것 같았는데, 막상 완성된 포스터만 걷어서 점수를 매기려니 막막하다. <span class='clue-highlight'>수업 도중 누가 자료를 찾고 토의에 참여했는지 기록해 둔 게 전혀 없어서</span> 결과물만 보고 점수를 줄 수밖에 없었다."
+        },
+        {
+          type: "student",
+          meta: "💬 쉬는 시간 학생 증언 · 4학년 민준(모둠장)",
+          text: "“어차피 <span class='clue-highlight'>마지막에 내는 포스터 한 장으로 모둠 점수가 똑같이 나오잖아요.</span> 그래서 그림 잘 그리는 지우가 거의 다 그리고, 나머지 애들은 그냥 옆에서 구경만 했어요.”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 사회과 수행평가 기록부 사본",
+          text: "[평가 시기] 단원 마지막 차시 종료 후 일괄 채점<br>[기록 방식] <span class='clue-highlight'>1모둠: 상 / 2모둠: 중 (차시별 개인 과정 기록 없음)</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 완성된 결과물(초록색 열)이 아니라, 수업 중 교사가 개인별 참여 과정을 관찰·기록하는 처방이 필요합니다.",
+      correctDrugId: "mid-obs",
+      step2: {
+        question: "‘단계별 과정 관찰·피드백’을 교실에 바로 적용하려면 어떤 조치가 가장 적절할까요?",
+        choices: [
+          { text: "1~3차시별 핵심 관찰 요소(자료 조사·토의 기여) 체크리스트를 만들고 순회하며 즉시 피드백한다.", correct: true },
+          { text: "포스터 테두리 디자인 완성도 배점을 50%에서 80%로 상향 조정한다.", correct: false, feedback: "결과물 배점만 높이면 무임승차 문제가 더 심해집니다." },
+          { text: "모둠 활동 대신 모든 학생이 각자 포스터를 집에서 그려 오도록 과제를 바꾼다.", correct: false, feedback: "협력적 탐구 목표를 포기하고 가정 과제 부담만 키우는 처방입니다." }
+        ]
+      },
+      summary: "1번 병동(사회): 결과물 일괄 채점 → 수업 중 단계별 과정 관찰·피드백 처방"
+    },
+    {
+      ward: "2번 병동",
+      subject: "5학년 국어 · 주장하는 글 발표 수업 (일방적 판정 거부감)",
+      bpm: 136,
+      scene: "• 수업 형태: 학생별 3분 스피치 발표 및 교사 단독 채점\n• 이상 징후: 교사의 일방적 점수 통보에 학생들이 평가 결과를 납득하지 못함",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 10월 19일 교사 성찰 일기",
+          text: "매시간 내가 채점표를 들고 26명의 발표를 혼자 다 기록하려니 진이 빠진다. 정작 아이들은 <span class='clue-highlight'>내가 왜 그 점수를 주었는지 납득하지 못하고</span>, 발표가 끝나면 자기 글의 문제점을 돌아볼 생각조차 하지 않는다."
+        },
+        {
+          type: "student",
+          meta: "💬 학생 익명 설문 증언 · 5학년 서연",
+          text: "“선생님이 제 발표를 보고 ‘목소리가 작음’이라고만 적어주셨어요. <span class='clue-highlight'>친구들한테 제 근거가 설득력 있었는지 직접 듣고 싶고, 저도 고칠 점을 스스로 찾아보고 싶어요.</span>”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 발표 활동지 하단 스캔",
+          text: "[교사 코멘트] 주장과 근거 연결이 약함 (75점)<br>[학생 성찰 및 친구 피드백 칸] <span class='clue-highlight'>항목 자체가 없어 백지로 비어 있음</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 교사 혼자 평가하는 칸이 아니라, 수업 중 학생 스스로와 친구가 함께 점검하는 처방을 고르세요.",
+      correctDrugId: "mid-peer",
+      step2: {
+        question: "학생들이 서로의 배움을 돕고 스스로 성찰하도록 돕는 실행 전략은?",
+        choices: [
+          { text: "‘배운 점 1가지 + 보완할 점 1가지’ 구조화된 동료 피드백 카드와 자기 성찰일지를 작성하게 한다.", correct: true },
+          { text: "친구들끼리 1점부터 10점까지 인기투표 방식으로 점수를 매겨 성적에 그대로 반영한다.", correct: false, feedback: "근거 없는 점수 매기기는 교우 관계 갈등과 왜곡을 부릅니다." },
+          { text: "발표 녹화 영상을 교사 혼자 주말에 다시 보며 감점 사유를 10줄씩 적어준다.", correct: false, feedback: "여전히 학생 주체성이 빠진 교사 일방 평가입니다." }
+        ]
+      },
+      summary: "2번 병동(국어): 교사 일방 채점 → 수업 중 동료 피드백·자기 성찰일지 처방"
+    },
+    {
+      ward: "3번 병동",
+      subject: "4학년 과학 · 간이 정수기 설계 보고서 (기준 모호성 혼란)",
+      bpm: 134,
+      scene: "• 수업 형태: 실험 설계 보고서 제출 후 교사 정성 코멘트 부여\n• 이상 징후: ‘참 잘했어요’식 모호한 칭찬으로 학생이 수정 방향을 알지 못함",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 10월 22일 교사 성찰 일기",
+          text: "아이들이 과학에 흥미를 잃을까 봐 보고서마다 ‘멋진 생각이에요!’, ‘참 잘했어요!’라고 도장을 찍어주었다. 그런데 <span class='clue-highlight'>다시 제출한 보고서에서도 똑같은 오류가 반복</span>되는 걸 보니 무엇을 고쳐야 할지 전혀 모르는 것 같다."
+        },
+        {
+          type: "student",
+          meta: "💬 쉬는 시간 학생 증언 · 4학년 지호",
+          text: "“저번 보고서에 쌤이 ‘최고예요’라고 써주셔서 이번에도 똑같이 썼거든요? 그런데 <span class='clue-highlight'>왜 이번엔 ‘보완 필요’인지 기준을 모르겠어요. 뭘 어떻게 써야 잘하는 건가요?</span>”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 과학 실험 보고서 안내문",
+          text: "[평가 안내] 자유 형식으로 실험 과정과 결과를 정리해 제출<br>[채점 기준] <span class='clue-highlight'>수준별(상·중·하) 도달 기준표(루브릭) 미제시</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 수행 산출물(보고서)의 수준별 도달 기준을 명확히 제시하는 결과 중심 수행 처방이 필요합니다.",
+      correctDrugId: "post-rubric",
+      step2: {
+        question: "학생이 자신의 현재 수준과 목표 도달 방법을 스스로 알 수 있게 하는 조치는?",
+        choices: [
+          { text: "평가 요소(가설·변인통제·결론)별 상·중·하 수행 수준이 구체적으로 기술된 분석적 루브릭을 사전 공개한다.", correct: true },
+          { text: "칭찬 도장 대신 빨간 펜으로 틀린 부분에 X 표시만 크게 해서 돌려준다.", correct: false, feedback: "구체적 기준 없는 부정은 학습 무기력만 유발합니다." },
+          { text: "보고서 분량을 무조건 3장 이상 채우면 최고 등급을 부여한다.", correct: false, feedback: "형식적 분량은 과학적 탐구 역량을 평가하지 못합니다." }
+        ]
+      },
+      summary: "3번 병동(과학): 모호한 인상 채점 → 분석적 채점 기준표(루브릭) 처방"
+    },
+    {
+      ward: "4번 병동",
+      subject: "3학년 수학 · 분수의 기초 개념 도입 (선수학습 결손 쇼크)",
+      bpm: 146,
+      scene: "• 수업 형태: 단원 1차시 시작과 동시에 교과서 본시 문제 풀이 진행\n• 이상 징후: 나눗셈·등분할 개념이 없는 학생 다수가 첫 시간부터 수업 이탈",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 11월 2일 교사 성찰 일기",
+          text: "3학년 분수 단원 첫 시간, 당연히 똑같이 나누기 개념은 다 알 거라 생각하고 바로 진도를 나갔다. 그런데 <span class='clue-highlight'>교실 절반이 첫 활동지부터 손을 대지 못하고 멍하니 앉아 있어</span> 수업 전체가 멈춰버렸다."
+        },
+        {
+          type: "student",
+          meta: "💬 수업 직후 학생 증언 · 3학년 하윤",
+          text: "“선생님이 ‘전체를 똑같이 4로 나눈 것 중 1’을 색칠하라고 하셨는데, <span class='clue-highlight'>‘똑같이 나눈다’는 게 크기가 같아야 한다는 뜻인지 몰라서</span> 아무 칸이나 색칠했어요.”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 3학년 수학 진도 계획표",
+          text: "[1차시 도입 5분] 전시 학습 상기 생략 → 바로 교과서 52쪽 활동 시작<br>[비고] <span class='clue-highlight'>단원 진입 전 선수 개념 파악 기록 없음</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 단원 진도를 나가기 '수업 전' 단계에서 교사가 학생의 출발점 행동을 먼저 확인해야 합니다.",
+      correctDrugId: "pre-diag",
+      step2: {
+        question: "수업 전 진단 결과를 실제 수업 설계에 가장 효과적으로 연결하는 방법은?",
+        choices: [
+          { text: "등분할·나눗셈 기초 체크리스트로 선수 결손 학생을 파악해 구체물 조작 보충 활동을 먼저 배치한다.", correct: true },
+          { text: "진단 결과 하위권 학생들은 단원 끝날 때까지 연산 학습지만 따로 풀게 한다.", correct: false, feedback: "학습 소외를 고착화하는 분리 처방입니다." },
+          { text: "성적을 매겨 교실 게시판에 점수순으로 붙여 경각심을 준다.", correct: false, feedback: "진단평가는 서열화가 아닌 맞춤형 지원이 목적입니다." }
+        ]
+      },
+      summary: "4번 병동(수학): 선수 개념 확인 누락 → 수업 전 출발점 행동 진단 체크리스트 처방"
+    },
+    {
+      ward: "5번 병동",
+      subject: "5학년 음악 · 모둠 리듬 창작 및 합주 (평가 방법 불일치)",
+      bpm: 132,
+      scene: "• 수업 형태: 4차시 동안 모둠별 리듬 창작 및 악기 앙상블 활동\n• 이상 징후: 실제 연주·창작 과정 대신 음악 이론 암기 지필시험으로 성적 산출",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 11월 6일 교사 성찰 일기",
+          text: "4차시 내내 아이들과 신나게 리듬을 만들고 악기로 합주 수업을 했다. 그런데 평가 주간에 실기 채점이 번거로워 <span class='clue-highlight'>음표 이름과 박자 계산을 묻는 객관식 시험지로 성적을 냈더니</span> 수업 시간 내내 열정적이던 아이들이 허탈해한다."
+        },
+        {
+          type: "student",
+          meta: "💬 쉬는 시간 학생 증언 · 5학년 도윤",
+          text: "“우리 모둠이 리듬 겹치기 연습 진짜 열심히 해서 박수까지 받았잖아요. 그런데 <span class='clue-highlight'>시험지에는 16분음표 길이 계산 문제만 나와서 연주 잘한 건 하나도 소용없었어요.</span>”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 5학년 2학기 음악 평가 문항지",
+          text: "[성취기준] 악곡의 특징을 살려 친구들과 어울려 연주한다.<br>[실제 평가] <span class='clue-highlight'>객관식 20문항 지필평가 100% 반영 (실기·연주 기록 0%)</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 지필·단답 열이 아니라, 수업 중 실제 수행과 실기 과정을 누적해 보는 수행·산출물 처방을 고르세요.",
+      correctDrugId: "mid-perf",
+      step2: {
+        question: "성취기준(연주·창작)과 평가를 일치시키는 가장 현장 친화적인 방법은?",
+        choices: [
+          { text: "차시별 모둠 리듬 스케치와 중간 연습 영상을 포트폴리오로 누적해 실제 연주 과정과 표현을 평가한다.", correct: true },
+          { text: "지필시험 문항 난이도를 더 높여서 변별력을 확보한다.", correct: false, feedback: "평가 내용과 목표의 불일치를 더욱 심화시킵니다." },
+          { text: "연주 수업 시간을 줄이고 4차시 모두 이론 문제 풀이를 진행한다.", correct: false, feedback: "평가 편의를 위해 본질적인 음악 경험을 축소하는 오류입니다." }
+        ]
+      },
+      summary: "5번 병동(음악): 실기 수업 후 이론 지필평가 → 실기·수행 과정 포트폴리오 처방"
+    },
+    {
+      ward: "6번 병동",
+      subject: "6학년 통합 프로젝트 · 한 학기 배움 정리 (피드백 시효 만료)",
+      bpm: 130,
+      scene: "• 수업 형태: 한 학기 프로젝트 결과물을 방학식 날 통지표 문구로 일괄 통보\n• 이상 징후: 학생이 자신의 성장 과정을 되돌아보고 다음 배움으로 연결할 기회 상실",
+      clues: [
+        {
+          type: "diary",
+          meta: "📓 11월 12일 교사 성찰 일기",
+          text: "학기 동안 모은 프로젝트 활동지를 나 혼자 밤새 읽고 통지표에 ‘성실히 참여함’이라고 적어 방학식 날 나눠주었다. 아이들은 <span class='clue-highlight'>통지표 종이 한 장만 힐끗 보고 가방에 구겨 넣을 뿐</span>, 한 학기 동안 자신이 얼마나 성장했는지 전혀 느끼지 못한다."
+        },
+        {
+          type: "student",
+          meta: "💬 졸업 앨범 인터뷰 증언 · 6학년 수빈",
+          text: "“1학기 때 했던 프로젝트 활동지가 다 어디 갔는지도 모르겠어요. <span class='clue-highlight'>제 초기 작품이랑 마지막 작품을 나란히 놓고 제가 얼마나 늘었는지 직접 정리해 보고 싶었어요.</span>”"
+        },
+        {
+          type: "artifact",
+          meta: "📎 현장 채증물 · 학기말 생활통지표 발송 대장",
+          text: "[전달 시점] 학기 종료일 하교 직전 일괄 배부<br>[학생 참여] <span class='clue-highlight'>학기말 자기 성장 회고 및 포트폴리오 정리 시간 미편성</span>"
+        }
+      ],
+      consultHint: "💡 자문 핵심: 수업·단원 종료 후 교사 통보로 끝내지 않고, 학생이 스스로 성장을 회고하는 과정 중심 처방을 고르세요.",
+      correctDrugId: "post-self",
+      step2: {
+        question: "성장 포트폴리오 자기평가회를 가장 의미 있게 운영하는 방법은?",
+        choices: [
+          { text: "초기·중기·최종 결과물을 학생 스스로 선별해 ‘나의 변화 근거’를 발표하고 다음 목표를 세우게 한다.", correct: true },
+          { text: "가장 글씨를 예쁘게 쓴 학생 3명의 공책만 교실 뒤에 전시하고 끝낸다.", correct: false, feedback: "소수 우수작 전시만으로는 모든 학생의 자기 성찰이 일어나지 않습니다." },
+          { text: "포트폴리오 파일을 교사가 전부 수거해 학부모에게 등기 우편으로만 보낸다.", correct: false, feedback: "배움의 주체인 학생 본인의 성찰 과정이 빠져 있습니다." }
+        ]
+      },
+      summary: "6번 병동(6학년): 학기말 일방적 문구 통보 → 성장 포트폴리오 자기평가회 처방"
+    }
+  ];
+
+  // 게임 상태 변수
+  let currentCaseIdx = 0;
+  let selectedDrug = null;
+  let checkedClues = [false, false, false];
+  let activeTabIdx = 0;
+  let timeRemaining = 240; // 4분
+  let timerInterval = null;
+  let reputation = 100;
+  let savedCount = 0;
+  let soundEnabled = true;
+  let suddenCallTriggered = false;
+  let chances = { consult: true, eliminate: true, time: true };
+
+  // Web Audio 효과음
+  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  function playTone(freq, type = 'sine', duration = 0.14) {
+    if (!soundEnabled) return;
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    document.getElementById('sound-btn').textContent = soundEnabled ? '🔊' : '🔇';
+  }
+
+  function showNotice(emoji, title, desc) {
+    document.getElementById('notice-emoji').textContent = emoji;
+    document.getElementById('notice-title').textContent = title;
+    document.getElementById('notice-desc').textContent = desc;
+    document.getElementById('notice-modal').style.display = 'flex';
+  }
+
+  function closeNotice() {
+    document.getElementById('notice-modal').style.display = 'none';
+  }
+
+  function openGuideModal() {
+    document.getElementById('guide-modal').style.display = 'flex';
+  }
+
+  function renderMatrix() {
+    const tbody = document.getElementById('matrix-body');
+    tbody.innerHTML = '';
+    MATRIX_ROWS.forEach(row => {
+      const tr = document.createElement('tr');
+      const th = document.createElement('th');
+      th.className = 'time-col';
+      th.innerHTML = row.time.replace('\n', '<br>');
+      tr.appendChild(th);
+
+      row.cells.forEach(cell => {
+        const td = document.createElement('td');
+        td.className = 'drug-cell' + (cell.disabled ? ' disabled' : '');
+        td.dataset.id = cell.id;
+        if (cell.disabled) {
+          td.textContent = cell.title;
+        } else {
+          td.innerHTML = `<div class="drug-title">${cell.title}</div><div class="drug-icons">${cell.icons}</div>`;
+          td.onclick = () => selectDrugCell(cell, td);
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  function renderWardHearts() {
+    const container = document.getElementById('ward-hearts');
+    container.innerHTML = '';
+    CASES.forEach((c, idx) => {
+      const span = document.createElement('span');
+      span.className = 'heart-slot';
+      if (idx < savedCount) {
+        span.classList.add('saved');
+        span.textContent = `💚 ${idx + 1}병동`;
+      } else if (idx === currentCaseIdx) {
+        span.classList.add('active');
+        span.textContent = `🚨 ${idx + 1}병동`;
+      } else {
+        span.textContent = `🏥 ${idx + 1}병동`;
+      }
+      container.appendChild(span);
+    });
+  }
+
+  function loadCase(idx) {
+    const data = CASES[idx];
+    selectedDrug = null;
+    checkedClues = [false, false, false];
+    activeTabIdx = 0;
+
+    // 패널 상태 초기화
+    const panel = document.getElementById('patient-panel');
+    panel.classList.remove('stable');
+    document.getElementById('vital-status').textContent = '● CRITICAL · 평가 부작용 경보';
+    document.getElementById('vital-status').classList.remove('stable');
+    const bpmEl = document.getElementById('bpm-display');
+    bpmEl.textContent = `${data.bpm} BPM`;
+    bpmEl.classList.remove('stable');
+    document.getElementById('ecg-line').classList.remove('stable');
+
+    document.getElementById('patient-ward').textContent = data.ward;
+    document.getElementById('patient-subject').textContent = data.subject;
+    document.getElementById('scene-text').innerHTML = data.scene.replace(/\n/g, '<br>');
+
+    // 자문 배너 초기화
+    const consultBanner = document.getElementById('consult-banner');
+    consultBanner.style.display = 'none';
+    consultBanner.textContent = '';
+    const consultTag = document.getElementById('consult-tag');
+    consultTag.textContent = '자문 대기 중';
+    consultTag.classList.add('secret');
+
+    // 처방전 초기화
+    const rxBox = document.getElementById('selected-prescription');
+    rxBox.classList.remove('stamped');
+    rxBox.textContent = '우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요';
+
+    // 매트릭스 셀 선택/소거 초기화
+    document.querySelectorAll('.drug-cell').forEach(el => {
+      el.classList.remove('selected', 'eliminated');
+    });
+
+    // 탭 초기화 및 첫 번째 탭 자동 열람
+    for (let i = 0; i < 3; i++) {
+      const tab = document.getElementById(`tab-${i}`);
+      tab.className = 'clue-tab unread';
+    }
+    selectClueTab(0);
+    renderWardHearts();
+  }
+
+  function selectClueTab(tabIdx) {
+    activeTabIdx = tabIdx;
+    checkedClues[tabIdx] = true;
+    playTone(520, 'sine', 0.08);
+
+    const data = CASES[currentCaseIdx];
+    const clue = data.clues[tabIdx];
+
+    for (let i = 0; i < 3; i++) {
+      const tab = document.getElementById(`tab-${i}`);
+      tab.classList.remove('active', 'unread', 'checked');
+      if (!checkedClues[i]) tab.classList.add('unread');
+      else tab.classList.add('checked');
+      if (i === tabIdx) tab.classList.add('active');
+    }
+
+    const box = document.getElementById('clue-content-box');
+    box.className = `clue-content-box type-${clue.type}`;
+    box.innerHTML = `
+      <div class="evidence-meta">${clue.meta}</div>
+      <p class="evidence-body">${clue.text}</p>
+    `;
+
+    const count = checkedClues.filter(Boolean).length;
+    const progressEl = document.getElementById('clue-progress');
+    progressEl.textContent = `${count} / 3 확인`;
+    progressEl.style.color = count === 3 ? 'var(--accent-green)' : 'var(--accent-red)';
+
+    updateAdministerButton();
+  }
+
+  function selectDrugCell(cell, tdEl) {
+    if (tdEl.classList.contains('eliminated')) return;
+    playTone(640, 'triangle', 0.09);
+
+    document.querySelectorAll('.drug-cell').forEach(el => el.classList.remove('selected'));
+    tdEl.classList.add('selected');
+    selectedDrug = cell;
+
+    const rxBox = document.getElementById('selected-prescription');
+    rxBox.classList.add('stamped');
+    rxBox.innerHTML = `선택 처방: <strong>${cell.title}</strong> (${cell.icons})`;
+
+    updateAdministerButton();
+  }
+
+  function updateAdministerButton() {
+    const btn = document.getElementById('administer-btn');
+    const allCluesRead = checkedClues.every(Boolean);
+
+    if (!allCluesRead) {
+      btn.classList.add('locked');
+      btn.textContent = `🔒 현장 증거 3종을 모두 확인하세요 (${checkedClues.filter(Boolean).length}/3)`;
+    } else if (!selectedDrug) {
+      btn.classList.add('locked');
+      btn.textContent = '💊 약품 캐비닛에서 처방을 선택하세요';
+    } else {
+      btn.classList.remove('locked');
+      btn.textContent = '💉 선택한 평가 처방 투약 실행';
+    }
+  }
+
+  function submitPrescription() {
+    const allCluesRead = checkedClues.every(Boolean);
+    if (!allCluesRead) {
+      showNotice('🔍', '증거 확인 부족', '일기·학생 증언·현장 채증물 3종 탭을 모두 눌러 확인한 후 투약할 수 있습니다.');
+      return;
+    }
+    if (!selectedDrug) {
+      showNotice('💊', '처방 미선택', '우측 약품 캐비닛에서 현재 교실에 맞는 평가 처방을 선택해 주세요.');
+      return;
+    }
+
+    const currentCase = CASES[currentCaseIdx];
+    if (selectedDrug.id === currentCase.correctDrugId) {
+      playTone(780, 'sine', 0.16);
+      openStep2Modal(currentCase);
+    } else {
+      playTone(210, 'sawtooth', 0.25);
+      reputation = Math.max(0, reputation - 10);
+      updateReputationUI();
+      showNotice('⚠️', '처방 불일치 (신뢰도 -10)', '증거에서 드러난 평가 시기(전/중/후)와 초점(과정/결과)을 다시 대조해 보세요!');
+    }
+  }
+
+  function openStep2Modal(caseData) {
+    const modal = document.getElementById('choice-modal');
+    document.getElementById('choice-badge').textContent = '2단계 교실 실천 조치';
+    document.getElementById('choice-title').textContent = '적절한 약품 선택! 구체적 실행안은?';
+    document.getElementById('choice-desc').textContent = caseData.step2.question;
+
+    const optionsWrap = document.getElementById('choice-options');
+    optionsWrap.innerHTML = '';
+
+    // 선택지 섞기
+    const shuffled = [...caseData.step2.choices].sort(() => Math.random() - 0.5);
+    shuffled.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        if (opt.correct) {
+          playTone(880, 'sine', 0.2);
+          modal.style.display = 'none';
+          completeCurrentCase();
+        } else {
+          playTone(220, 'sawtooth', 0.2);
+          btn.classList.add('wrong');
+          reputation = Math.max(0, reputation - 5);
+          updateReputationUI();
+          showNotice('🩺', '실천 보완 필요 (신뢰도 -5)', opt.feedback);
+        }
+      };
+      optionsWrap.appendChild(btn);
+    });
+
+    modal.style.display = 'flex';
+  }
+
+  function completeCurrentCase() {
+    savedCount++;
+    const panel = document.getElementById('patient-panel');
+    panel.classList.add('stable');
+    document.getElementById('vital-status').textContent = '● STABLE · 교실 평가 정상화 완료';
+    document.getElementById('vital-status').classList.add('stable');
+    const bpmEl = document.getElementById('bpm-display');
+    bpmEl.textContent = '76 BPM';
+    bpmEl.classList.add('stable');
+    document.getElementById('ecg-line').classList.add('stable');
+    renderWardHearts();
+
+    setTimeout(() => {
+      if (savedCount === CASES.length) {
+        finishGame(true);
+      } else if (savedCount === 3 && !suddenCallTriggered) {
+        suddenCallTriggered = true;
+        triggerSuddenCall();
+      } else {
+        currentCaseIdx++;
+        loadCase(currentCaseIdx);
+      }
+    }, 850);
+  }
+
+  // 중간 돌발 교무실 콜 이벤트
+  function triggerSuddenCall() {
+    const modal = document.getElementById('choice-modal');
+    document.getElementById('choice-badge').textContent = '📞 돌발 교무실 핫라인';
+    document.getElementById('choice-title').textContent = '학부모 상담 전화가 걸려왔습니다!';
+    document.getElementById('choice-desc').textContent =
+      '“선생님, 요즘 과정 중심 평가를 하신다는데 점수로 등수가 안 나오면 우리 아이가 잘하고 있는지 어떻게 알 수 있나요?”';
+
+    const optionsWrap = document.getElementById('choice-options');
+    optionsWrap.innerHTML = '';
+
+    const callChoices = [
+      {
+        text: "“등수 대신 성취기준 도달 수준과 수업 중 성장 과정, 다음 보완 방향을 구체적 피드백으로 안내해 드립니다.”",
+        correct: true
+      },
+      {
+        text: "“사실 저도 귀찮아서 대충 상·중·하만 체크하고 있으니 그냥 믿고 맡겨주세요.”",
+        correct: false,
+        feedback: "전문성과 신뢰를 떨어뜨리는 답변입니다. 성장 중심 안내를 선택해 보세요."
+      },
+      {
+        text: "“궁금하시면 학기말에 한꺼번에 점수표로 보내드릴 테니 그때 확인하시면 됩니다.”",
+        correct: false,
+        feedback: "과정 중심 평가의 핵심인 적시 피드백 취지에 어긋납니다."
+      }
+    ];
+
+    callChoices.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'choice-btn';
+      btn.textContent = opt.text;
+      btn.onclick = () => {
+        if (opt.correct) {
+          playTone(920, 'sine', 0.2);
+          reputation = Math.min(100, reputation + 10);
+          updateReputationUI();
+          modal.style.display = 'none';
+          showNotice('🌟', '명쾌한 소통! (신뢰도 +10)', '과정 중심 평가의 취지를 따뜻하고 명확하게 전달했습니다.');
+          currentCaseIdx++;
+          loadCase(currentCaseIdx);
+        } else {
+          playTone(220, 'sawtooth', 0.2);
+          btn.classList.add('wrong');
+          showNotice('📞', '응대 재고 필요', opt.feedback);
+        }
+      };
+      optionsWrap.appendChild(btn);
+    });
+
+    modal.style.display = 'flex';
+  }
+
+  // 협진 찬스 3종
+  function useConsultChance() {
+    if (!chances.consult) return;
+    chances.consult = false;
+    document.getElementById('chance-consult').disabled = true;
+    playTone(700, 'sine', 0.14);
+
+    const data = CASES[currentCaseIdx];
+    const banner = document.getElementById('consult-banner');
+    banner.textContent = data.consultHint;
+    banner.style.display = 'block';
+
+    const tag = document.getElementById('consult-tag');
+    tag.textContent = '수석교사 자문 완료';
+    tag.classList.remove('secret');
+  }
+
+  function useEliminateChance() {
+    if (!chances.eliminate) return;
+    chances.eliminate = false;
+    document.getElementById('chance-eliminate').disabled = true;
+    playTone(660, 'sine', 0.14);
+
+    const correctId = CASES[currentCaseIdx].correctDrugId;
+    const candidates = Array.from(document.querySelectorAll('.drug-cell:not(.disabled):not(.eliminated)'))
+      .filter(el => el.dataset.id !== correctId);
+
+    candidates.sort(() => Math.random() - 0.5).slice(0, 2).forEach(el => {
+      el.classList.add('eliminated');
+      if (selectedDrug && selectedDrug.id === el.dataset.id) {
+        selectedDrug = null;
+        el.classList.remove('selected');
+        const rxBox = document.getElementById('selected-prescription');
+        rxBox.classList.remove('stamped');
+        rxBox.textContent = '우측 약품 캐비닛에서 적절한 평가 처방을 선택하세요';
+        updateAdministerButton();
+      }
+    });
+  }
+
+  function useTimeChance() {
+    if (!chances.time) return;
+    chances.time = false;
+    document.getElementById('chance-time').disabled = true;
+    timeRemaining += 30;
+    updateTimerUI();
+    playTone(820, 'sine', 0.15);
+    showNotice('⏱️', '응급 시간 확보 (+30초)', '진료 제한 시간이 30초 연장되었습니다.');
+  }
+
+  function updateTimerUI() {
+    const min = String(Math.floor(timeRemaining / 60)).padStart(2, '0');
+    const sec = String(timeRemaining % 60).padStart(2, '0');
+    const timerEl = document.getElementById('timer-display');
+    timerEl.textContent = `⏱ ${min}:${sec}`;
+    if (timeRemaining <= 30) timerEl.classList.add('urgent');
+    else timerEl.classList.remove('urgent');
+  }
+
+  function updateReputationUI() {
+    document.getElementById('reputation-display').textContent = `신뢰도 ${reputation}`;
+  }
+
+  function startTimer() {
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      timeRemaining--;
+      updateTimerUI();
+      if (timeRemaining <= 0) {
+        clearInterval(timerInterval);
+        finishGame(false);
+      }
+    }, 1000);
+  }
+
+  function finishGame(isCleared) {
+    clearInterval(timerInterval);
+    const modal = document.getElementById('result-modal');
+
+    document.getElementById('result-emoji').textContent = isCleared ? '🏆' : '⏰';
+    document.getElementById('result-title').textContent = isCleared ? '전 병동 평가 정상화 완료!' : '당직 시간이 종료되었습니다';
+    document.getElementById('result-subtitle').textContent = isCleared
+      ? '교실의 일기와 학생의 목소리를 놓치지 않고 정확한 처방을 내렸습니다.'
+      : `총 ${CASES.length}개 병동 중 ${savedCount}개 병동을 안정화했습니다.`;
+
+    let rank = '수업 평가 수련의';
+    if (isCleared && reputation >= 90) rank = '수업 평가 마스터 전문의';
+    else if (isCleared) rank = '수업 평가 응급 전문의';
+    document.getElementById('rank-badge').textContent = rank;
+
+    document.getElementById('stat-saved').textContent = `${savedCount} / ${CASES.length}`;
+    const min = String(Math.floor(Math.max(0, timeRemaining) / 60)).padStart(2, '0');
+    const sec = String(Math.max(0, timeRemaining) % 60).padStart(2, '0');
+    document.getElementById('stat-time').textContent = `${min}:${sec}`;
+    document.getElementById('stat-rep').textContent = `${reputation}점`;
+
+    const summaryList = document.getElementById('summary-list');
+    summaryList.innerHTML = CASES.slice(0, savedCount).map(c =>
+      `<div class="summary-item">✅ <strong>${c.summary}</strong></div>`
+    ).join('') || '<div class="summary-item">아직 완료된 처방 기록이 없습니다. 다시 도전해 보세요!</div>';
+
+    updatePledge();
+    modal.style.display = 'flex';
+  }
+
+  function updatePledge() {
+    const when = document.getElementById('pledge-when').value;
+    const what = document.getElementById('pledge-what').value;
+    document.getElementById('pledge-preview').textContent = `“나는 ${when}, ${what}”`;
+  }
+
+  function startGame() {
+    document.getElementById('guide-modal').style.display = 'none';
+    startTimer();
+  }
+
+  function resetGame() {
+    clearInterval(timerInterval);
+    document.getElementById('result-modal').style.display = 'none';
+    document.getElementById('choice-modal').style.display = 'none';
+    currentCaseIdx = 0;
+    savedCount = 0;
+    timeRemaining = 240;
+    reputation = 100;
+    suddenCallTriggered = false;
+    chances = { consult: true, eliminate: true, time: true };
+
+    document.getElementById('chance-consult').disabled = false;
+    document.getElementById('chance-eliminate').disabled = false;
+    document.getElementById('chance-time').disabled = false;
+
+    updateTimerUI();
+    updateReputationUI();
+    renderMatrix();
+    loadCase(0);
+    openGuideModal();
+  }
+
+  // 초기 실행
+  renderMatrix();
+  loadCase(0);
+  openGuideModal();
+</script>
 </body>
 </html>
