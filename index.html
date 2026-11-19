@@ -1246,7 +1246,20 @@
       .clue-tab {font-size:.7rem;}
     }
 
-  </style>
+  
+    .guide-help {text-align:left;border:1px solid #ddd6fe;background:#faf5ff;border-radius:12px;padding:10px 12px;margin:9px 0;font-size:.86rem;line-height:1.55;color:#4c1d95;}
+    .guide-help div {margin-top:5px;}
+    .guide-more {text-align:left;margin:10px 0 14px;font-size:.83rem;line-height:1.55;color:#475569;}
+    .guide-more summary {cursor:pointer;font-weight:800;color:#334155;padding:5px 0;}
+    .guide-more div {padding:5px 0;}
+    #consult-banner {background:#f0fdfa;border:1px solid #99f6e4;color:#134e4a;border-radius:12px;padding:12px;}
+    .consult-doctor-head {display:flex;align-items:center;gap:9px;margin-bottom:9px;}
+    .consult-avatar {display:grid;place-items:center;width:40px;height:40px;background:white;border:1px solid #99f6e4;border-radius:50%;font-size:1.45rem;flex:none;}
+    .consult-doctor-head small {display:block;font-weight:500;font-size:.73rem;color:#0f766e;}
+    .consult-speech {background:#fff;border:1px solid #ccfbf1;border-radius:0 10px 10px 10px;padding:10px;font-weight:600;line-height:1.6;}
+    @media(max-width:767px){.chance-btn::after {font-size:.72rem;white-space:normal;line-height:1.35;} .guide-help {font-size:.82rem;} .consult-speech {font-size:.87rem;}}
+
+</style>
 </head>
 <body>
 
@@ -1273,10 +1286,10 @@
   <div class="status-bar">
     <div class="ward-hearts" id="ward-hearts"></div>
     <div class="chance-bar">
-      <span class="chance-label">협진 찬스 <span class="chance-sub-note">(각 1회 기본 · 보급 복구 가능)</span>:</span>
-      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">🩺 수석교사 자문 (1회)</button>
-      <button class="chance-btn" id="chance-row" onclick="useRowScanChance()">🎯 영역(행) 스캔 (1회)</button>
-      <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 소거 (1회)</button>
+      <span class="chance-label">도움 기회 <span class="chance-sub-note">(각 1회 기본 · 보급 복구 가능)</span>:</span>
+      <button class="chance-btn" id="chance-consult" onclick="useConsultChance()">👩‍🏫 수석교사 도움 (1회)</button>
+      <button class="chance-btn" id="chance-row" onclick="useRowScanChance()">🎯 정답 행 찾기 (1회)</button>
+      <button class="chance-btn" id="chance-eliminate" onclick="useEliminateChance()">✂️ 오답 2개 지우기 (1회)</button>
     </div>
   </div>
 
@@ -1298,7 +1311,7 @@
 
         <div class="patient-meta" style="margin-top: 10px;">
           <span class="patient-badge" id="patient-ward">1번 병동</span>
-          <span class="consult-tag secret" id="consult-tag">자문 대기 중</span>
+          <span class="consult-tag secret" id="consult-tag">교사 도움 가능</span>
         </div>
         <div class="patient-subject" id="patient-subject" style="margin-top: 4px;"></div>
       </div>
@@ -1398,30 +1411,19 @@
   <div class="modal-inner">
     <div class="modal-emoji">🩺</div>
     <h2 class="modal-title">IB PYP 수업 평가 응급실 안내</h2>
-    <p class="modal-desc">지금 진행 중인 6개 탐구 교실의 실시간 단서를 살펴보고 알맞은 IB 평가 처방을 연결해 보세요. <strong>신뢰도 50점(수습의)</strong>에서 출발해 <strong>100점(마스터 전문의)</strong>과 히든 배지에 도전할 수 있습니다.</p>
-
+    <p class="modal-desc">당신은 수업 평가 응급실의 담당 의사입니다! 6개 교실의 문제를 해결하고 신뢰도 100점에 도전하세요.</p>
     <div class="flow-diagram">
-      <div class="flow-chip">1️⃣ 조기 처방 직관 보너스</div>
-      <div class="flow-chip">2️⃣ 연승 피버 &amp; 실천 처방</div>
-      <div class="flow-chip">3️⃣ 학습자상 &amp; 부작용 도감</div>
+      <div class="flow-chip">① 단서 확인</div>
+      <div class="flow-chip">② 약품 선택</div>
+      <div class="flow-chip">③ 실천 방법 선택</div>
     </div>
-
     <div class="guide-steps">
-      <div class="guide-step-item">
-        <div class="step-num-badge">1</div>
-        <div class="step-text-wrap"><strong>조기 처방 리스크-리턴:</strong> 단서 3개를 다 열지 않아도 즉시 투약할 수 있습니다. <strong>단서 1개만 보고 맞히면 +4점</strong>, <strong>2개 보고 맞히면 +2점</strong> 직관 보너스가 주어집니다!</div>
-      </div>
-      <div class="guide-step-item">
-        <div class="step-num-badge">2</div>
-        <div class="step-text-wrap"><strong>연속 명처방 피버:</strong> 첫 시도에 오진 없이 연속으로 병동을 안정화하면 <strong>피버 모드(+2점 추가 보너스)</strong>가 발동됩니다. (기회 무제한)</div>
-      </div>
-      <div class="guide-step-item">
-        <div class="step-num-badge">3</div>
-        <div class="step-text-wrap"><strong>다회차 누적 수집 도감:</strong> 플레이 방식에 따라 <strong>IB 학습자상 10종 전문의 카드</strong>, 오진 시 나타나는 <strong>처방 부작용 도감</strong>, 누적 점수 기반 <strong>청진기·명찰 스킨</strong>이 해금됩니다.</div>
-      </div>
+      <div class="guide-step-item"><div class="step-num-badge">1</div><div class="step-text-wrap"><strong>교실 상황과 단서를 읽으세요.</strong><br>교사 일기, 학생 증언, 평가 기록물을 눌러 필요한 정보를 확인합니다.</div></div>
+      <div class="guide-step-item"><div class="step-num-badge">2</div><div class="step-text-wrap"><strong>평가 약품표에서 알맞은 처방을 고르세요.</strong><br>평가 시점(UOI·LOI·차시), 목적, 요소를 살펴 약품 1개를 누른 뒤 ‘처방 실행’을 누릅니다.</div></div>
+      <div class="guide-step-item"><div class="step-num-badge">3</div><div class="step-text-wrap"><strong>실제 교실에서 적용할 방법을 고르세요.</strong><br>세 가지 방법 중 알맞은 것을 선택하면 병동이 안정됩니다. 틀려도 다시 도전할 수 있습니다.</div></div>
     </div>
-
-    <p class="modal-desc" style="text-align:left">🆕 위급 병동 1곳 · 2·4병동 뒤 랜덤 보급 · 마지막 비밀의 VIP 특별 진료. 추가 진료점은 신뢰도와 별개로 누적 장비 점수에 반영됩니다.</p>
+    <div class="guide-help"><strong>💡 막힐 때 사용하는 도움 기회 (각 1회)</strong><div>👩‍🏫 <b>수석교사 도움:</b> 평가 전문가의 조언을 확인합니다.</div><div>🎯 <b>정답 행 찾기:</b> 정답이 있는 UOI·LOI·차시 행을 표시합니다.</div><div>✂️ <b>오답 2개 지우기:</b> 틀린 약품 2개를 제외합니다.</div></div>
+    <details class="guide-more"><summary>점수와 특별 미션 안내</summary><div>첫 시도 성공 +7점, 단서 1개만 확인하면 추가 +4점, 2개면 +2점, 연속 성공 시 추가 +2점. 오진 후 성공하면 +4점입니다.<br>위급 환자, 응급 미션, 2·4병동 뒤 보급 상자, 마지막 VIP 특별 진료도 등장합니다. VIP는 약품 2개를 선택합니다. 추가 진료점은 장비 누적 점수에 반영됩니다.</div></details>
     <button class="modal-btn" onclick="startGame()">🚑 응급실 진료 시작하기</button>
   </div>
 </div>
@@ -1454,10 +1456,10 @@
   </div>
 </div>
 
-<!-- 4. 깜짝 긴급 트리아제 미니게임 모달 -->
+<!-- 4. 응급 미션 모달 -->
 <div class="modal-overlay" id="triage-modal">
   <div class="modal-inner" style="max-width: 540px;">
-    <div class="surprise-siren-banner">🚨 깜짝 미션 발생! 긴급 응급실 트리아제 호출</div>
+    <div class="surprise-siren-banner">🚨 응급 미션 발생!</div>
     <h2 class="modal-title">실시간 교실 평가 유형을 빠르게 분류하세요!</h2>
     <p class="modal-desc" style="margin-bottom: 12px;">갑작스러운 응급 분류 요청입니다! 15초 안에 상황 카드 3장을 분류하면 <strong>개당 신뢰도 +3점</strong>을 획득합니다.</p>
 
@@ -1559,7 +1561,7 @@
     </div>
 
     <div class="result-btn-group">
-      <button class="modal-btn secondary" onclick="copyResultToClipboard()">📋 인증서 &amp; 다짐 복사 (패들렛용)</button>
+      <button class="modal-btn secondary" onclick="copyResultToClipboard()">📋 인증서 및 다짐 복사</button>
       <button class="modal-btn" id="next-run-btn" onclick="resetGame()">🚑 2회차 당직 출근하기</button>
     </div>
   </div>
@@ -1672,11 +1674,11 @@
     { id: 'risk-taker', icon: '🦁', title: '도전하는 사람 (Risk-taker)', hint: '단서 1~2개만 보고 직관 보너스를 3회 이상 달성하며 완주', desc: '단서의 핵심을 빠르게 포착해 과감하게 평가 처방을 실행했습니다.' },
     { id: 'inquirer', icon: '🔍', title: '탐구하는 사람 (Inquirer)', hint: '단서 18개를 모두 꼼꼼히 열람하고 오진 0회로 완주', desc: '교사 일기·학생 증언·기록물을 하나도 놓치지 않고 깊이 탐구했습니다.' },
     { id: 'reflective', icon: '🪞', title: '성찰하는 사람 (Reflective)', hint: '오진(재검토)을 겪은 뒤 피드백을 반영해 끝까지 완주', desc: '초기 오진의 원인을 스스로 성찰하고 수정하여 교실을 안정화했습니다.' },
-    { id: 'principled', icon: '⚖️', title: '원칙을 지키는 사람 (Principled)', hint: '협진 찬스(자문·스캔·소거)를 한 번도 쓰지 않고 완주', desc: '외부 도움 없이 IB 평가 매트릭스의 원칙과 위계만으로 승부했습니다.' },
-    { id: 'thinker', icon: '🧠', title: '사고하는 사람 (Thinker)', hint: '오진 0회 + 돌발 트리아제 3/3 퍼펙트 달성', desc: '복잡한 교실 단서와 긴급 분류 상황을 논리적으로 분석해 해결했습니다.' },
+    { id: 'principled', icon: '⚖️', title: '원칙을 지키는 사람 (Principled)', hint: '도움 기회(교사 도움·정답 행 찾기·오답 지우기)를 한 번도 쓰지 않고 완주', desc: '외부 도움 없이 IB 평가 매트릭스의 원칙과 위계만으로 승부했습니다.' },
+    { id: 'thinker', icon: '🧠', title: '사고하는 사람 (Thinker)', hint: '오진 0회 + 응급 미션 3문제 모두 정답', desc: '복잡한 교실 단서와 긴급 분류 상황을 논리적으로 분석해 해결했습니다.' },
     { id: 'knowledgeable', icon: '📚', title: '지식이 풍부한 사람 (Knowledgeable)', hint: '최종 신뢰도 95점 이상 달성', desc: 'UOI·LOI·차시와 평가 목적·요소에 대한 탄탄한 이해를 보여주었습니다.' },
     { id: 'balanced', icon: '☯️', title: '균형 잡힌 사람 (Balanced)', hint: '영역(UOI·LOI·차시) 오판 없이 전 병동 완주', desc: '거시적인 단원 총괄과 미시적인 차시 형성평가의 균형을 유지했습니다.' },
-    { id: 'communicator', icon: '🗣️', title: '소통하는 사람 (Communicator)', hint: '수석교사 자문 찬스를 활용해 동료와 협력하며 완주', desc: '동료 교사의 자문을 경청하고 교실 현장의 목소리와 연결해 해법을 찾았습니다.' },
+    { id: 'communicator', icon: '🗣️', title: '소통하는 사람 (Communicator)', hint: '수석교사 도움를 활용해 동료와 협력하며 완주', desc: '동료 교사의 자문을 경청하고 교실 현장의 목소리와 연결해 해법을 찾았습니다.' },
     { id: 'open-minded', icon: '🌈', title: '열린 마음을 지닌 사람 (Open-minded)', hint: '2단계 실천 처방(교실 적용 방안)을 한 번도 틀리지 않고 완주', desc: '학생 성찰과 과정 중심 피드백 관점을 열린 태도로 수용했습니다.' },
     { id: 'caring', icon: '💚', title: '배려하는 사람 (Caring)', hint: '누적 2회차 이상 응급실 당직 완주', desc: '지속적인 평가 개선 노력으로 학생들의 배움과 성장을 지원했습니다.' }
   ];
@@ -1828,7 +1830,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 4학년 민준 & 지수", text: "“지금 단원 마무리 연습 문제 풀고 있는데, 민수는 ‘변화’랑 ‘인과관계’ 개념을 연결해서 새로운 사례에 적용해 보고 있고, 지수는 외운 단어 뜻만 빈칸에 적고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 총괄평가 계획서 초안", text: "[영역 및 목적] UOI 전체 마무리 · 학습의 평가 (기록·통지용)<br>[현재 초안] <span class='clue-highlight'>단순 사실·용어 회상 위주 문항 (개념 연결 및 새 문제 적용 과제 미구성)</span>" }
       ],
-      consultHint: "💡 자문 핵심: [UOI] 영역의 총괄평가([학습의 평가]) 중 [📖 지식·이해] 개념 연결과 새로운 문제 상황 적용을 확인하는 처방을 고르세요.",
+      consultHint: "[UOI] 영역의 총괄평가([학습의 평가]) 중 [📖 지식·이해] 개념 연결과 새로운 문제 상황 적용을 확인하는 처방을 고르세요.",
       correctDrugId: "uoi-of-essay",
       step2: {
         question: "‘지식 에세이(📖)’를 통해 학생의 개념 연결과 전이 능력을 평가하려면 어떤 과제를 제시해야 할까요?",
@@ -1851,7 +1853,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 5학년 서연 & 현우", text: "“지금 조사 활동지 고치고 있는데, 민수는 백과사전 문장을 그대로 옮겨 적고 있고, 서연이는 자료를 어떤 기준으로 비교·분석해야 할지 몰라서 빈칸만 보고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 기능 피드백 메모장", text: "[영역 및 목적] UOI 진행 중 · 학습을 위한 평가 (✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>ATL POI 단계 기준 및 수행지시어 미적용 상태</span>" }
       ],
-      consultHint: "💡 자문 핵심: [UOI] 진행 중 교사가 피드백하는 [학습을 위한 평가]에서 [✍️ 과정·기능] ATL POI와 수행지시어를 활용하는 처방입니다.",
+      consultHint: "[UOI] 진행 중 교사가 피드백하는 [학습을 위한 평가]에서 [✍️ 과정·기능] ATL POI와 수행지시어를 활용하는 처방입니다.",
       correctDrugId: "uoi-for-atl",
       step2: {
         question: "‘ATL 성장 스펙트럼(✍️)’을 활용한 가장 효과적인 형성평가 피드백 방식은?",
@@ -1874,7 +1876,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 4학년 지호 & 모둠원", text: "“지금 우리 모둠 자료 해석하고 있는데, 민수가 혼자 자기 생각대로 표를 다 그리고 있고 다른 친구들은 탐구 방향을 못 잡아서 아무것도 못 하고 구경만 하고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · LOI 2차시 탐구 활동지", text: "[영역 및 목적] LOI 탐구 과정 · 학습으로서의 평가 (✍️, ❤️)<br>[진행 현황] <span class='clue-highlight'>탐구나침반 활용 및 자기평가·동료평가 성찰 활동 미편성</span>" }
       ],
-      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생 스스로와 동료가 주체가 되는 [학습으로서의 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 성찰 처방입니다.",
+      consultHint: "[LOI] 수준에서 학생 스스로와 동료가 주체가 되는 [학습으로서의 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 성찰 처방입니다.",
       correctDrugId: "loi-as-refl",
       step2: {
         question: "‘탐구 과정 성찰(✍️, ❤️)’을 LOI 수업에 내실 있게 적용하는 방법은?",
@@ -1897,7 +1899,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 3학년 하윤 & 모둠원", text: "“지금 모둠에서 개념 카드를 나누고 있는데, 민수가 혼자 카드를 다 분류하고 있고 나머지 친구들은 분류 기준을 몰라서 아무것도 못 하고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · 본시 교수·학습 과정안 전개부", text: "[영역 및 목적] 단일 차시 활동 중 · 학습을 위한 평가 (✍️, ❤️)<br>[진행 현황] <span class='clue-highlight'>차시 내 학생 탐구 활동 관찰 관점 및 맞춤형 피드백 계획 미반영</span>" }
       ],
-      consultHint: "💡 자문 핵심: 가장 작은 단위인 [차시] 수준에서 교사가 활동 중에 개입하는 [학습을 위한 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 처방을 찾으세요.",
+      consultHint: "가장 작은 단위인 [차시] 수준에서 교사가 활동 중에 개입하는 [학습을 위한 평가] 중 [✍️ 과정·기능, ❤️ 가치·태도] 처방을 찾으세요.",
       correctDrugId: "les-for-obs",
       step2: {
         question: "차시 수업 중 ‘학습 활동 관찰(✍️, ❤️)’을 통해 즉각적인 배움을 돕는 방법은?",
@@ -1920,7 +1922,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 5학년 도윤 & 예진", text: "“지금 단원 마무리 학습지 쓰고 있는데, 민수는 ‘사고하는 사람’ 칸에 활동 이름만 적고 있고, 예진이는 다음 단원 목표 칸에 뭘 써야 할지 몰라서 연필만 들고 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · UOI 단원 마무리 성찰지", text: "[영역 및 목적] UOI 성찰 단계 · 학습으로서의 평가 (❤️ 가치·태도, ✍️ 과정·기능)<br>[진행 현황] <span class='clue-highlight'>준거 기반 자기 활동 성찰 및 새로운 목표 설정 항목 미구성</span>" }
       ],
-      consultHint: "💡 자문 핵심: [UOI] 영역에서 학생 스스로 준거에 따라 성찰하고 새 목표를 세우는 [학습으로서의 평가]([❤️ 가치·태도, ✍️ 과정·기능])를 고르세요.",
+      consultHint: "[UOI] 영역에서 학생 스스로 준거에 따라 성찰하고 새 목표를 세우는 [학습으로서의 평가]([❤️ 가치·태도, ✍️ 과정·기능])를 고르세요.",
       correctDrugId: "uoi-as-lp",
       step2: {
         question: "‘학습자상 및 ATL 성장 스펙트럼(❤️, ✍️)’을 학습으로서의 평가로 운영하는 가장 좋은 방법은?",
@@ -1943,7 +1945,7 @@
         { type: "student", meta: "💬 현장 학생 증언 · 6학년 수빈 & 민수", text: "“지금 첫 번째 탐구목록 개념 지도 그리고 있는데, 민수는 예시 단어만 잔뜩 적고 있고 수빈이는 일반화 문장이랑 개념을 어떻게 연결하는지 몰라서 멈춰 있어요.”" },
         { type: "artifact", meta: "📎 평가 기록물 · LOI 1차 개념 정리 활동지", text: "[영역 및 목적] LOI 진행 중 수시 점검 · 학습을 위한 평가 (📖 지식·이해)<br>[진행 현황] <span class='clue-highlight'>LOI 중간 결과물 기반 개념 이해 수준 파악 및 피드백 단계 미편성</span>" }
       ],
-      consultHint: "💡 자문 핵심: [LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 탐구 과정 중 수시로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
+      consultHint: "[LOI] 수준에서 학생의 [📖 지식·이해](개념 이해 수준)를 교사가 탐구 과정 중 수시로 파악해 피드백하는 [학습을 위한 평가] 처방입니다.",
       correctDrugId: "loi-for-prod",
       step2: {
         question: "LOI 수준에서 ‘학습 결과물(📖)’ 과정 중 수시 평가를 효과적으로 수행하는 조치는?",
@@ -1989,7 +1991,7 @@
     const used=Object.keys(chances).filter(k=>!chances[k]);
     if(!used.length) return false;
     const k=used[Math.floor(Math.random()*used.length)]; chances[k]=true;
-    const labels={consult:['chance-consult','🩺 수석교사 자문 (1회)'],rowScan:['chance-row','🎯 영역(행) 스캔 (1회)'],eliminate:['chance-eliminate','✂️ 오답 2개 소거 (1회)']};
+    const labels={consult:['chance-consult','👩‍🏫 수석교사 도움 (1회)'],rowScan:['chance-row','🎯 정답 행 찾기 (1회)'],eliminate:['chance-eliminate','✂️ 오답 2개 지우기 (1회)']};
     const b=document.getElementById(labels[k][0]); b.disabled=false; b.textContent=labels[k][1]; return true;
   }
   function openLoot(next){
@@ -2000,7 +2002,7 @@
     b.disabled=true;
     const rewards=[0,1,2];
     for(let i=rewards.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[rewards[i],rewards[j]]=[rewards[j],rewards[i]];}
-    const labels=['🩺 협진 찬스 복구','⚡ 다음 병동 보너스','🏅 추가 진료점 +5점'];
+    const labels=['🩺 도움 기회 복구','⚡ 다음 병동 보너스','🏅 추가 진료점 +5점'];
     let opened=false;
     const grid=document.createElement('div');
     grid.style.cssText='display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:8px 0 14px';
@@ -2011,7 +2013,7 @@
       box.innerHTML=`<span style="display:block;font-size:2rem">🎁</span>상자 ${i+1}`;
       box.onclick=()=>{
         if(opened)return;opened=true;let msg;
-        if(r===0 && restoreChance()) msg='🩺 사용한 협진 찬스 1개 복구!';
+        if(r===0 && restoreChance()) msg='🩺 사용한 도움 기회 1개 복구!';
         else if(r===1){doubledNext=true;msg='⚡ 다음 병동 완료 진료점 보너스! 기존 획득 점수만큼 추가 진료점을 지급합니다.';}
         else {addExtra(5);msg=r===0?'🩺 복구할 찬스가 없어 추가 진료점 +5점 지급!':'🏅 추가 진료점 +5점!';}
         [...grid.children].forEach((el,k)=>{el.disabled=true;el.textContent=labels[rewards[k]];el.style.opacity=k===i?'1':'.5';el.style.background=k===i?'#dcfce7':'#f1f5f9';el.style.borderColor=k===i?'#16a34a':'#cbd5e1';});
@@ -2050,7 +2052,7 @@
   }
   function currentCaseData(){return vipActive?VIP_CASE:activeCases[currentCaseIdx];}
   function openBoss(){
-    setupExtra('👑','비밀의 VIP 환자 등장','TOP SECRET · 일반 병동 6곳 진료 완료. 극비 특별 병동이 열렸습니다. 기존 약품 캐비닛에서 두 가지 처방을 선택하세요.','VIP 병동 입장',()=>{
+    setupExtra('👑','비밀의 VIP 환자 등장','TOP SECRET · 일반 병동 6곳 진료 완료. 극비 특별 병동이 열렸습니다. 모든 약품을 다시 검토하여 두 가지 처방을 선택하세요. 앞선 병동에서 사용한 약품도 선택할 수 있습니다.','VIP 병동 입장',()=>{
       extraModal().style.display='none';vipActive=true;
       document.querySelector('.container').classList.add('vip-ward');
       renderMatrix();loadCase(currentCaseIdx);window.scrollTo(0,0);
@@ -2355,7 +2357,7 @@
           stack.className = 'drug-stack';
 
           cell.items.forEach(item => {
-            const isStamped = stampedDrugIds.has(item.id);
+            const isStamped = !vipActive && stampedDrugIds.has(item.id);
             const itemEl = document.createElement('div');
             itemEl.className = 'drug-item' + (isStamped ? ' stamped-done' : '');
             itemEl.dataset.id = item.id;
@@ -2379,7 +2381,7 @@
       tbody.appendChild(tr);
     });
 
-    document.getElementById('dex-progress').textContent = `도감 수집: ${stampedDrugIds.size} / ${CASES.length} 처방 완료`;
+    document.getElementById('dex-progress').textContent = vipActive ? "특별 진료 · 모든 약품 선택 가능" : `도감 수집: ${stampedDrugIds.size} / ${CASES.length} 처방 완료`;
   }
 
   function renderWardHearts() {
@@ -2437,7 +2439,7 @@
     consultBanner.style.display = 'none';
     consultBanner.textContent = '';
     const consultTag = document.getElementById('consult-tag');
-    consultTag.textContent = chances.consult ? '자문 대기 중' : '자문 찬스 소진';
+    consultTag.textContent = chances.consult ? '교사 도움 가능' : '교사 도움 사용 완료';
     consultTag.classList.add('secret');
 
     const rxBox = document.getElementById('selected-prescription');
@@ -2807,8 +2809,8 @@
     updateStatusUI();
 
     const titleText = isTimeout
-      ? `⏱️ 시간 종료! 깜짝 트리아제 ${triageCorrectCount}/3개 분류`
-      : `🚨 깜짝 트리아제 완료! (${triageCorrectCount}/3개 정확 분류)`;
+      ? `⏱️ 시간 종료! 응급 미션 ${triageCorrectCount}/3개 분류`
+      : `🚨 응급 미션 완료! (${triageCorrectCount}/3개 정확 분류)`;
     const descText = gained > 0
       ? `돌발 응급 분류 미션 성공으로 신뢰도 +${gained}점을 추가 획득했습니다! 이어서 ${currentCaseIdx + 2}번 병동으로 이동합니다.`
       : `보너스 점수는 놓쳤지만, 이어서 ${currentCaseIdx + 2}번 병동 진료를 계속 진행합니다.`;
@@ -2828,16 +2830,22 @@
 
     const btn = document.getElementById('chance-consult');
     btn.disabled = true;
-    btn.textContent = '🩺 자문 소진됨';
+    btn.textContent = '교사 도움 사용 완료';
     playTone(700, 'sine', 0.14);
 
     const data = currentCaseData();
     const banner = document.getElementById('consult-banner');
-    banner.textContent = data.consultHint;
-    banner.style.display = 'block';
+    banner.replaceChildren();
+    const head=document.createElement('div');head.className='consult-doctor-head';
+    const avatar=document.createElement('span');avatar.className='consult-avatar';avatar.textContent='👩‍🏫';
+    const label=document.createElement('div');label.innerHTML='<strong>수석교사</strong><small>수업 평가 전문가의 조언</small>';
+    head.append(avatar,label);
+    const speech=document.createElement('div');speech.className='consult-speech';speech.textContent=data.consultHint;
+    banner.append(head,speech);banner.style.display = 'block';
+    showNotice('👩‍🏫','수석교사의 조언',data.consultHint);
 
     const tag = document.getElementById('consult-tag');
-    tag.textContent = '수석교사 자문 완료';
+    tag.textContent = '수석교사 도움 받음';
     tag.classList.remove('secret');
   }
 
@@ -2847,7 +2855,7 @@
 
     const btn = document.getElementById('chance-row');
     btn.disabled = true;
-    btn.textContent = '🎯 스캔 소진됨';
+    btn.textContent = '정답 행 찾기 사용 완료';
     playTone(760, 'sine', 0.15);
 
     const targetArea = currentCaseData().targetArea;
@@ -2857,7 +2865,7 @@
       }
     });
 
-    showNotice('🎯', `영역 스캔 완료: [${targetArea}]`, `현재 병동의 평가 처방은 약품 캐비닛의 [${targetArea}] 가로줄(보라색 표시) 안에 있습니다.`);
+    showNotice('🎯', `정답 행 찾기: [${targetArea}]`, `현재 병동의 평가 처방은 약품 캐비닛의 [${targetArea}] 가로줄(보라색 표시) 안에 있습니다.`);
   }
 
   function useEliminateChance() {
@@ -2866,7 +2874,7 @@
 
     const btn = document.getElementById('chance-eliminate');
     btn.disabled = true;
-    btn.textContent = '✂️ 소거 소진됨';
+    btn.textContent = '오답 지우기 사용 완료';
     playTone(660, 'sine', 0.14);
 
     const correctIds = vipActive?VIP_CASE.correctDrugIds:[currentCaseData().correctDrugId];
@@ -2952,8 +2960,8 @@
     return [
       { unlocked: mistakeCount === 0, title: '⚡ 원샷 원킬', desc: '6개 병동 모두 오진 0회 완주' },
       { unlocked: totalCluesOpened <= 11, title: '🕵️ 단서 절약가', desc: totalCluesOpened <= 11 ? `단서 ${totalCluesOpened}/18개만 열람하고 성공` : '단서 11개 이하만 보고 전 병동 완주' },
-      { unlocked: chances.consult && chances.rowScan && chances.eliminate, title: '🧠 독고다이 명의', desc: '협진 찬스 미사용 독자 처방 달성' },
-      { unlocked: triageCorrectCount === 3, title: '⏱️ 트리아제 에이스', desc: '깜짝 긴급 평가 분류 3/3 퍼펙트' }
+      { unlocked: chances.consult && chances.rowScan && chances.eliminate, title: '🧠 독고다이 명의', desc: '도움 기회 미사용 독자 처방 달성' },
+      { unlocked: triageCorrectCount === 3, title: '⏱️ 응급 미션 달인', desc: '응급 미션 3문제 모두 정답' }
     ];
   }
 
@@ -3072,7 +3080,7 @@
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(shareText).then(() => {
-        showNotice('📋', '복사 완료!', '인증서 결과와 나의 평가 다짐이 클립보드에 복사되었습니다. 패들렛이나 채팅창에 바로 붙여넣기 하세요!');
+        showNotice('📋', '복사 완료!', '인증서 결과와 나의 평가 다짐이 클립보드에 복사되었습니다. 원하는 곳에 붙여넣으세요!');
       }).catch(() => {
         showNotice('📋', '복사 안내', shareText);
       });
@@ -3132,15 +3140,15 @@
 
     const consultBtn = document.getElementById('chance-consult');
     consultBtn.disabled = false;
-    consultBtn.textContent = '🩺 수석교사 자문 (1회)';
+    consultBtn.textContent = '👩‍🏫 수석교사 도움 (1회)';
 
     const rowBtn = document.getElementById('chance-row');
     rowBtn.disabled = false;
-    rowBtn.textContent = '🎯 영역(행) 스캔 (1회)';
+    rowBtn.textContent = '🎯 정답 행 찾기 (1회)';
 
     const eliminateBtn = document.getElementById('chance-eliminate');
     eliminateBtn.disabled = false;
-    eliminateBtn.textContent = '✂️ 오답 2개 소거 (1회)';
+    eliminateBtn.textContent = '✂️ 오답 2개 지우기 (1회)';
 
     updateStatusUI();
     renderMatrix();
@@ -3191,7 +3199,7 @@
   function adaptMobileMenu(){closeMobileMenu();menuNodes.forEach((node,i)=>{if(mobileQuery.matches)mobileMenuPanel.append(node);else menuHomes[i].after(node);});}
   mobileQuery.addEventListener('change',adaptMobileMenu);
   adaptMobileMenu();
-  [['chance-consult','🩺 자문 1회','자문 소진'],['chance-row','🎯 영역 1회','영역 소진'],['chance-eliminate','✂️ 소거 1회','소거 소진']].forEach(([id,short,used])=>{const el=document.getElementById(id);el.dataset.short=short;el.dataset.used=used;});
+  [['chance-consult','👩‍🏫 교사 도움','사용 완료'],['chance-row','🎯 정답 행 찾기','사용 완료'],['chance-eliminate','✂️ 오답 2개 지우기','사용 완료']].forEach(([id,short,used])=>{const el=document.getElementById(id);el.dataset.short=short;el.dataset.used=used;});
   const vitalStatus=document.getElementById('vital-status');
   function syncVitalShort(){const t=vitalStatus.textContent;vitalStatus.dataset.short=t.includes('안정화')||t.includes('MISSION COMPLETE')?'● 안정화':t.includes('VIP')?'◆ VIP 진료':'● 진료 중';}
   new MutationObserver(syncVitalShort).observe(vitalStatus,{childList:true,characterData:true,subtree:true});syncVitalShort();
