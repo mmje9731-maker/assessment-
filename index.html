@@ -1040,8 +1040,8 @@
       .chance-btn { min-height:44px; padding:6px 3px; font-size:.73rem; overflow-wrap:anywhere; }
       .game-layout { display:block; }
       .patient-panel,.cabinet-panel { padding:12px; gap:10px; }
-      .container.mobile-cabinet .patient-panel { display:none; }
-      .container:not(.mobile-cabinet) .cabinet-panel { display:none; }
+      .patient-panel,.cabinet-panel { display:flex; }
+      .cabinet-panel { margin-top:10px; }
       .clue-tab { min-height:48px; font-size:.77rem; padding:8px 3px; }
       .clue-content-box,.scene-text,.drug-desc { overflow-wrap:anywhere; }
       .scene-text,.clue-content-box { font-size:.95rem; line-height:1.65; }
@@ -1096,6 +1096,66 @@
     @media(max-width:360px) { .clue-tab { font-size:.71rem; } .mobile-nav button { font-size:.8rem; } .container { padding-left:8px; padding-right:8px; } .chance-btn { font-size:.68rem; } }
     @media(prefers-reduced-motion:reduce) { .ecg-line,.floating-score,.surprise-siren-banner { animation:none!important; } }
 
+
+    @media(max-width:767px) {
+      .container { padding-bottom:calc(var(--mobile-dock-height,125px) + 16px); }
+      html { scroll-padding-bottom:calc(var(--mobile-dock-height,125px) + 12px); }
+      .header-left .subtitle { font-size:.75rem; }
+      .header-controls .icon-btn { min-height:40px; }
+      .patient-panel,.cabinet-panel { gap:8px; padding:10px; }
+      .scene-box,.clue-system { padding:9px 10px; }
+      .clue-content-box { min-height:0; padding:10px; }
+      .scene-text,.clue-content-box { font-size:.89rem; line-height:1.55; }
+      .cabinet-title { font-size:.96rem; }
+      .matrix-table tbody { gap:8px; }
+      .matrix-table th,.matrix-table td { padding:7px!important; }
+      .matrix-cell::before { margin-bottom:5px; padding:4px 7px; font-size:.79rem; }
+      .drug-stack { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:5px; }
+      .drug-item:only-child { grid-column:1/-1; }
+      .drug-item { min-width:0; min-height:48px; padding:7px; }
+      .drug-title { font-size:.83rem; line-height:1.4; }
+      .drug-desc { font-size:.76rem; line-height:1.42; }
+      #mobile-dock .prescription-paper { margin:0; padding:5px 7px; gap:4px; background:white; }
+      #mobile-dock .prescription-header { border:0; padding:0; }
+      #mobile-dock .selected-prescription { max-height:64px; }
+      #mobile-dock .action-btn { min-height:46px; }
+      .mobile-area-filter { position:static; }
+    }
+    @media(max-width:360px) { .drug-stack { grid-template-columns:1fr; } }
+
+    /* Compact original assessment matrix on smartphones. */
+    .matrix-detail-toggle { display:none; }
+    @media(max-width:767px) {
+      .mobile-area-filter, .mobile-scroll-hint { display:none!important; }
+      .matrix-detail-toggle { display:block; align-self:flex-end; min-height:36px; padding:5px 10px; border:1px solid #cbd5e1; border-radius:8px; background:#fff; color:#334155; font:inherit; font-size:.78rem; font-weight:700; }
+      .cabinet-panel { padding:8px; }
+      .table-scroll-wrap { width:100%; overflow:visible; }
+      .matrix-table { display:table; table-layout:fixed; border-collapse:collapse; width:100%; min-width:0; border:1px solid #cbd5e1; background:white; }
+      .matrix-table thead { display:table-header-group; }
+      .matrix-table tbody { display:table-row-group; }
+      .matrix-table tr,.matrix-table tr.mobile-filtered { display:table-row; border:0; border-radius:0; overflow:visible; }
+      .matrix-table th,.matrix-table td { display:table-cell; width:auto; border:1px solid #cbd5e1; padding:4px 3px!important; font-size:.71rem; line-height:1.32; overflow-wrap:anywhere; word-break:normal; }
+      .matrix-table .corner-header { width:23%; padding:4px!important; }
+      .corner-title { display:block; font-size:.69rem; margin:0; padding:0; border:0; }
+      .corner-title span { display:block; }
+      .corner-elements { display:none; }
+      .group-header-process,.group-header-result { font-size:.72rem!important; }
+      .sub-header { font-size:.71rem!important; }
+      .sub-header small { display:none; }
+      .matrix-table .area-col { display:table-cell!important; vertical-align:top; }
+      .area-badge { font-size:.75rem; padding:3px 5px; margin:0 0 5px; }
+      .area-focus-list { display:flex; flex-direction:column; flex-wrap:nowrap; gap:3px; font-size:.65rem; line-height:1.3; }
+      .matrix-cell::before { content:none!important; display:none!important; }
+      .matrix-cell.disabled { text-align:center!important; }
+      .drug-stack { display:flex; flex-direction:column; gap:4px; }
+      .drug-item { min-height:44px; min-width:0; padding:5px 3px; display:flex; flex-direction:column; justify-content:center; border-radius:6px; }
+      .drug-title { font-size:.72rem; line-height:1.3; margin:0; overflow-wrap:anywhere; word-break:normal; }
+      .drug-desc { display:none; font-size:.67rem; line-height:1.35; margin-top:4px; }
+      .matrix-table.show-details .drug-desc { display:block; }
+      .stamp-tag { font-size:.55rem; padding:1px 2px; align-self:flex-start; }
+      .matrix-table .drug-item.selected { border-width:1.5px; }
+      .element-legend { font-size:.69rem; padding:5px 6px; }
+    }
   </style>
 </head>
 <body>
@@ -1205,6 +1265,7 @@
         <button type="button" data-area="all" aria-pressed="true">전체</button><button type="button" data-area="UOI" aria-pressed="false">UOI</button><button type="button" data-area="LOI" aria-pressed="false">LOI</button><button type="button" data-area="차시" aria-pressed="false">차시</button>
       </div><div class="mobile-scroll-hint">← 좌우로 밀어서 전체 약품표 보기 →</div>
 
+      <button type="button" class="matrix-detail-toggle" aria-expanded="false" aria-controls="matrix-table">약품 설명 펼치기 ▾</button>
       <div class="table-scroll-wrap">
         <table class="matrix-table" id="matrix-table">
           <thead>
@@ -1237,10 +1298,7 @@
 </div>
 
 <div id="mobile-dock">
-  <div class="mobile-nav" aria-label="진료 화면 전환">
-    <button type="button" id="mobile-patient" aria-pressed="true">🔍 교실 상황 · 단서</button>
-    <button type="button" id="mobile-cabinet" aria-pressed="false">💊 평가 약품표</button>
-  </div>
+
 </div>
 
 <!-- 1. 게임 규칙 안내 모달 -->
@@ -3008,14 +3066,8 @@
     document.querySelectorAll('.mobile-area-filter button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.area===area)));
     document.querySelectorAll('#matrix-body tr').forEach(tr=>tr.classList.toggle('mobile-filtered',area!=='all'&&tr.dataset.area!==area));
   }
-  function mobileShowCabinet(show,scroll=true){
-    document.querySelector('.container').classList.toggle('mobile-cabinet',show);
-    document.getElementById('mobile-patient').setAttribute('aria-pressed',String(!show));
-    document.getElementById('mobile-cabinet').setAttribute('aria-pressed',String(show));
-    if(scroll&&mobileQuery.matches) (show?document.querySelector('.cabinet-panel'):document.getElementById('patient-panel')).scrollIntoView({block:'start'});
-  }
   function mobileResetView(){
-    mobileFilter('all'); mobileShowCabinet(false,false);
+    mobileFilter('all');
     mobileDock.classList.toggle('vip-dock',vipActive);
     if(mobileQuery.matches) window.scrollTo(0,0);
   }
@@ -3027,12 +3079,16 @@
       if(mobileRx.parentElement===mobileDock) mobileHome.after(mobileRx);
     }
   }
-  document.getElementById('mobile-patient').onclick=()=>mobileShowCabinet(false);
-  document.getElementById('mobile-cabinet').onclick=()=>mobileShowCabinet(true);
   document.querySelectorAll('.mobile-area-filter button').forEach(b=>b.onclick=()=>mobileFilter(b.dataset.area));
   mobileQuery.addEventListener('change',mobileAdapt);
   if(window.ResizeObserver) new ResizeObserver(()=>{if(mobileQuery.matches)document.documentElement.style.setProperty('--mobile-dock-height',mobileDock.offsetHeight+'px');}).observe(mobileDock);
   mobileAdapt();
+  const matrixDetailToggle=document.querySelector('.matrix-detail-toggle');
+  matrixDetailToggle.addEventListener('click',()=>{
+    const expanded=document.getElementById('matrix-table').classList.toggle('show-details');
+    matrixDetailToggle.setAttribute('aria-expanded',String(expanded));
+    matrixDetailToggle.textContent=expanded?'약품 설명 접기 ▴':'약품 설명 펼치기 ▾';
+  });
 
   resetGame();
 </script>
