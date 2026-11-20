@@ -1468,7 +1468,15 @@
 #recovery-result-modal .modal-btn{margin-top:12px;width:100%;min-height:48px}
 #recovery-result-modal .read-note{font-size:13px;color:#52655c;line-height:1.5;margin:8px 0 0}
 @media(max-width:767px){#recovery-result-modal .modal-inner{padding:15px}}
-</style></head>
+</style>
+<style id="recovery-stamp-style">
+#recovery-result-modal .recovery-stamp{display:block;width:min(210px,80%);margin:8px auto 12px;color:#166534;border:3px double #15803d;border-radius:7px;padding:7px 12px;box-sizing:border-box;transform:rotate(-5deg);background:#f0fdf4;text-align:center;line-height:1.35;}
+.recovery-stamp strong{display:block;font-size:22px;font-weight:900;letter-spacing:.09em}.recovery-stamp small{display:block;font-size:12px;letter-spacing:.06em;margin-top:3px;font-weight:700}
+#recovery-result-modal .recovery-stamp.stamped{animation:recoveryStampIn .48s cubic-bezier(.2,.8,.25,1) both}
+@keyframes recoveryStampIn{0%{opacity:0;transform:scale(1.26) rotate(-12deg)}65%{opacity:1;transform:scale(.96) rotate(-5deg)}100%{opacity:1;transform:scale(1) rotate(-5deg)}}
+@media(prefers-reduced-motion:reduce){#recovery-result-modal .recovery-stamp.stamped{animation:none}}
+</style>
+</head>
 <body>
 
 <div class="container">
@@ -1678,6 +1686,7 @@
   <div class="modal-emoji" aria-hidden="true">💚</div>
   <h2 class="modal-title" id="recovery-result-title">처방 성공!</h2>
   <div id="recovery-result-award" class="ward-award" hidden></div>
+  <div class="recovery-stamp" id="recovery-stamp" aria-label="진료 완료, 교실 안정화 확인"><strong>진료 완료</strong><small>교실 안정화 확인</small></div>
   <div id="recovery-result-award-recovery" class="classroom-recovery" hidden></div>
   <p class="read-note">교실의 변화를 충분히 확인한 뒤 다음으로 진행하세요.</p>
   <button type="button" class="modal-btn" id="recovery-result-next">다음 →</button>
@@ -2295,12 +2304,12 @@
   function showSignal(kind,next){
     clearSignal(); const m=document.getElementById('signal-modal'), b=document.getElementById('signal-action');
     const configs={triage:['중앙 관제실 · 긴급 신호','이상 징후 감지','갑작스러운 평가 응급 상황','긴급 호출 발생!','15초 동안 3개의 평가 상황을 분류하세요. 시작 버튼을 누르면 제한 시간이 시작됩니다.','응급 미션 시작',signalECG],critical:['환자 상태 감시실','심박수 급상승','위급 환자 이송 중','위급 환자 도착!','첫 시도에 두 단계 모두 성공하면 추가 진료점 8점을 획득합니다.','위급 환자 진료하기',signalECG],loot:['응급실 물품 관리실','보급 신호 수신','보급품 도착 확인 중','특별 보급품 도착!','잠긴 보급 상자 3개 중 하나를 선택하세요. 희귀 보급품이 숨어 있을 수도 있습니다.','보급 상자 확인',signalCrate],vip:['제한 구역 · 특별 접근','미등록 병동 신호 감지','보안 권한 확인 중','비밀의 VIP 병동 개방!','일반 병동 6곳을 모두 안정화했습니다. 모든 약품이 다시 선택 가능하며, 이번에는 두 가지 처방이 필요합니다.','VIP 병동 입장',signalDoor]};
-    const c=configs[kind];signalCallback=next;m.dataset.kind=kind;m.dataset.phase='0';document.getElementById('signal-label').textContent=c[0];document.getElementById('signal-art').innerHTML=c[6];document.getElementById('signal-title').textContent=c[1];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='신호 수신 중… 바로 확인할 수 있습니다.';b.textContent=c[5];b.disabled=false;m.style.display='flex';playTone(kind==='loot'?520:kind==='vip'?392:440,'sine',.13);
-    const phase1=()=>{m.dataset.phase='1';document.getElementById('signal-title').textContent=c[2];document.getElementById('signal-status').textContent='신호 분석 완료 · 바로 확인할 수 있습니다.';playTone(kind==='loot'?660:kind==='vip'?523:660,'sine',.14);};
-    const phase2=()=>{m.dataset.phase='2';document.getElementById('signal-title').textContent=c[3];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='준비되면 아래 버튼을 눌러 주세요.';b.textContent=c[5];b.disabled=false;try{b.focus({preventScroll:true});}catch(e){}playTone(kind==='vip'?784:kind==='loot'?740:880,'sine',.14);};
+    const c=configs[kind];signalCallback=next;m.dataset.kind=kind;m.dataset.phase='0';document.getElementById('signal-label').textContent=c[0];document.getElementById('signal-art').innerHTML=c[6];document.getElementById('signal-title').textContent=c[1];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent=kind==='vip'?'특별 진료 요청 확인 중…':'신호 수신 중… 바로 확인할 수 있습니다.';b.textContent=kind==='vip'?'보안 확인 중…':c[5];b.disabled=kind==='vip';m.style.display='flex';playTone(kind==='loot'?520:kind==='vip'?392:440,'sine',.13);
+    const phase1=()=>{m.dataset.phase='1';document.getElementById('signal-title').textContent=c[2];document.getElementById('signal-status').textContent=kind==='vip'?'접근 권한 확인 중…':'신호 분석 완료 · 바로 확인할 수 있습니다.';playTone(kind==='loot'?660:kind==='vip'?523:660,'sine',.14);};
+    const phase2=()=>{m.dataset.phase='2';document.getElementById('signal-title').textContent=c[3];document.getElementById('signal-desc').textContent=c[4];document.getElementById('signal-status').textContent='준비되면 아래 버튼을 눌러 주세요.';const enable=()=>{b.textContent=c[5];b.disabled=false;document.getElementById('signal-status').textContent='준비되면 아래 버튼을 눌러 주세요.';try{b.focus({preventScroll:true});}catch(e){}};if(kind==='vip'&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){b.textContent='병동 개방 중…';document.getElementById('signal-status').textContent='보안 승인 완료 · 출입문 개방 중';signalTimers.push(setTimeout(enable,750));}else{enable();}playTone(kind==='vip'?784:kind==='loot'?740:880,'sine',.14);};
     renderWardAward("signal-award",false);
     b.onclick=()=>{if(b.disabled||!signalCallback)return;const cb=signalCallback;clearSignal();cb();};
-    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){phase2();}else{signalTimers=[setTimeout(phase1,1500),setTimeout(phase2,3500)];}
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches&&kind!=='vip'){phase2();}else{signalTimers=[setTimeout(phase1,1500),setTimeout(phase2,3500)];}
   }
   function maybeCriticalSignal(){if(hasStarted&&!vipActive&&currentCaseIdx===criticalWard&&!criticalAnnounced){criticalAnnounced=true;showSignal('critical',()=>{});}}
 
@@ -2345,6 +2354,9 @@
     btn.textContent=isVip?'최종 인증서 확인 →':'다음 →';
     btn.onclick=()=>{if(modal.style.display==='none')return;closeRecoveryResult();next();};
     modal.style.display='flex';modal.querySelector('.modal-inner').scrollTop=0;
+    const stamp=document.getElementById('recovery-stamp');
+    stamp.classList.remove('stamped');void stamp.offsetWidth;stamp.classList.add('stamped');
+    playTone(520,'sine',0.11);
   }
   let lootTimer=null, triageAnswerTimer=null, triageEnded=true, transitionPaintTimer=null;
   let consultCount=2, consultedWard=false, usedAnyHelp=false;
