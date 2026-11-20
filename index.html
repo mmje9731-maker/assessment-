@@ -1483,7 +1483,10 @@
 @keyframes recoveryStampIn{0%{opacity:0;transform:scale(1.26) rotate(-12deg)}65%{opacity:1;transform:scale(.96) rotate(-5deg)}100%{opacity:1;transform:scale(1) rotate(-5deg)}}
 @media(prefers-reduced-motion:reduce){#recovery-result-modal .recovery-stamp.stamped{animation:none}}
 </style>
-</head>
+<style>
+#result-modal .formal-cert{background:#f8f5eb;color:#234b40;border:2px solid #ad9253;border-radius:8px;padding:6px;text-align:center;box-shadow:0 8px 24px #14223718;animation:certReveal .6s both}
+.cert-paper{border:1px solid #d4c49c;padding:clamp(12px,3vw,30px);overflow:hidden}.cert-eyebrow{font-size:11px;letter-spacing:1.6px;color:#806c40;font-weight:800}.cert-crest{width:80px;height:80px;margin:8px auto 0;display:block}.cert-paper h2{font-size:clamp(24px,5vw,36px);margin:5px 0;color:#234b40}.formal-cert .certificate-person{margin:16px auto 10px;border-top:1px solid #d4c49c;padding-top:12px;background:none}.formal-cert #certificate-name{font-size:clamp(24px,5vw,34px);color:#252c25;overflow-wrap:anywhere}.formal-cert #rank-badge{display:inline-block;background:#234b40;color:#f4e2b0;padding:7px 14px;border-radius:4px;font-size:clamp(14px,3vw,19px);animation:certReveal .55s .6s both}.cert-message{font-size:15px;line-height:1.8;word-break:keep-all;overflow-wrap:anywhere;color:#49483d;margin:13px auto;max-width:480px}.formal-cert .stats-grid{border-block:1px solid #d4c49c;padding:10px 0;margin:16px 0;gap:4px}.formal-cert .stat-box{background:none;border:0;padding:5px 2px}.formal-cert .stat-label{color:#736a54;font-size:11px}.formal-cert .stat-val{color:#234b40;font-size:19px}.cert-footer{display:flex;align-items:center;justify-content:space-between;gap:12px;text-align:left}.cert-footer small{display:block;font-size:10px;color:#736a54;margin-top:6px}.cert-footer strong{display:block;font-size:14px;margin-top:4px}.formal-cert .certificate-date{color:#736a54;font-size:12px}.formal-cert .grade-stamp{display:grid;place-items:center;text-align:center;width:76px;height:76px;box-sizing:border-box;border:4px double #a84439;color:#a84439;border-radius:50%;background:transparent;white-space:normal;padding:7px;font-size:14px;animation:certSeal .55s 1.2s both;transform:rotate(-12deg)}.cert-save{margin:3px 0}.cert-save-status{font-size:12px;color:#475569;margin:4px 0}.cert-gear{padding:12px;border:1px solid #d1d5db;border-radius:12px;background:#f8fafc;text-align:left;margin:12px 0}.cert-gear #result-skin-label{font-size:13px;margin:6px 0;color:#475569}.cert-envelope{background:#142237!important;color:#f5e4af!important;border:1px solid #b89a55!important}.cert-envelope p{color:#d1dbea!important}.envelope-art svg{width:125px;display:block;margin:0 auto 10px}@keyframes certReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@keyframes certSeal{from{opacity:0;transform:scale(1.8) rotate(-12deg)}to{opacity:1;transform:scale(1) rotate(-12deg)}}@media(prefers-reduced-motion:reduce){#result-modal .formal-cert,.formal-cert #rank-badge,.formal-cert .grade-stamp{animation:none}}
+</style></head>
 <body>
 
 <div class="container">
@@ -1764,16 +1767,13 @@
     <nav class="final-progress" aria-label="결과 확인 단계"><span>① 인증서</span><span>② 특별 보고서</span><span>③ 실천 다짐</span><span>④ 수료</span></nav>
     <section class="final-stage" id="final-stage-0">
     <div class="final-kicker">진료 완료 · 인증서 발급</div>
-    <div class="id-card" id="result-id-card">
-      <div class="id-card-top">
-        <div class="id-card-title-group">
-          <div class="id-card-sub" id="result-skin-label">🩺 기본 청진기 · IB PYP 평가 인증서</div>
-          <div class="id-card-main-rank" id="rank-badge">IB 평가 마스터 전문의</div>
-        </div>
-        <div class="grade-stamp" id="grade-stamp">S등급 인증</div>
-      </div>
-
-      <div class="certificate-person"><small>진료 담당자</small><div id="certificate-name"></div><div class="certificate-date" id="certificate-date"></div></div>
+    <div class="id-card formal-cert" id="result-id-card">
+      <div class="cert-paper"><div class="cert-eyebrow">IB PYP ASSESSMENT ER</div><svg class="cert-crest" viewBox="0 0 100 100" aria-hidden="true"><path d="M50 8L61 15 75 16 81 29 92 40 88 54 81 69 68 75 50 88 32 75 19 69 12 54 8 40 19 29 25 16 39 15Z" fill="#b89a55"/><circle cx="50" cy="47" r="29" fill="#234b40" stroke="#f5e4af" stroke-width="2"/><path d="M45 30h10v12h12v10H55v12H45V52H33V42h12Z" fill="#f5e4af"/></svg>
+      <h2>평가 진료 인증서</h2><div class="cert-eyebrow">CERTIFICATE OF COMPLETION</div>
+      <div class="certificate-person"><small>진료 담당자</small><div id="certificate-name"></div></div>
+      <div class="id-card-main-rank" id="rank-badge"></div>
+      <p id="cert-message" class="cert-message"></p>
+      <p class="cert-message">학생의 배움을 살피고 성장을 지원하는 평가의 가치를 실제 교실에서도 이어가기를 기대하며, 진료 과정의 완수를 인증합니다.</p>
       <div class="stats-grid">
         <div class="stat-box">
           <div class="stat-label">안정화 병동</div>
@@ -1789,7 +1789,10 @@
         </div>
       </div>
 
-      <div class="skin-progress-box">
+      <div class="cert-footer"><div><div class="certificate-date" id="certificate-date"></div><strong>IB PYP 평가 응급실</strong><small>게임 내 활동 완수 인증 · 공식 IB 자격 아님</small></div><div class="grade-stamp" id="grade-stamp"></div></div>
+      </div></div>
+      <button type="button" class="modal-btn secondary cert-save" onclick="saveCertificatePNG()">↓ 인증서 이미지 저장</button><p id="cert-save-status" role="status" class="cert-save-status"></p>
+      <div class="cert-gear"><strong>나의 진료 장비 성장</strong><div id="result-skin-label"></div><div class="skin-progress-box">
         <div class="skin-progress-head">
           <span id="skin-progress-title">누적 진료 포인트: 100점</span>
           <span id="skin-progress-next" style="color:#2563eb;">다음 장비까지 50점!</span>
@@ -1799,8 +1802,7 @@
         </div>
       </div>
     </div>
-
-    <div class="final-teaser"><strong>🔒 선생님만의 특별 진료 보고서가 도착했습니다!</strong><p>IB 코디네이터의 최종 소견과 아직 공개되지 않은 진료 결과를 확인해 보세요.</p><button class="modal-btn final-gold" onclick="showFinalStage(1)">🔓 나의 특별 진료 보고서 열기 →</button></div>
+      <div class="final-teaser cert-envelope"><div class="envelope-art" aria-hidden="true"><svg viewBox="0 0 180 110"><rect x="5" y="6" width="170" height="98" rx="5" fill="#24354e" stroke="#cbaf6d"/><path d="M6 96L75 40H105L174 96M5 7L90 72L175 7Z" fill="#344761" stroke="#c1a263"/><circle cx="90" cy="68" r="15" fill="#9e4036" stroke="#d78666"/><text x="90" y="73" text-anchor="middle" font-size="13" fill="#efc0a4">IB</text></svg></div><strong>선생님께 도착한 특별 보고서</strong><p>획득한 배지와 코디네이터의 개인별 최종 소견이 담겨 있습니다.</p><button class="modal-btn final-gold" onclick="showFinalStage(1)">봉인 해제하기 →</button></div>
     </section>
     <section class="final-stage" id="final-stage-1" hidden>
     <section class="honor-hall" aria-label="나의 진료 명예의 전당">
@@ -3540,9 +3542,10 @@
     document.getElementById('certificate-name').textContent=doctorName||'진료 담당 선생님';
     document.getElementById('certificate-date').textContent=new Date().toLocaleDateString('ko-KR')+' · 진료 수료';
     const idCard = document.getElementById('result-id-card');
-    idCard.className = `id-card tier-${skin.tier}`;
+    idCard.className = `id-card formal-cert`;
     document.getElementById('result-skin-label').textContent = `${skin.icon} ${skin.name} · IB PYP 평가 인증서`;
     document.getElementById('rank-badge').textContent = `IB 평가 ${getTitleByReputation(reputation)}`;
+    document.getElementById('cert-message').textContent = reputation>=90?'귀하는 다양한 교실 상황에서 평가의 목적을 살피고, 학생의 성장을 지원하는 평가 방법과 실천 방안을 탐구하였습니다.':reputation>=75?'귀하는 교실 상황에 필요한 평가 방법을 탐색하고 평가와 수업을 연결하는 실천 방안을 고민하였습니다.':reputation>=60?'귀하는 다양한 평가 사례를 경험하며 평가 목적에 따른 적절한 방법과 실천 방안을 탐구하였습니다.':'귀하는 탐구와 재도전을 통해 IB PYP 평가의 의미와 교실 적용 가능성을 살펴보았습니다.';
 
     const stampEl = document.getElementById('grade-stamp');
     if (reputation >= 90) {
@@ -3666,6 +3669,26 @@
     else if(messages.length===1 && bossCleared) messages.push('마지막 VIP 교실처럼 학습 결과를 기록하는 일과 아이들의 자기성찰을 함께 챙겨 보시면 좋겠어요.');
     messages.push('오늘 적으신 다짐, 다음 수업에서 한 가지부터 실천해 보세요. 다음에 만나면 어떤 변화가 있었는지 꼭 들려주세요!');
     messages.forEach(msg=>{const el=document.createElement('div');el.className='farewell-bubble';el.textContent=msg;body.append(el);});
+  }
+
+  async function saveCertificatePNG(){
+    const status=document.getElementById('cert-save-status');
+    try{
+      if(document.fonts) await document.fonts.ready;
+      const c=document.createElement('canvas');c.width=1200;c.height=1450;const x=c.getContext('2d');
+      const val=id=>document.getElementById(id).textContent.trim();
+      function text(t,y,size=28,color='#234b40',weight='500'){x.fillStyle=color;x.font=`${weight} ${size}px "Noto Sans KR", "Malgun Gothic", sans-serif`;x.textAlign='center';x.fillText(t,600,y,1020);}
+      function wrap(t,y){x.font='500 30px "Noto Sans KR", "Malgun Gothic", sans-serif';let line='';for(const ch of t){if(x.measureText(line+ch).width>960){text(line,y,30,'#49483d');y+=49;line='';}line+=ch;}if(line)text(line,y,30,'#49483d');return y+49;}
+      x.fillStyle='#f8f5eb';x.fillRect(0,0,1200,1450);x.strokeStyle='#ad9253';x.lineWidth=5;x.strokeRect(28,28,1144,1394);x.lineWidth=2;x.strokeRect(45,45,1110,1360);
+      text('IB PYP ASSESSMENT ER',125,25,'#806c40','700');x.fillStyle='#b89a55';x.beginPath();x.arc(600,218,65,0,Math.PI*2);x.fill();x.fillStyle='#234b40';x.beginPath();x.arc(600,218,52,0,Math.PI*2);x.fill();x.fillStyle='#f5e4af';x.fillRect(590,185,20,66);x.fillRect(567,208,66,20);
+      text('평가 진료 인증서',345,62,'#234b40','900');text('CERTIFICATE OF COMPLETION',395,22,'#806c40','700');text('진료 담당자',475,24,'#736a54');text(val('certificate-name'),550,58,'#252c25','800');x.fillStyle='#234b40';x.fillRect(280,583,640,66);text(val('rank-badge'),628,32,'#f4e2b0','800');
+      let y=wrap(val('cert-message'),715);wrap('학생의 배움을 살피고 성장을 지원하는 평가의 가치를 실제 교실에서도 이어가기를 기대하며, 진료 과정의 완수를 인증합니다.',y+15);
+      x.strokeStyle='#d4c49c';x.beginPath();x.moveTo(115,1050);x.lineTo(1085,1050);x.moveTo(115,1170);x.lineTo(1085,1170);x.stroke();
+      [['안정화 병동','stat-saved'],['최대 연속 명처방','stat-combo'],['최종 신뢰도','stat-rep']].forEach((a,i)=>{x.save();x.translate((i-1)*320,0);text(a[0],1090,23,'#736a54');text(val(a[1]),1140,37,'#234b40','800');x.restore();});
+      x.save();x.translate(-155,0);text(val('certificate-date'),1235,25,'#736a54');text('IB PYP 평가 응급실',1285,35,'#234b40','800');text('게임 내 활동 완수 인증 · 공식 IB 자격 아님',1330,21,'#736a54');x.restore();
+      x.save();x.translate(980,1270);x.rotate(-.2);x.strokeStyle='#a84439';x.lineWidth=4;for(const r of [83,73]){x.beginPath();x.arc(0,0,r,0,Math.PI*2);x.stroke();}x.translate(-600,0);text(val('grade-stamp'),8,25,'#a84439','800');x.restore();
+      const blob=await new Promise(resolve=>c.toBlob(resolve,'image/png'));if(!blob)throw Error('PNG');const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='IB_PYP_평가_진료_인증서.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='인증서 이미지 저장을 요청했습니다.';
+    }catch(e){status.textContent='이미지 저장에 실패했습니다. 화면 캡처를 이용해 주세요.';}
   }
   function showFinalStage(index){
     if(!Number.isInteger(index)||index<0||index>3)return;
