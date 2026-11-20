@@ -1351,6 +1351,22 @@
 #final-stage-1 .opinion-chat{background:#fff;border:1px solid #cbded8;border-radius:14px;overflow:hidden;margin:14px 0}#final-stage-1 .opinion-chat .farewell-head{background:#173b35;color:white;padding:15px;display:flex;align-items:center;gap:12px}#final-stage-1 .opinion-chat .farewell-head strong{color:white;font-size:17px}#final-stage-1 .opinion-chat .farewell-head small{color:#bde0d6}#final-opinion-text{display:block;background:#fff;padding:4px 15px!important}.opinion-point{padding:14px 0;border-bottom:1px solid #e2e8f0}.opinion-point:last-child{border-bottom:0}.opinion-point strong{display:block;font-size:15px;color:#166534;margin-bottom:5px}.opinion-point.point-1 strong{color:#92400e}.opinion-point.point-2 strong{color:#1d4ed8}.opinion-point p{font-size:16px!important;line-height:1.65!important;margin:0!important;color:#263547!important;word-break:keep-all;overflow-wrap:anywhere}#final-stage-1 .opinion-action{padding:10px 15px 15px;background:#fff}#final-stage-1 .opinion-action small{color:#64748b;line-height:1.5}
 @media(max-width:520px){.hall-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.honor-hall h2{font-size:21px}.hall-medal span{font-size:12px}.hall-counts b{font-size:20px}}@media(prefers-reduced-motion:reduce){.hall-medal.fresh svg{animation:none}}
 
+
+#result-modal #final-stage-3{background:#edf2e9;border-radius:16px;gap:0;overflow:hidden;text-align:left;color:#25473c}
+#final-stage-3 .epilogue-hero{background:#173b35;color:white;padding:24px 16px;text-align:center}
+#final-stage-3 .epilogue-hero small{color:#c1d8ca;font-size:11px;letter-spacing:.12em}
+#final-stage-3 .epilogue-hero h2{font-size:clamp(22px,5vw,30px);color:white;margin:8px 0;word-break:keep-all}
+#final-stage-3 .epilogue-hero p{color:#cde0d4;font-size:15px;margin:0;line-height:1.6}
+.epilogue-pulse{display:block;width:100%;max-width:360px;margin:12px auto;animation:epPulse 1s ease-out both}.epilogue-pulse path:first-child{stroke-dasharray:500;stroke-dashoffset:500;animation:epDraw 1s ease-out forwards}
+.epilogue-classroom svg{display:block;width:100%;height:auto}.epilogue-classroom{animation:epAppear .65s .7s both}
+#final-stage-3 .epilogue-content{padding:clamp(12px,4vw,24px);display:flex;flex-direction:column;gap:14px;min-width:0}
+#final-stage-3 .pledge-finale{background:#fffdf7;border:1px solid #d4cab0;box-shadow:none;padding:20px 16px;animation:epAppear .55s 1.4s both}
+#final-stage-3 .pledge-finale:before{display:none}#final-stage-3 .finish-eyebrow{color:#647968;letter-spacing:.1em}#final-stage-3 .pledge-finale h2{font-size:21px}#final-stage-3 .pledge-finale blockquote{font-size:clamp(17px,4vw,21px);line-height:1.8;border-top:0;margin:10px 0 15px;padding:12px 2px;text-align:center}#final-stage-3 .finish-name,#final-stage-3 .finish-date{text-align:right}#final-stage-3 .finish-badge{display:none!important}
+#final-stage-3 .epilogue-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}#final-stage-3 .epilogue-actions button{min-width:0;margin:0;font-size:14px;padding:12px 6px;background:#fff;color:#315b49;border:1px solid #9eb2a4}#final-stage-3 .epilogue-status{font-size:13px;color:#315b49;min-height:0}#final-stage-3 .epilogue-status:empty{display:none}
+#final-stage-3 .farewell-chat{margin:0;background:#fff;border:1px solid #d4dfd3;animation:epAppear .5s 2.1s both}#final-stage-3 .farewell-head{background:#e4ede2;padding:14px;color:#25473c}#final-stage-3 .farewell-body{display:flex;flex-direction:column;padding:16px;gap:12px;align-items:stretch}#final-stage-3 .farewell-bubble,#final-stage-3 .farewell-bubble:last-child{width:100%;padding:0;background:transparent;box-shadow:none;border:0;border-radius:0;font-size:16px;line-height:1.75;color:#34483e}#final-stage-3 .farewell-date{display:none}
+#final-stage-3 .epilogue-closing{text-align:center;padding:12px 0;animation:epAppear .5s 2.5s both}#final-stage-3 .epilogue-closing small{font-size:11px;letter-spacing:.1em;color:#586e5e}#final-stage-3 .epilogue-closing h2{font-size:23px;line-height:1.5;color:#25473c;margin:8px 0}#final-stage-3 #epilogue-end{background:#25473c;color:white;margin:0}#final-stage-3 #next-run-btn{background:#fff;color:#315b49;border:1px solid #9eb2a4;margin:0}#final-stage-3 .epilogue-links{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 12px}#final-stage-3 .epilogue-links button{font-size:13px;color:#526b59;margin:0}#epilogue-goodbye{padding:14px;border-radius:9px;background:#dce9d9;text-align:center;color:#25473c;font-weight:700}#epilogue-goodbye[hidden],#epilogue-end[hidden]{display:none!important}
+@keyframes epDraw{to{stroke-dashoffset:0}}@keyframes epPulse{from{opacity:.25}to{opacity:1}}@keyframes epAppear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){#final-stage-3 *{animation:none!important;stroke-dashoffset:0!important}}
+
 </style>
 
 <style>
@@ -1840,24 +1856,26 @@
     <button class="final-back" onclick="showFinalStage(1)">← 진료 보고서 다시 보기</button>
     </section>
     <section class="final-stage" id="final-stage-3" hidden>
-      <div class="final-kicker">모든 임무 완료 · 최종 수료</div>
+      <div class="epilogue-hero"><small>IB PYP ASSESSMENT ER · EPILOGUE</small>
+        <svg class="epilogue-pulse" viewBox="0 0 320 72" aria-hidden="true"><path d="M0 36H95L108 25L120 47L133 8L147 63L161 30L175 36H320" fill="none" stroke="#8cc2ac" stroke-width="2.5"/><path d="M160 25C147 10 128 30 160 54C192 30 173 10 160 25Z" fill="#e1c998" stroke="#173b35" stroke-width="2"/></svg>
+        <h2>오늘의 진료를 마칩니다.</h2><p>하지만 선생님의 평가 탐구는 계속됩니다.</p>
+      </div>
+      <div class="epilogue-classroom" role="img" aria-label="따뜻한 햇살이 비치는 교실"><svg viewBox="0 0 720 260" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="epWall" x2="0" y2="1"><stop stop-color="#f8edcf"/><stop offset="1" stop-color="#e3d8bc"/></linearGradient><linearGradient id="epSky" x2="0" y2="1"><stop stop-color="#bcdedc"/><stop offset="1" stop-color="#f8edbf"/></linearGradient></defs><rect width="720" height="260" fill="url(#epWall)"/><path d="M0 165H720V260H0Z" fill="#bca88a"/><path d="M0 165L720 165M0 215H720M80 260L260 165M640 260L470 165" stroke="#a28e73" opacity=".45"/><rect x="40" y="22" width="234" height="122" rx="3" fill="#fff8e7" stroke="#a29274" stroke-width="5"/><rect x="48" y="30" width="218" height="106" fill="url(#epSky)"/><path d="M48 116Q95 80 140 112T266 95V136H48Z" fill="#9fb99b"/><path d="M120 30V136M194 30V136M48 82H266" stroke="#fff9e9" stroke-width="7"/><path d="M49 139H266L512 260H218Z" fill="#fff2bb" opacity=".44"/><rect x="332" y="24" width="326" height="121" rx="5" fill="#aa9774"/><rect x="340" y="32" width="310" height="105" rx="2" fill="#496758"/><path d="M370 59H500M370 79H565M370 99H458" stroke="#e5e5cf" stroke-width="3" opacity=".65"/><path d="M330 146H660" stroke="#806f55" stroke-width="7"/><g fill="#b0926e" stroke="#76674f" stroke-width="3"><path d="M86 183H211L230 207H68Z"/><path d="M68 207V250M230 207V250" fill="none"/><path d="M292 175H412L430 198H274Z"/><path d="M274 198V247M430 198V247" fill="none"/><path d="M504 185H629L648 211H485Z"/><path d="M485 211V255M648 211V255" fill="none"/></g><g fill="#e8d7b6"><rect x="130" y="188" width="41" height="10" rx="2"/><rect x="336" y="180" width="38" height="10" rx="2"/><rect x="550" y="191" width="42" height="10" rx="2"/></g><circle cx="98" cy="49" r="13" fill="#fff3c4" opacity=".9"/></svg></div>
+      <div class="epilogue-content">
       <article class="pledge-finale" aria-label="나의 평가 실천 다짐 카드">
-        <div class="finish-seal" aria-hidden="true">✦</div>
-        <div class="finish-eyebrow">IB PYP 수업 평가 응급실 · 수료 기념</div>
-        <h2>나의 교실, 새로운 시작</h2>
-        <div class="finish-name" id="finish-name"></div>
+        <div class="finish-eyebrow">MY NEXT CLASSROOM</div><h2>교실로 가져갈 나의 다짐</h2>
         <blockquote id="finish-pledge"></blockquote>
-        <div class="finish-date" id="finish-date"></div>
-        <div class="final-medal finish-badge" id="final-medal" hidden>🏅 교실 실천가</div>
+        <div class="finish-name" id="finish-name"></div><div class="finish-date" id="finish-date"></div>
+        <div class="final-medal finish-badge" id="final-medal" hidden>교실 실천가</div>
       </article>
-      <section class="farewell-chat" aria-label="IB 코디네이터의 마지막 메시지"><div class="farewell-head"><div class="photo-coordinator" role="img" aria-label="IB 코디네이터 프로필"></div><div><strong>IB 코디네이터</strong><small>마지막 진료를 마치며 · 새 메시지</small></div></div><div class="farewell-body" id="farewell-body" aria-live="polite"></div></section>
-      <p class="finish-message">오늘의 진료는 끝났지만,<br>우리 교실의 변화는 이제 시작입니다.</p>
-      <div class="result-btn-group">
-      <button class="modal-btn secondary" id="final-copy" disabled onclick="copyResultToClipboard()">📋 인증서 및 다짐 복사</button>
-      <button class="modal-btn" id="next-run-btn" onclick="resetGame()">🚑 2회차 당직 출근하기</button>
-    </div>
-    <button class="final-back" onclick="showFinalStage(2)">← 실천 다짐 수정하기</button>
-    <button class="final-back" onclick="showFinalStage(0)">인증서 다시 보기</button>
+      <div class="epilogue-actions"><button class="modal-btn secondary" onclick="savePledgePNG()">다짐 카드 저장</button><button class="modal-btn secondary" id="final-copy" disabled onclick="copyPledgeOnly()">다짐 복사</button></div><div id="pledge-save-status" role="status" class="epilogue-status"></div>
+      <section class="farewell-chat" aria-label="IB 코디네이터의 마지막 메시지"><div class="farewell-head"><div class="photo-coordinator" role="img" aria-label="IB 코디네이터 프로필"></div><div><strong>IB 코디네이터</strong><small>당직을 마치며 전하는 편지</small></div></div><div class="farewell-body" id="farewell-body" aria-live="polite"></div></section>
+      <div class="epilogue-closing"><small>FROM ASSESSMENT TO ACTION</small><h2>오늘의 선택이<br>내일의 배움을 바꿉니다.</h2></div>
+      <button class="modal-btn" id="epilogue-end" onclick="finishEpilogue()">진료를 마치고 교실로 돌아가기</button>
+      <div id="epilogue-goodbye" hidden role="status">오늘의 당직을 마쳤습니다. 다음 수업에서 만나요!</div>
+      <button class="modal-btn secondary" id="next-run-btn" onclick="resetGame()">새로운 당직 시작</button>
+      <div class="epilogue-links"><button class="final-back" onclick="showFinalStage(2)">실천 다짐 수정</button><button class="final-back" onclick="showFinalStage(1)">컬렉션 확인</button><button class="final-back" onclick="showFinalStage(0)">인증서 보기</button></div>
+      </div>
     </section>
   </div>
 </div>
@@ -3654,21 +3672,30 @@
   let farewellTimers=[];
   function stopFarewell(){farewellTimers.forEach(clearTimeout);farewellTimers=[];}
   function renderFarewell(){
-    stopFarewell();
-    const body=document.getElementById('farewell-body');body.replaceChildren();
-    const date=document.createElement('div');date.className='farewell-date';date.textContent='오늘 · 마지막 인사';body.append(date);
-    const messages=[];
-    const frame=wrongReview.find(x=>x.stage!=='응급 미션');
-    if(!wrongReview.length && (!triageTriggered||triageCorrectCount===3)) messages.push('선생님, 오늘 진료 기록에 오답이 없네요. 평가 목적과 교실 상황을 잘 연결해 보셨어요.');
-    else if(frame){
-      const a=OPINION_CASES[frame.caseId||activeCases.find((c,i)=>`${i+1}번 병동`===frame.ward)?.correctDrugId];
-      messages.push(`선생님, ${frame.ward}에서 평가 방법을 다시 고민하셨던 것 기억나세요? 아이들의 반응을 보고 평가를 수정하는 것도 중요한 과정이에요.`);
-      if(a) messages.push(a[1]);
-    }else messages.push(wrongReview.length?'선생님, 응급 미션에서 헷갈렸던 상황도 있었죠? 평가 결과를 어디에 활용할지 먼저 생각해 보시면 좋겠어요.':'선생님, 모든 병동을 마치셨네요. 평가 유형을 분류할 때는 시간보다 평가 결과의 활용 목적을 차분히 생각해 보시면 좋겠어요.');
-    if(messages.length===1 && usedConsultThisRun) messages.push('오늘 함께 고민했던 것처럼, 실제 수업에서도 동료 선생님들과 평가 이야기를 나눠 보세요.');
-    else if(messages.length===1 && bossCleared) messages.push('마지막 VIP 교실처럼 학습 결과를 기록하는 일과 아이들의 자기성찰을 함께 챙겨 보시면 좋겠어요.');
-    messages.push('오늘 적으신 다짐, 다음 수업에서 한 가지부터 실천해 보세요. 다음에 만나면 어떤 변화가 있었는지 꼭 들려주세요!');
-    messages.forEach(msg=>{const el=document.createElement('div');el.className='farewell-bubble';el.textContent=msg;body.append(el);});
+    stopFarewell();const body=document.getElementById('farewell-body');body.replaceChildren();
+    const messages=[];const frame=wrongReview.find(x=>x.stage!=='응급 미션');
+    if(frame)messages.push(`선생님, ${frame.ward}에서 처음 선택을 다시 살펴보고 처방을 이어 가셨죠. 평가 방법을 상황에 맞게 조정하는 경험도 소중합니다.`);
+    else if(wrongReview.length)messages.push('선생님, 응급 미션까지 도전하셨네요. 평가 결과를 어디에 활용할지 생각하는 습관을 실제 수업에서도 이어 가면 좋겠어요.');
+    else if(usedConsultThisRun)messages.push('선생님, 오늘 코디네이터와 함께 평가 방법을 고민하셨죠. 실제 수업에서도 동료와 평가 이야기를 나누어 보세요.');
+    else messages.push('선생님, 오늘 교실 사례를 하나씩 살펴보며 평가 방법과 실천 방안을 연결해 보셨네요.');
+    messages.push('오늘 작성하신 다짐을 다음 수업에서 한 가지부터 실천해 보세요. 아이들의 반응을 살피며 조금씩 조정해 보면 좋겠어요.');
+    messages.push('다음에 만나면 교실에서 어떤 변화가 있었는지 들려주세요. 응원하겠습니다!');
+    messages.forEach(msg=>{const el=document.createElement('p');el.className='farewell-bubble';el.textContent=msg;body.append(el);});
+  }
+  function finishEpilogue(){document.getElementById('epilogue-end').hidden=true;document.getElementById('epilogue-goodbye').hidden=false;}
+  async function copyPledgeOnly(){
+    if(document.getElementById('final-copy').disabled)return;
+    const text=document.getElementById('finish-pledge').textContent;const status=document.getElementById('pledge-save-status');
+    try{await navigator.clipboard.writeText(text);status.textContent='다짐을 복사했습니다.';}catch(e){const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';document.body.append(t);t.select();let ok=false;try{ok=document.execCommand('copy');}catch(e){}t.remove();if(ok)status.textContent='다짐을 복사했습니다.';else showNotice('📋','다짐 복사 안내',text);}
+  }
+  async function savePledgePNG(){
+    if(document.getElementById('final-copy').disabled)return;const status=document.getElementById('pledge-save-status');
+    try{if(document.fonts)await document.fonts.ready;const c=document.createElement('canvas'),x=c.getContext('2d');const W=1200,margin=100;const pledge=document.getElementById('finish-pledge').textContent;const name=document.getElementById('finish-name').textContent;const date=document.getElementById('finish-date').textContent;
+    const font='"Pretendard", "Noto Sans KR", "Malgun Gothic", sans-serif';x.font='600 48px '+font;const lines=[];let line='';for(const ch of pledge){if(ch==='\n'){lines.push(line);line='';continue;}if(x.measureText(line+ch).width>W-margin*2&&line){lines.push(line);line=ch;}else line+=ch;}if(line)lines.push(line);
+    c.width=W;c.height=Math.max(900,560+lines.length*76);x.fillStyle='#fffdf7';x.fillRect(0,0,W,c.height);x.strokeStyle='#b7ae91';x.lineWidth=4;x.strokeRect(28,28,W-56,c.height-56);x.strokeStyle='#ded5bd';x.lineWidth=2;x.strokeRect(44,44,W-88,c.height-88);
+    x.textAlign='center';x.fillStyle='#647968';x.font='600 25px '+font;x.fillText('MY NEXT CLASSROOM',W/2,110);x.fillStyle='#25473c';x.font='700 54px '+font;x.fillText('교실로 가져갈 나의 다짐',W/2,195);x.font='600 48px '+font;lines.forEach((l,i)=>x.fillText(l,W/2,300+i*76));let y=340+lines.length*76;x.strokeStyle='#c9c3ac';x.beginPath();x.moveTo(margin,y);x.lineTo(W-margin,y);x.stroke();x.textAlign='right';x.font='700 35px '+font;x.fillText(name,W-margin,y+65);x.font='28px '+font;x.fillStyle='#647968';x.fillText(date,W-margin,y+110);x.textAlign='center';x.font='23px '+font;x.fillText('IB PYP 평가 응급실 · 실천 다짐',W/2,c.height-65);
+    const blob=await new Promise(r=>c.toBlob(r,'image/png'));if(!blob)throw Error('PNG');const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='IB_PYP_나의_실천_다짐.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='다짐 카드 이미지 저장을 요청했습니다.';
+    }catch(e){status.textContent='이미지 저장에 실패했습니다. 화면 캡처로 저장해 주세요.';}
   }
 
   async function saveCertificatePNG(){
@@ -3697,7 +3724,7 @@
     document.querySelectorAll('#result-modal .final-progress span').forEach((e,i)=>{e.classList.toggle('active',i===index);e.classList.toggle('done',i<index);if(i===index)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});
     document.querySelector('#result-modal .modal-inner').scrollTop=0;
     document.getElementById('result-modal').scrollTop=0;
-    if(index===3)renderFarewell();else stopFarewell();
+    if(index===3){document.getElementById('epilogue-end').hidden=false;document.getElementById('epilogue-goodbye').hidden=true;document.getElementById('pledge-save-status').textContent='';renderFarewell();}else stopFarewell();
   }
   function confirmFinalPledge(){
     document.getElementById('final-medal').hidden=false;
