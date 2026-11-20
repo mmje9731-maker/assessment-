@@ -1368,22 +1368,35 @@
 @keyframes epDraw{to{stroke-dashoffset:0}}@keyframes epPulse{from{opacity:.25}to{opacity:1}}@keyframes epAppear{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}@media(prefers-reduced-motion:reduce){#final-stage-3 *{animation:none!important;stroke-dashoffset:0!important}}
 
 
-#cinematic-ending[hidden]{display:none!important}
-#cinematic-ending{position:fixed;inset:0;z-index:2147483000;background:#101c17;color:#fff;overflow:auto;overscroll-behavior:contain;isolation:isolate;display:flex;flex-direction:column;min-height:0;animation:cinBlack .65s ease both}
-#cinematic-ending .cin-photo{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;animation:cinReveal 2s .65s both}
-#cinematic-ending .cin-shade{position:fixed;inset:0;background:linear-gradient(0deg,rgba(12,28,20,.96),rgba(12,28,20,.63) 44%,rgba(12,28,20,.13) 100%);z-index:-1;animation:cinReveal 1.2s .7s both}
-#cinematic-ending .cin-content{margin:auto auto 0;width:min(100%,740px);box-sizing:border-box;padding:32px 22px max(28px,env(safe-area-inset-bottom));text-align:center;display:grid;gap:16px;justify-items:center;flex-shrink:0}
-#cinematic-ending .cin-kicker{color:#e4d5ae;letter-spacing:.2em;font-size:12px;animation:cinUp .65s 1.5s both}
-#cinematic-ending h2{font-size:clamp(25px,6vw,46px);line-height:1.45;color:#fff;margin:0;word-break:keep-all;animation:cinUp .8s 2s both}
-#cinematic-ending .cin-message{font-size:clamp(16px,3vw,21px);line-height:1.75;color:#edf4e9;margin:0;word-break:keep-all;overflow-wrap:anywhere;animation:cinUp .8s 3s both}
-#cinematic-ending .cin-title{font-size:12px;letter-spacing:.13em;color:#dfd4b5;line-height:1.8;animation:cinUp .7s 4s both}
-#cinematic-ending .cin-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;animation:cinUp .6s 4.6s both}
+#cinematic-ending[hidden],#cinematic-ending [hidden]{display:none!important}
+#cinematic-ending{position:fixed;inset:0;z-index:2147483000;background:#101d24;color:#fff;overflow:auto;overscroll-behavior:contain;isolation:isolate;display:flex;flex-direction:column;min-height:0;animation:cinFade .5s both}
+#cinematic-ending .cin-scene{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:15px;text-align:center;padding:65px 22px max(30px,env(safe-area-inset-bottom));min-height:100%;box-sizing:border-box;isolation:isolate;animation:cinFade .55s both}
+#cinematic-ending h2{color:#fff;font-size:clamp(24px,5vw,44px);line-height:1.45;margin:0;word-break:keep-all;overflow-wrap:anywhere}
+#cinematic-ending p{color:#dbe8d9;font-size:clamp(15px,2.5vw,20px);line-height:1.7;margin:0;word-break:keep-all;max-width:650px;overflow-wrap:anywhere}
+#cinematic-ending .cin-kicker{color:#e4d5ae;letter-spacing:.15em;font-size:12px;line-height:1.6}
+#cinematic-ending .cin-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:-2;animation:cinPhoto 3s ease-out both}
+#cinematic-ending .cin-shade{position:absolute;inset:0;background:linear-gradient(0deg,#0b2119e8,#101f1788 55%,#101f1733);z-index:-1}
+#cinematic-ending .cin-pulse{width:min(460px,90%);height:auto;filter:drop-shadow(0 0 6px #77e7ab88)}
+#cinematic-ending .cin-pulse path{stroke-dasharray:650;stroke-dashoffset:650;animation:cinDraw 1s linear forwards}
+#cinematic-ending .cin-door{width:min(310px,75vw);height:min(42vh,260px);min-height:135px;border:8px solid #586c72;position:relative;overflow:hidden;background:#fff0c5;box-shadow:0 0 60px #f8e3a644}
+#cinematic-ending .cin-door img{width:100%;height:100%;object-fit:cover;opacity:.8}
+#cinematic-ending .cin-leaf{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(100deg,#3e555f,#263940);border:1px solid #8b9a9e;box-shadow:inset 0 0 18px #172b32;animation-duration:1.65s;animation-delay:.15s;animation-fill-mode:both;animation-timing-function:ease-in-out}
+#cinematic-ending .cin-leaf::before{content:'';position:absolute;top:16%;left:22%;width:56%;height:29%;border:2px solid #98a9aa;background:#24383b}
+#cinematic-ending .cin-leaf::after{content:'';position:absolute;top:55%;width:5px;height:29px;background:#c6b98c;border-radius:4px}
+#cinematic-ending .cin-left{left:0;animation-name:cinLeft}#cinematic-ending .cin-left::after{right:8px}#cinematic-ending .cin-right{right:0;animation-name:cinRight}#cinematic-ending .cin-right::after{left:8px}
+#cinematic-ending .cin-final{background:radial-gradient(ellipse at top,#29483a,#14271f 72%)}
+#cinematic-ending .cin-final h2{color:#f4ebd7}#cinematic-ending .cin-emblem{width:74px;height:74px}
 #cinematic-ending button{font:inherit;font-size:14px;font-weight:700;border:1px solid #b8cbbd;border-radius:10px;padding:12px 20px;background:#f4f0e2;color:#234638;cursor:pointer;min-height:44px}
-#cinematic-ending button:disabled{visibility:hidden;pointer-events:none}
-#cinematic-ending .cin-skip{position:absolute;right:14px;top:max(14px,env(safe-area-inset-top));background:#13291fba;color:#fff;font-size:12px;min-height:36px;padding:8px 12px}
+#cinematic-ending .cin-skip{position:fixed;z-index:5;right:14px;top:max(14px,env(safe-area-inset-top));background:#13291fdd;color:white;font-size:12px;padding:8px 12px}
+#cinematic-ending .cin-actions{margin-top:12px;animation:cinFade .5s both}
+#cinematic-ending .cin-actions button:disabled{visibility:hidden}
 #cinematic-ending.cin-instant *{animation:none!important}
-@keyframes cinBlack{from{opacity:0}to{opacity:1}}@keyframes cinReveal{from{opacity:0;transform:scale(1.025)}to{opacity:1;transform:scale(1)}}@keyframes cinUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes cinFade{from{opacity:0}to{opacity:1}}@keyframes cinPhoto{from{opacity:.3;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}@keyframes cinDraw{to{stroke-dashoffset:0}}@keyframes cinLeft{to{transform:translateX(-101%)}}@keyframes cinRight{to{transform:translateX(101%)}}
 @media(prefers-reduced-motion:reduce){#cinematic-ending,#cinematic-ending *{animation:none!important}}
+
+
+#result-modal, #result-modal > .modal-inner {overflow-anchor:none;scroll-behavior:auto;}
+#result-modal .final-stage:focus {outline:none;}
 </style>
 
 <style>
@@ -1900,7 +1913,7 @@
       <div class="epilogue-actions"><button class="modal-btn secondary" onclick="savePledgePNG()">약속 카드 저장</button><button class="modal-btn secondary" id="final-copy" disabled onclick="copyPledgeOnly()">나의 다짐 복사</button></div><div id="pledge-save-status" role="status" class="epilogue-status"></div>
       <section class="farewell-chat" aria-label="IB 코디네이터의 마지막 메시지"><div class="farewell-head"><div class="photo-coordinator" role="img" aria-label="IB 코디네이터 프로필"></div><div><strong>IB 코디네이터</strong><small>당직을 마치며 전하는 편지</small></div></div><div class="farewell-body" id="farewell-body" aria-live="polite"></div></section>
       <div class="epilogue-closing"><svg class="epilogue-pulse" viewBox="0 0 320 72" aria-hidden="true"><path d="M0 36H95L108 25L120 47L133 8L147 63L161 30L175 36H320" fill="none" stroke="#8cc2ac" stroke-width="2.5"/><path d="M160 25C147 10 128 30 160 54C192 30 173 10 160 25Z" fill="#e1c998" stroke="#173b35" stroke-width="2"/></svg><small>THE END, AND A NEW BEGINNING.</small><h2>오늘의 선택이<br>내일의 배움을 바꿉니다.</h2></div>
-      <button class="modal-btn" id="epilogue-end" onclick="finishEpilogue()">교실에서 새로운 실천 시작하기<small>오늘의 배움을 내일의 수업으로</small></button>
+      <button class="modal-btn" id="epilogue-end" onclick="finishEpilogue()">진료를 마치고 교실로 돌아가기<small>오늘의 배움을 내일의 수업으로</small></button>
       <div id="epilogue-goodbye" hidden role="status">선생님의 새로운 실천을 응원합니다. 다짐은 언제든 다시 확인할 수 있어요.</div>
       <button class="modal-btn secondary" id="next-run-btn" onclick="resetGame()">다시 도전하기</button>
       <div class="epilogue-links"><button class="final-back" onclick="showFinalStage(2)">실천 다짐 수정</button><button class="final-back" onclick="showFinalStage(1)">컬렉션 확인</button><button class="final-back" onclick="showFinalStage(0)">인증서 보기</button></div>
@@ -3669,8 +3682,8 @@
     renderFinalOpinion();
     renderRxCards();
     updatePledge();
-    showFinalStage(0);
     document.getElementById('result-modal').style.display = 'flex';
+    showFinalStage(0);
   }
 
   // 실제 완료 병동과 응답 기록을 바탕으로 만드는 개인별 수업 협의.
@@ -3715,10 +3728,30 @@
     messages.push('선생님의 다음 탐구를 응원합니다.');
     messages.forEach(msg=>{const el=document.createElement('p');el.className='farewell-bubble';el.textContent=msg;body.append(el);});const sign=document.createElement('p');sign.className='farewell-sign';sign.textContent='― IB 코디네이터 드림';body.append(sign);
   }
-  let cinematicTimer=null, cinematicSoundTimers=[];
-  function revealCinematicEnding(){const e=document.getElementById('cinematic-ending');if(e.hidden)return;clearTimeout(cinematicTimer);e.classList.add('cin-instant');document.getElementById('cin-back').disabled=false;e.querySelector('.cin-skip').hidden=true;document.getElementById('cin-back').focus({preventScroll:true});}
-  function closeCinematicEnding(){const e=document.getElementById('cinematic-ending');clearTimeout(cinematicTimer);cinematicSoundTimers.forEach(clearTimeout);cinematicSoundTimers=[];e.hidden=true;e.classList.remove('cin-instant');document.getElementById('epilogue-end').focus({preventScroll:true});}
-  function finishEpilogue(){const e=document.getElementById('cinematic-ending');if(!e.hidden)return;e.querySelector('.cin-photo').src=document.querySelector('.epilogue-classroom img').src;e.classList.remove('cin-instant');document.getElementById('cin-back').disabled=true;e.querySelector('.cin-skip').hidden=false;e.hidden=false;e.scrollTop=0;e.focus({preventScroll:true});try{playTone(440,'sine',.25);cinematicSoundTimers=[setTimeout(()=>playTone(554,'sine',.3),350),setTimeout(()=>playTone(659,'sine',.5),700)];}catch(err){}if(matchMedia('(prefers-reduced-motion: reduce)').matches){revealCinematicEnding();}else{cinematicTimer=setTimeout(()=>{if(!e.hidden){document.getElementById('cin-back').disabled=false;e.querySelector('.cin-skip').hidden=true;document.getElementById('cin-back').focus({preventScroll:true});}},5200);}}
+  let cinematicTimers=[], cinematicSoundTimers=[];
+  function clearCinematicTimers(){cinematicTimers.forEach(clearTimeout);cinematicSoundTimers.forEach(clearTimeout);cinematicTimers=[];cinematicSoundTimers=[];}
+  function cinematicScene(i){const e=document.getElementById('cinematic-ending');if(e.hidden)return;e.querySelectorAll('.cin-scene').forEach((el,j)=>el.hidden=i!==j);e.scrollTop=0;}
+  function cinematicMessage(){
+    const text=document.getElementById('finish-pledge').textContent;const custom=document.getElementById('personal-pledge').value.trim();
+    if(custom&&!rxMethods.size&&!rxRecommended)return '선생님의 오늘 다짐이 내일 교실의 변화로 이어지기를 바랍니다.';
+    const themes=[/ATL|성장 스펙트럼|피드백|관찰/,/탐구나침반|자기성찰|스스로.*(점검|성찰|목표)/,/포트폴리오|기록|통지|개념.*(연결|적용)/].map(r=>r.test(text));
+    if(themes.filter(Boolean).length>1)return '평가를 통해 배움이 이어지고 성장이 이루어지는 교실.';
+    if(themes[0])return '아이들의 배움을 살피고 다음 성장의 길을 열어 주는 교실.';
+    if(themes[1])return '아이들이 스스로 배움을 돌아보고 다음 목표를 정하는 교실.';
+    if(themes[2])return '아이들의 배움과 성취를 구체적인 근거로 살피는 교실.';
+    return '선생님의 오늘 다짐이 내일 교실의 변화로 이어지기를 바랍니다.';
+  }
+  function revealCinematicEnding(){const e=document.getElementById('cinematic-ending');if(e.hidden)return;clearCinematicTimers();e.classList.add('cin-instant');cinematicScene(3);document.getElementById('cin-back').disabled=false;e.querySelector('.cin-skip').hidden=true;document.getElementById('cin-back').focus({preventScroll:true});}
+  function closeCinematicEnding(){const e=document.getElementById('cinematic-ending');clearCinematicTimers();e.hidden=true;e.classList.remove('cin-instant');document.getElementById('result-modal').inert=false;document.getElementById('epilogue-end').focus({preventScroll:true});}
+  function finishEpilogue(){
+    const e=document.getElementById('cinematic-ending');if(!e.hidden)return;clearCinematicTimers();
+    e.querySelectorAll('.cin-class-image').forEach(img=>img.src=document.querySelector('.epilogue-classroom img').src);
+    document.getElementById('cin-personal').textContent=cinematicMessage();document.getElementById('cin-ending-name').textContent=(doctorName||'진료 담당')+' 선생님';
+    e.classList.remove('cin-instant');document.getElementById('cin-back').disabled=true;e.querySelector('.cin-skip').hidden=false;e.hidden=false;document.getElementById('result-modal').inert=true;cinematicScene(0);e.focus({preventScroll:true});
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){revealCinematicEnding();return;}
+    cinematicTimers=[setTimeout(()=>cinematicScene(1),1500),setTimeout(()=>cinematicScene(2),3500),setTimeout(()=>cinematicScene(3),6000),setTimeout(()=>{if(e.hidden)return;document.getElementById('cin-back').disabled=false;e.querySelector('.cin-skip').hidden=true;document.getElementById('cin-back').focus({preventScroll:true});},9000)];
+    playTone(440,'sine',.22);cinematicSoundTimers=[[650,330,.16],[1050,330,.16],[1550,196,.65],[3500,261.63,1.1],[3800,329.63,1],[4100,392,1.2],[6000,261.63,1.7],[6300,329.63,1.5],[6600,523.25,1.5]].map(([t,f,d])=>setTimeout(()=>playTone(f,'sine',d),t));
+  }
   document.addEventListener('keydown',event=>{const e=document.getElementById('cinematic-ending');if(!e||e.hidden)return;if(event.key==='Escape'){event.preventDefault();closeCinematicEnding();}if(event.key==='Tab'){event.preventDefault();const b=document.getElementById('cin-back');(b.disabled?e.querySelector('.cin-skip'):b).focus();}});
 
   async function copyPledgeOnly(){
@@ -3753,14 +3786,25 @@
       const blob=await new Promise(resolve=>c.toBlob(resolve,'image/png'));if(!blob)throw Error('PNG');const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='IB_PYP_평가_진료_인증서.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),10000);status.textContent='인증서 이미지 저장을 요청했습니다.';
     }catch(e){status.textContent='이미지 저장에 실패했습니다. 화면 캡처를 이용해 주세요.';}
   }
+  let finalScrollVersion=0;
+  function resetFinalScroll(index){
+    const modal=document.getElementById('result-modal'),inner=modal.querySelector('.modal-inner');
+    const version=++finalScrollVersion;
+    const heading=modal.querySelector('#final-stage-'+index);
+    // Move focus away from the previous stage without scrolling to a button.
+    if(heading){heading.tabIndex=-1;heading.focus({preventScroll:true});}
+    const top=()=>{inner.scrollTop=0;modal.scrollTop=0;};
+    top();
+    // Reset again after the visible layout has been calculated, not while hidden.
+    requestAnimationFrame(()=>{if(version!==finalScrollVersion||modal.style.display==='none')return;top();});
+  }
   function showFinalStage(index){
     if(!Number.isInteger(index)||index<0||index>3||rxBusy)return;
     if(index===2){renderRxCards();updatePledge();}
     if(index===3 && document.getElementById('final-copy').disabled)return;
     document.querySelectorAll('#result-modal .final-stage').forEach((e,i)=>{e.hidden=i!==index;});
     document.querySelectorAll('#result-modal .final-progress span').forEach((e,i)=>{e.classList.toggle('active',i===index);e.classList.toggle('done',i<index);if(i===index)e.setAttribute('aria-current','step');else e.removeAttribute('aria-current');});
-    document.querySelector('#result-modal .modal-inner').scrollTop=0;
-    document.getElementById('result-modal').scrollTop=0;
+    resetFinalScroll(index);
     if(index===3){document.getElementById('epilogue-end').hidden=false;document.getElementById('epilogue-goodbye').hidden=true;document.getElementById('pledge-save-status').textContent='';renderFarewell();}else stopFarewell();
   }
   let rxWhen=1,rxMethods=new Set([0]),rxRecommended=false,rxBusy=false;
@@ -3962,9 +4006,11 @@
 
   resetGame();
 </script>
-<div id="cinematic-ending" hidden role="dialog" aria-modal="true" aria-labelledby="cin-ending-title" tabindex="-1">
-<img class="cin-photo" alt="" aria-hidden="true"><div class="cin-shade"></div>
+<div id="cinematic-ending" hidden role="dialog" aria-modal="true" aria-label="평가 응급실 엔딩" tabindex="-1">
 <button class="cin-skip" onclick="revealCinematicEnding()">연출 건너뛰기</button>
-<div class="cin-content"><div class="cin-kicker">BACK TO YOUR CLASSROOM</div><h2 id="cin-ending-title">오늘의 선택이<br>내일의 배움을 바꿉니다.</h2><p class="cin-message"><span id="cin-ending-name"></span>선생님의 새로운 실천을 응원합니다.</p><div class="cin-title">IB PYP 평가 응급실<br>THE END, AND A NEW BEGINNING.</div><div class="cin-actions"><button id="cin-back" disabled onclick="closeCinematicEnding()">수료 페이지 다시 보기</button></div></div></div>
+<section class="cin-scene"><small class="cin-kicker">ASSESSMENT ER · SHIFT COMPLETE</small><svg class="cin-pulse" viewBox="0 0 320 90" aria-hidden="true"><path d="M0 45H35L43 38L52 52L62 12L73 78L85 45H130L138 38L147 52L157 12L168 78L180 45H225L233 38L242 52L252 12L263 78L275 45H320" stroke="#77e7ab" stroke-width="2.5" fill="none" stroke-linejoin="round"/></svg><h2>모든 병동 진료 완료</h2><p>평가 응급실 당직을 마칩니다.</p></section>
+<section class="cin-scene" hidden><small class="cin-kicker">BACK TO YOUR CLASSROOM</small><div class="cin-door" aria-hidden="true"><img class="cin-class-image" alt=""><div class="cin-leaf cin-left"></div><div class="cin-leaf cin-right"></div></div><h2>선생님을 기다리는 곳이 있습니다.</h2></section>
+<section class="cin-scene" hidden><img class="cin-photo cin-class-image" alt="햇살이 비치는 교실"><div class="cin-shade"></div><small class="cin-kicker">A NEW BEGINNING</small><h2>다시, 선생님의 교실로.</h2><p id="cin-personal"></p><p>오늘의 마지막 처방은 내일의 첫 실천이 됩니다.</p></section>
+<section class="cin-scene cin-final" hidden><svg class="cin-emblem" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="44" fill="none" stroke="#bda978"/><circle cx="50" cy="50" r="37" fill="#263d30" stroke="#bda978"/><path d="M50 72V35M50 53Q22 52 25 28Q47 28 50 53M50 57Q77 55 77 32Q53 32 50 57" fill="none" stroke="#b7cea7" stroke-width="2.5" stroke-linecap="round"/></svg><p>평가는 배움의 끝이 아니라</p><h2>새로운 배움의 시작입니다.</h2><p id="cin-ending-name"></p><p>선생님의 다음 수업을 응원합니다.</p><strong class="cin-kicker">IB PYP 평가 응급실<br>THE END, AND A NEW BEGINNING.</strong><div class="cin-actions"><button id="cin-back" disabled onclick="closeCinematicEnding()">수료 페이지 다시 보기</button></div></section></div>
 </body>
 </html>
